@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "863169423879",
+    "project_id": "imagesician-app",
+    "storage_bucket": "imagesician-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:863169423879:android:70b129f4352efe9a8e58a2",
+        "android_client_info": {
+          "package_name": "unipi.p17168.imagesician"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "863169423879-02v19s5825a40lokv0p01tvbmtj9tsgs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQQq4OvEJ7s74l0Kjk-zlLMo9cL4j8reQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "863169423879-02v19s5825a40lokv0p01tvbmtj9tsgs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

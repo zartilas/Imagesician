@@ -13,6 +13,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ImagesicianActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
+
     enum class MainScreen(@IdRes val menuItemId: Int,
                           @DrawableRes val menuItemIconId: Int,
                           @StringRes val titleStringId: Int,
@@ -25,8 +26,6 @@ class ImagesicianActivity : AppCompatActivity(),
             LOGS(R.id.bottom_navigation_item_image, R.drawable.ic_add_photo_foreground, R.string.image_item, ImageFragment()),
             PROGRESS(R.id.bottom_navigation_item_barcode, R.drawable.ic_qr_code_foreground, R.string.barcode_item, QrcodeFragment()),
             PROFILE(R.id.bottom_navigation_item_settings, R.drawable.ic_more_horiz_foreground, R.string.settings_item, SettingsFragment())
-
-
     }
 
     private lateinit var viewPager: ViewPager
@@ -39,8 +38,8 @@ class ImagesicianActivity : AppCompatActivity(),
 
 
                 // Initialize components/views.
-                viewPager = findViewById(R.id.view_pager);
-                bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+                viewPager = findViewById(R.id.view_pager)
+                bottomNavigationView = findViewById(R.id.bottom_navigation_view)
                 mainPagerAdapter = MainPagerAdapter(supportFragmentManager)
 
                 // Set items to be displayed.
@@ -97,8 +96,7 @@ class ImagesicianActivity : AppCompatActivity(),
                 }
                 return false
             }
-
-        }
+    }
 
     fun getMainScreenForMenuItem(menuItemId: Int): ImagesicianActivity.MainScreen? {
         for (mainScreen in ImagesicianActivity.MainScreen.values()) {
