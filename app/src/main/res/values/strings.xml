@@ -21,5 +21,7 @@
     <string name="image_item">Image</string>
     <string name="barcode_item">QR Code</string>
     <string name="settings_item">Settings</string>
+    <string name="select_image">Select Image</string>
+    <string name="context_text">Context Text?</string>
 
 </resources>

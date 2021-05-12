@@ -1,28 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/coordinatorLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".ImageFragment">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginBottom="20dp"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/pic_picture" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/photo_pic" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/floatingButton"
+        style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+        android:layout_width="251dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/select_image"
+        android:textAlignment="center"
+        android:textColor="@color/blue_600"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:icon="@drawable/icon_photo_add"
+        app:iconGravity="start"
+        app:iconSize="35dp"
+        app:iconTint="@color/blue_600"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <Switch
+        android:id="@+id/switchContextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/context_text"
+        android:textColor="@color/blue_600"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/floatingButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingButton"
+        app:layout_constraintTop_toBottomOf="@+id/floatingButton"
+        tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        style="@style/Widget.MaterialComponents.ChipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/switchContextText"
+        app:layout_constraintStart_toStartOf="@+id/switchContextText"
+        app:layout_constraintTop_toBottomOf="@+id/switchContextText" />
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
