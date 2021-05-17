@@ -1,26 +1,27 @@
 package unipi.p17168.imagesician
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.chip.Chip
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
-import com.google.mlkit.vision.objects.defaults.PredefinedCategory
-import kotlinx.coroutines.selects.select
+
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
 import java.io.IOException
 
 
+@Suppress("DEPRECATION") //for the method getImage
 class ImageFragment : Fragment() {
 
     //~~~~~~~VARIABLES~~~~~~~
@@ -33,12 +34,12 @@ class ImageFragment : Fragment() {
     private val binding get() = _binding!!
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//
+//    }
 
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // Inflate the layout for this fragment
         _binding = FragmentImageBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -48,9 +49,9 @@ class ImageFragment : Fragment() {
         return view
     }
 
-    fun init(){
-
-    }
+//    fun init(){
+//
+//    }
 
 
     private fun userTriggerButtons() {
@@ -76,7 +77,6 @@ class ImageFragment : Fragment() {
             {
                 val bitmap = getImage(data)
                 if (bitmap != null) {
-                  //  binding.imageView.setImageURI(Uri.parse("imageUri"))
                     binding.imageView.setImageBitmap(bitmap)
                     processImageTagging(bitmap)
                 }
@@ -106,6 +106,7 @@ class ImageFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun processImageTagging(bitmap: Bitmap){
 
         // Multiple object detection in static images
@@ -124,14 +125,21 @@ class ImageFragment : Fragment() {
             labeler.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
-                    // ...
-                    for (label in it) {
-                        val textLabeler = label.text
+                     for (label in it) {
+                         //val textLabeler = label.text
+                         binding.chipGroup
+                         val textLabeler = label.text
+                         for (index in textLabeler.indices) {
 
-
+                             val chipGroup = Chip(context,null,R.style.Widget_MaterialComponents_Chip_Choice)
+                             chipGroup.text= "Item ${textLabeler[index]}"
+                         }
                          println("The labeler : $textLabeler")
 
-                    }
+                     }
+                    //binding.chipGroup.removeAllViews()
+
+
 
                 }
                 .addOnFailureListener {
@@ -146,10 +154,11 @@ class ImageFragment : Fragment() {
                     // Task completed successfully
                     // ...
                     for (detectedObject in it) {
-                       // val boundingBox = detectedObject.boundingBox //giro apo to kouti
-                       // val trackingId = detectedObject.trackingId
+                        // val boundingBox = detectedObject.boundingBox //giro apo to box
+                        // val trackingId = detectedObject.trackingId
                         for (label in detectedObject.labels) {
                             val text = label.text
+
                             println("The detection: $text")
 //                            if (PredefinedCategory.FOOD == text) {
 //                               // ...
@@ -161,7 +170,7 @@ class ImageFragment : Fragment() {
 //                               // ...
 //
 //                            }
-                            val confidence = label.confidence //poso sigouros einai gia to antikimeno
+                            val confidence = label.confidence //confidence for the labeling
 
                             println("The confidence:$confidence")
                         }
@@ -193,6 +202,8 @@ class ImageFragment : Fragment() {
 //            Log.wtf("Log",ex)
 //        }
     }
+
+
 
     //get image from data
     private fun getImage(data: Intent?): Bitmap?{
@@ -233,3 +244,4 @@ class ImageFragment : Fragment() {
 
 
 }
+
