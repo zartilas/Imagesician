@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.label.ImageLabeling
+import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.objects.defaults.PredefinedCategory
@@ -113,43 +115,55 @@ class ImageFragment : Fragment() {
             .enableClassification()  // Optional
             .build()
         val objectDetector = ObjectDetection.getClient(options)
+        val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
 
         try {
             val image = InputImage.fromBitmap(bitmap,0)
+
+            //LABELER
+            labeler.process(image)
+                .addOnSuccessListener {
+                    // Task completed successfully
+                    // ...
+                    for (label in it) {
+                        val textLabeler = label.text
+
+
+                         println("The labeler : $textLabeler")
+
+                    }
+
+                }
+                .addOnFailureListener {
+                    // Task failed with an exception
+                    // ...
+                }
+
+            //DETECTOR
+
             objectDetector.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
                     // ...
                     for (detectedObject in it) {
-                        val boundingBox = detectedObject.boundingBox //giro apo to kouti
-                        val trackingId = detectedObject.trackingId
-                        val fslakdjfasldkf = detectedObject.labels
+                       // val boundingBox = detectedObject.boundingBox //giro apo to kouti
+                       // val trackingId = detectedObject.trackingId
                         for (label in detectedObject.labels) {
                             val text = label.text
-                            println("00000000000000000000000000000000000000000000")
-                            println(boundingBox)
-                            println(fslakdjfasldkf)
+                            println("The detection: $text")
+//                            if (PredefinedCategory.FOOD == text) {
+//                               // ...
+//                                println("1111111111111111111111111111111111111111111111")
 
-                            if (PredefinedCategory.FOOD == text) {
-                               // ...
-                                println("1111111111111111111111111111111111111111111111")
-                                println(boundingBox)
-                                println(fslakdjfasldkf)
-
-  
-
-                            }
-                            val index = label.index
-                            if (PredefinedCategory.FOOD_INDEX == index) {
-                               // ...
-                                println("222222222222222222222222222222222")
-                                println(boundingBox)
-                                println(fslakdjfasldkf)
-
-                            }
+//                            }
+//                            val index = label.index
+//                            if (PredefinedCategory.FOOD_INDEX == index) {
+//                               // ...
+//
+//                            }
                             val confidence = label.confidence //poso sigouros einai gia to antikimeno
-                            println("4444444444444444444444444444444444444444444444444")
-                            println(confidence)
+
+                            println("The confidence:$confidence")
                         }
                     }
                 }
