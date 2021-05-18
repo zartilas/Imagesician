@@ -125,15 +125,20 @@ class ImageFragment : Fragment() {
             labeler.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
-                     for (label in it) {
-                         //val textLabeler = label.text
-                         binding.chipGroup
-                         val textLabeler = label.text
-                         for (index in textLabeler.indices) {
 
-                             val chipGroup = Chip(context,null,R.style.Widget_MaterialComponents_Chip_Choice)
-                             chipGroup.text= "Item ${textLabeler[index]}"
-                         }
+                     for (label in it) {
+
+                         binding.chipGroup.removeAllViews()
+                         it.sortedByDescending { it.confidence }
+                             .map{
+                                 Chip(context,null,R.style.Widget_MaterialComponents_Chip_Choice)
+                                     .apply { text=it.text }
+                             }
+                             .forEach{
+                                 binding.chipGroup.addView(it)
+                             }
+
+                         val textLabeler = label.text
                          println("The labeler : $textLabeler")
 
                      }

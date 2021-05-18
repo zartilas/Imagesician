@@ -7,7 +7,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -25,7 +24,7 @@ class ImagesicianActivity : AppCompatActivity(),
          */
             LOGS(R.id.bottom_navigation_item_image, R.drawable.ic_add_photo_foreground, R.string.image_item, ImageFragment()),
             PROGRESS(R.id.bottom_navigation_item_barcode, R.drawable.ic_qr_code_foreground, R.string.barcode_item, QrcodeFragment()),
-            PROFILE(R.id.bottom_navigation_item_settings, R.drawable.ic_more_horiz_foreground, R.string.settings_item, SettingsFragment())
+            PROFILE(R.id.bottom_navigation_item_settings, R.drawable.ic_horizontal_dots_foreground, R.string.settings_item, SettingsFragment())
     }
 
     private lateinit var viewPager: ViewPager
