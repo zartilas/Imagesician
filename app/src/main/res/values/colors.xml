@@ -2,8 +2,10 @@
 <resources>
     <color name="colorPrimaryDark">#FF018786</color>
     <color name="colorPrimary">#00B594</color>
-    <color name="colorNavigation">#4A566E</color>
-    <color name="colorNavigationIcons">#FFCC03</color>
+    <color name="colorNavigation">#FFFFFF</color>
+    <color name="colorNavigationItemSelect">#FF018786</color>
+    <color name="colorNavigationItem">#A9A9A9</color>
     <color name="colorStrings">#A9A9A9</color>
     <color name="colorBackground">#f8f8ff</color>
+
 </resources>
