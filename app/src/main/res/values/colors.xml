@@ -5,7 +5,8 @@
     <color name="colorNavigation">#FFFFFF</color>
     <color name="colorNavigationItemSelect">#FF018786</color>
     <color name="colorNavigationItem">#A9A9A9</color>
-    <color name="colorStrings">#A9A9A9</color>
+    <color name="colorStrings">#FFFFFF</color>
+    <color name="colorStringsWithOutBackground">#00B594</color>
     <color name="colorBackground">#f8f8ff</color>
 
 </resources>

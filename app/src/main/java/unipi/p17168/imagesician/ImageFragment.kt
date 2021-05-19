@@ -106,7 +106,7 @@ class ImageFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint("SetTextI18n", "ResourceAsColor")
     private fun processImageTagging(bitmap: Bitmap){
 
         // Multiple object detection in static images
@@ -115,6 +115,7 @@ class ImageFragment : Fragment() {
             .enableMultipleObjects()
             .enableClassification()  // Optional
             .build()
+
         val objectDetector = ObjectDetection.getClient(options)
         val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
 
@@ -125,9 +126,7 @@ class ImageFragment : Fragment() {
             labeler.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
-
                      for (label in it) {
-
                          binding.chipGroup.removeAllViews()
                          it.sortedByDescending { it.confidence }
                              .map{
@@ -137,54 +136,42 @@ class ImageFragment : Fragment() {
                              .forEach{
                                  binding.chipGroup.addView(it)
                              }
-
                          val textLabeler = label.text
                          println("The labeler : $textLabeler")
-
                      }
-                    //binding.chipGroup.removeAllViews()
-
-
-
                 }
                 .addOnFailureListener {
                     // Task failed with an exception
-                    // ...
+
                 }
 
-            //DETECTOR
-
+            //OBJECT DETECTOR
             objectDetector.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
-                    // ...
                     for (detectedObject in it) {
-                        // val boundingBox = detectedObject.boundingBox //giro apo to box
-                        // val trackingId = detectedObject.trackingId
-                        for (label in detectedObject.labels) {
-                            val text = label.text
+                        // val boundingBox = detectedObject.boundingBox //giro apo to box // val trackingId = detectedObject.trackingId
+                            for (label in detectedObject.labels) {
+                                val textDetected = label.text
+                                println("The textDetected : $textDetected")
+                                    it.sortedByDescending { it.trackingId}
+                                        .map{
+                                            Chip(context,null,R.style.Widget_MaterialComponents_Chip_Choice)
+                                                .apply { text = // TODO: 19/5/2021  )
+                                                }
+                                        }
+                                        .forEach{
+                                            binding.chipGroup.addView(it)
+                                        }
 
-                            println("The detection: $text")
-//                            if (PredefinedCategory.FOOD == text) {
-//                               // ...
-//                                println("1111111111111111111111111111111111111111111111")
 
-//                            }
-//                            val index = label.index
-//                            if (PredefinedCategory.FOOD_INDEX == index) {
-//                               // ...
-//
-//                            }
-                            val confidence = label.confidence //confidence for the labeling
-
-                            println("The confidence:$confidence")
-                        }
+                            }
                     }
-                }
-                .addOnFailureListener {
+                }.addOnFailureListener {
                     // Task failed with an exception
                     // ...
                 }
+
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -246,7 +233,6 @@ class ImageFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
-
 }
+
 
