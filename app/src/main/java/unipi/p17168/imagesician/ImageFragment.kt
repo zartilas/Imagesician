@@ -142,31 +142,54 @@ class ImageFragment : Fragment() {
                 }
                 .addOnFailureListener {
                     // Task failed with an exception
-
                 }
-
             //OBJECT DETECTOR
             objectDetector.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
+                    val listWithLabels = arrayListOf<String>()
                     for (detectedObject in it) {
-                        // val boundingBox = detectedObject.boundingBox //giro apo to box // val trackingId = detectedObject.trackingId
-                            for (label in detectedObject.labels) {
-                                val textDetected = label.text
-                                println("The textDetected : $textDetected")
-                                    it.sortedByDescending { it.trackingId}
-                                        .map{
-                                            Chip(context,null,R.style.Widget_MaterialComponents_Chip_Choice)
-                                                .apply { text = // TODO: 19/5/2021  )
-                                                }
-                                        }
-                                        .forEach{
-                                            binding.chipGroup.addView(it)
-                                        }
+                        // val boundingBox = detectedObject.boundingBox //giro apo to box
+                        // val trackingId = detectedObject.trackingId
+                        for (label in detectedObject.labels) {
+                            val textDetected = label.text
+                                if (!listWithLabels.contains(textDetected)) {
+                                    listWithLabels.add(textDetected)
+                                }
 
-
+//                                    it.sortedByDescending { it.trackingId }
+//                                        .map {
+//                                            Chip(
+//                                                context,
+//                                                null,
+//                                                R.style.Widget_MaterialComponents_Chip_Choice
+//                                            ).apply {
+//                                                text = textDetected
+//                                            }
+//                                        }
+//                                        .forEach {
+//                                            if(it == it){
+//                                                binding.chipGroup.addView(it)}
+//
+//
+//                                        }
+                        }
+                        //TODO FIX  CHIP GROUP
+                      listWithLabels.sortedByDescending { it.length }.map {
+                                Chip(
+                                    context,
+                                    null,
+                                    R.style.Widget_MaterialComponents_Chip_Choice
+                                ).apply {
+                                    // text = it.subSequence(0,listWithLabels.size)
+                                }
                             }
+                            .forEach {
+                                binding.chipGroup.addView(it)
+                        }
+                        listWithLabels.forEach(System.out::println)
                     }
+
                 }.addOnFailureListener {
                     // Task failed with an exception
                     // ...
@@ -176,25 +199,7 @@ class ImageFragment : Fragment() {
             e.printStackTrace()
         }
 
-
-
-       // val visionImg = FirebaseVisionImage.fromBitmap(bitmap)
-//        FirebaseVision.getInstance().cloudImageLabeler.processImage(visionImg).addOnSuccessListener{ tags->
-//            binding.chipGroup.removeAllViews()
-//            tags.sortedByDescending { it.confidence }
-//                .map{
-//                    Chip(context,null,R.style.Widget_MaterialComponents_Chip_Choice)
-//                        .apply { text=it.text }
-//                }
-//                .forEach{
-//                    binding.chipGroup.addView(it)
-//                }
-//        }.addOnFailureListener{
-//            ex->
-//            Log.wtf("Log",ex)
-//        }
     }
-
 
 
     //get image from data
@@ -203,30 +208,7 @@ class ImageFragment : Fragment() {
         return MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImage)
     }
 
-//    private fun startTextRecognizing(bitmap: Bitmap){
-//        if (binding.imageView.drawable != null){
-//            val image = FirebaseVisionImage.fromBitmap(bitmap)
-//            val detector = FirebaseVision.getInstance().cloudTextRecognizer
-//            detector.processImage(image).addOnSuccessListener { firebaseVisionText->
-//                processTextBlock(firebaseVisionText)
-//                //firebase code for save text
-//            }
-//                .addOnFailureListener{
-//                    Toast.makeText(context,"Sorry, Failed",Toast.LENGTH_LONG).show()
-//                }
-//        }else {
-//            Toast.makeText(context,"Sorry, Failed",Toast.LENGTH_LONG).show()
-//        }
-//    }
 
-//    private fun processTextBlock(result: FirebaseVisionText) {
-//        binding.chipGroup.removeAllViews()
-//        result.textBlocks.map {
-//            Chip(context, null, R.style.Widget_MaterialComponents_Chip_Choice)
-//                .apply { text = it.text }
-//
-//        }.forEach{binding.chipGroup.addView(it)}
-//    }
 
 
     override fun onDestroyView() {
