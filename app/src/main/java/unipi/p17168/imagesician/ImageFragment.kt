@@ -106,6 +106,18 @@ class ImageFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
     @SuppressLint("SetTextI18n", "ResourceAsColor")
     private fun processImageTagging(bitmap: Bitmap){
 
@@ -118,89 +130,131 @@ class ImageFragment : Fragment() {
 
         val objectDetector = ObjectDetection.getClient(options)
         val labeler = ImageLabeling.getClient(ImageLabelerOptions.DEFAULT_OPTIONS)
+        val listWithLabels = arrayListOf<String>()
 
         try {
             val image = InputImage.fromBitmap(bitmap,0)
+            fun olakala() {
+                //OBJECT DETECTOR
+                objectDetector.process(image)
+                    .addOnSuccessListener {
+                        // Task completed successfully
+                        for (detectedObject in it) {
+                            for (label in detectedObject.labels) {
+                                val textDetected = label.text
+                                if (!listWithLabels.contains(textDetected)) {
+                                    listWithLabels.add(textDetected)
 
-            //LABELER
+                                }
+                            }
+                        }
+                        binding.chipGroup.removeAllViews()
+                        listWithLabels.sortedByDescending { it.length }.map {
+                            Chip(
+                                context,
+                                null,
+                                R.style.Widget_MaterialComponents_Chip_Choice
+                            ).apply {
+                                text = it
+                            }
+                        }.forEach {
+                                binding.chipGroup.addView(it)
+                            }
+                    }.addOnFailureListener {
+                        // Task failed with an exception
+                        binding.chipFailed.text = "I may be an AI app but not God, I can't know everything, I'm sorry." }
+            }
+
+
+
+
+//ΣΧΟΛΙΑ
+
+            //val image = InputImage.fromBitmap(bitmap,0)
+           // LABELER
             labeler.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
                      for (label in it) {
-                         binding.chipGroup.removeAllViews()
-                         it.sortedByDescending { it.confidence }
-                             .map{
-                                 Chip(context,null,R.style.Widget_MaterialComponents_Chip_Choice)
-                                     .apply { text=it.text }
-                             }
-                             .forEach{
-                                 binding.chipGroup.addView(it)
-                             }
                          val textLabeler = label.text
+                         if (!listWithLabels.contains(label.text)) {
+                             listWithLabels.add(textLabeler)
+                     }
                          println("The labeler : $textLabeler")
                      }
-                }
-                .addOnFailureListener {
+                    //OBJECT DETECTOR
+                    objectDetector.process(image)
+                        .addOnSuccessListener {
+                            // Task completed successfully
+                            for (detectedObject in it) {
+                                for (label in detectedObject.labels) {
+                                    val textDetected = label.text
+                                    if (!listWithLabels.contains(textDetected)) {
+                                        listWithLabels.add(textDetected)
+
+                                    }
+                                }
+                            }
+                        }
+
+                    binding.chipGroup.removeAllViews()
+                    listWithLabels.sortedByDescending { it.length }.map {
+                        Chip(
+                            context,
+                            null,
+                            R.style.Widget_MaterialComponents_Chip_Choice
+                        ).apply {
+                            text = it
+                        }
+                    }
+                        .forEach {
+                            binding.chipGroup.addView(it)
+                        }
+                    listWithLabels.forEach(System.out::println)
+
+                }.addOnFailureListener {
                     // Task failed with an exception
+                    olakala()
+
                 }
             //OBJECT DETECTOR
             objectDetector.process(image)
                 .addOnSuccessListener {
                     // Task completed successfully
-                    val listWithLabels = arrayListOf<String>()
                     for (detectedObject in it) {
-                        // val boundingBox = detectedObject.boundingBox //giro apo to box
-                        // val trackingId = detectedObject.trackingId
                         for (label in detectedObject.labels) {
                             val textDetected = label.text
                                 if (!listWithLabels.contains(textDetected)) {
                                     listWithLabels.add(textDetected)
-                                }
 
-//                                    it.sortedByDescending { it.trackingId }
-//                                        .map {
-//                                            Chip(
-//                                                context,
-//                                                null,
-//                                                R.style.Widget_MaterialComponents_Chip_Choice
-//                                            ).apply {
-//                                                text = textDetected
-//                                            }
-//                                        }
-//                                        .forEach {
-//                                            if(it == it){
-//                                                binding.chipGroup.addView(it)}
-//
-//
-//                                        }
-                        }
-                        //TODO FIX  CHIP GROUP
-                      listWithLabels.sortedByDescending { it.length }.map {
-                                Chip(
-                                    context,
-                                    null,
-                                    R.style.Widget_MaterialComponents_Chip_Choice
-                                ).apply {
-                                    // text = it.subSequence(0,listWithLabels.size)
                                 }
-                            }
-                            .forEach {
-                                binding.chipGroup.addView(it)
                         }
-                        listWithLabels.forEach(System.out::println)
                     }
-
+                    binding.chipGroup.removeAllViews()
+                    listWithLabels.sortedByDescending { it.length }.map {
+                        Chip(
+                            context,
+                            null,
+                            R.style.Widget_MaterialComponents_Chip_Choice
+                        ).apply {
+                            text = it
+                        }
+                    }
+                        .forEach {
+                            binding.chipGroup.addView(it)
+                        }
+                    listWithLabels.forEach(System.out::println)
                 }.addOnFailureListener {
                     // Task failed with an exception
-                    // ...
-                }
+                    binding.chipFailed.text = "I may be an AI app but not God, I can't know everything, I'm sorry." }
 
         } catch (e: IOException) {
+            binding.chipFailed.text = "Something went wrong,try again."
             e.printStackTrace()
         }
 
-    }
 
+    }
 
     //get image from data
     private fun getImage(data: Intent?): Bitmap?{
@@ -209,12 +263,11 @@ class ImageFragment : Fragment() {
     }
 
 
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
 
 
