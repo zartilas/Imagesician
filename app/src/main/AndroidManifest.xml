@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Imagesician">
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
-            android:value="ica" />
+            android:value="ica,ocr" />
         <activity android:name=".ImagesicianActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
