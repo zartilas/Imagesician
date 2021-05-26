@@ -27,7 +27,8 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/itemName"
+            android:id="@+id/import android.view.View;
+import android.view.Window;"
             android:layout_width="250dp"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
