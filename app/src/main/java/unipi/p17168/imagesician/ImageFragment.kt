@@ -1,14 +1,16 @@
 package unipi.p17168.imagesician
 
+//import android.media.ExifInterface
+
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
+import android.app.SearchManager
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
-import android.net.Uri
-import android.net.Uri.parse
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -24,9 +26,9 @@ import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
+import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.io.IOException
-import kotlin.jvm.Throws
 
 
 @Suppress("DEPRECATION") //for the method getImage
@@ -41,8 +43,6 @@ class ImageFragment : Fragment() {
     //val
     private val binding get() = _binding!!
 
-
-
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //
@@ -52,9 +52,7 @@ class ImageFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentImageBinding.inflate(inflater, container, false)
         val view = binding.root
-
         userTriggerButtons()
-
         return view
     }
 
@@ -81,7 +79,6 @@ class ImageFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         if (requestCode == 666) {
             if(resultCode == Activity.RESULT_OK)
             {
@@ -94,11 +91,10 @@ class ImageFragment : Fragment() {
                 bitmapImage.apply {
                     if(!imageIsText){
                         if (bitmapImage != null) {
-                                val imageForIV =
-                                    context?.let { checkIfImageNeededRotation(it,bitmapImage,bitmapImage) } //TODO FIX THIS LINE
+//                            val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
 
                             binding.chipFailed.isVisible = false
-                            binding.imageView.setImageBitmap(imageForIV)
+                            binding.imageView.setImageBitmap(bitmapImage)
                             processImageTagging(bitmapImage)
                         }
                     }
@@ -110,9 +106,10 @@ class ImageFragment : Fragment() {
                     }
                 }
 
-                }
             }
+        }
 
+        searchEng()
 
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -127,14 +124,44 @@ class ImageFragment : Fragment() {
                 binding.chipFailed.isVisible = true
                 binding.chipFailed.text = "i am text"// }
             println("I AM TEXT BOOS")
+
+            val result = result.result
+            for (block in result.textBlocks) {
+                val blockText = block.text
+                val blockCornerPoints = block.cornerPoints
+                val blockFrame = block.boundingBox
+                for (line in block.lines) {
+                    val lineText = line.text
+                    val lineCornerPoints = line.cornerPoints
+                    val lineFrame = line.boundingBox
+                    for (element in line.elements) {
+                        val elementText = element.text
+                        val elementCornerPoints = element.cornerPoints
+                        val elementFrame = element.boundingBox
+                    }
+                }
+            }
+
+
+
+
+
+
+
             }.addOnFailureListener {
                 // Task failed with an exception
                 // ...
                 binding.chipFailed.isVisible = true
                 binding.chipFailed.chipText = "i am text Fail"
                 println("I AM TEXT  FAIL BOSS")
+
+
             }
     }
+
+
+
+
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
     private fun processImageTagging(bitmap: Bitmap){
@@ -210,50 +237,76 @@ class ImageFragment : Fragment() {
         }
     }
 
+    private fun searchEng(){
+        val intent = Intent(Intent.ACTION_WEB_SEARCH)
+        val term = "kotlin"
+        val mysearch = intent.putExtra(SearchManager.QUERY, term)
+        println("My Search: $mysearch")
+    }
+
+
+
+
+
+
     //get image from data
     private fun getImage(data: Intent?): Bitmap?{
         val selectedImage = data?.data
         return MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImage)
     }
 
-    //Get Image Uri from bitmap
-    private fun  getImageUri(context: Context, bitmap: Bitmap): Uri? {
-        val bytes =  ByteArrayOutputStream()
-        bitmap.compress( Bitmap.CompressFormat.JPEG,100,bytes)
-        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "imageUri", null)
-        return parse(path)
-    }
+//    fun rotateBitmap(original: Bitmap, degrees: Float): Bitmap? {
+//        val width = original.width
+//        val height = original.height
+//        val matrix = Matrix()
+//        matrix.preRotate(degrees)
+//        val rotatedBitmap = Bitmap.createBitmap(original, 0, 0, width, height, matrix, true)
+//        val canvas = Canvas(rotatedBitmap)
+//        canvas.drawBitmap(original, 5.0f, 0.0f, null)
+//        return rotatedBitmap
+//    }
 
-    //Check if the photo needs rotation
-   @Throws(IOException::class)
-    private fun checkIfImageNeededRotation(context: Context, newImage: Bitmap, selectedImage: Bitmap): Bitmap? {
-        val selectedImageForRotation =  getImageUri(context,selectedImage)
-        val input = selectedImageForRotation?.let { context.contentResolver.openInputStream(it) }
-        val ei = ExifInterface(input!!)
-        return when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
-            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(newImage, 90)
-            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(newImage, 180)
-            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(newImage, 270)
+//    //Get Image Uri from bitmap
+//    private fun  getImageUri(context: Context, bitmap: Bitmap): Uri? {
+//       // val bytes =  ByteArrayOutputStream()
+//        //bitmap.compress( Bitmap.CompressFormat.JPEG,100,bytes)
+//        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "imageUri", null)
+//        return parse(path)
+//    }
+//
 
-            else -> newImage
-        }
-    }
 
-    private fun rotateImage(newImage: Bitmap, degree: Int): Bitmap? {
-        val matrix = Matrix()
-        matrix.postRotate(degree.toFloat())
-        val rotatedNewImage = Bitmap.createBitmap(newImage, 0, 0, newImage.width, newImage.height, matrix, true)
-        newImage.recycle()
-        return rotatedNewImage
-    }
+//    //Check if the photo needs rotation
+//    @Throws(IOException::class)
+//    private fun checkIfImageNeededRotation(newImage: Bitmap): Bitmap? {
+//
+//    val bos = ByteArrayOutputStream()
+//    newImage.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
+//    val bitmapdata: ByteArray = bos.toByteArray()
+//    val bs = ByteArrayInputStream(bitmapdata)
+//
+//        val ei = ExifInterface(bs)
+//        return when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+//            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(newImage, 90F)
+//            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(newImage, 180F)
+//            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(newImage, 270F)
+//
+//            else -> newImage
+//        }
+//    }
+//
+//    private fun rotateImage(newImage: Bitmap, degree: Float): Bitmap? {
+//        val matrix = Matrix()
+//        matrix.postRotate(degree)
+//        val rotatedNewImage = Bitmap.createBitmap(newImage, 0, 0, newImage.width, newImage.height, matrix, true)
+//        newImage.recycle()
+//        println("I AM HERE TOO BOSS")
+//        return rotatedNewImage
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
-
-
-
-
 
