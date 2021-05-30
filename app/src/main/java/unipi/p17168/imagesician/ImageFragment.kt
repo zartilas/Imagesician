@@ -1,12 +1,9 @@
 package unipi.p17168.imagesician
 
-//import android.media.ExifInterface
-
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
-import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -21,12 +18,16 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
 import java.io.IOException
+
 
 
 @Suppress("DEPRECATION") //for the method getImage
@@ -105,9 +106,18 @@ class ImageFragment : Fragment() {
                             binding.imageView.setImageBitmap(bitmapImage)
 
                            println("hi boss")
-
-                            val test = RetrieveFeedTask().execute()
-                            println("My paragraph 2: $test") // prints "The potato is a starchy [...]."
+//                            GlobalScope.launch(Dispatchers.IO) {
+//
+//
+//                                launch(Dispatchers.Default) {
+//
+//                                }
+//
+//                            }
+                            val test77777 = asyncTaskTest( "book")
+                            println("My paragraph 2: $test77777")
+                            //val test = RetrieveFeedTask().execute()
+                           // prints "The potato is a starchy [...]."
                             println("hi boss 2")
 
                             processImageTagging(bitmapImage)
@@ -329,39 +339,40 @@ class ImageFragment : Fragment() {
 ////
 ////                }
 //    }
-    internal class RetrieveFeedTask : AsyncTask<Void, Void, Boolean>() {
 
-    override fun doInBackground(vararg article: Void): Boolean? {
+    private fun wikipedia(article: String): String?{
+        val baseUrl: String = String.format("https://en.wikipedia.org/wiki/")
+        val url = baseUrl + article
+        val doc: Document = Jsoup.connect(url).get()
+        val paragraphs: Elements = doc.select(".mw-parser-output p")
+        val firstParagraph: Element = paragraphs.first()
+        println("My First Paragraph: $firstParagraph")
 
-         try {
+        val test68 = firstParagraph.text();
+        println("My First Paragraph test 68: $test68")
+        return firstParagraph.text()
 
-            fun fetchFirstParagraph(article: String): String {
-                val baseUrl: String = String.format("https://en.wikipedia.org/wiki/")
-                val url = baseUrl + article
-                val doc: Document = Jsoup.connect(url).get()
-                val paragraphs: Elements = doc.select(".mw-content-ltr p")
-                val firstParagraph: Element = paragraphs.first()
+//                val parser = WikipediaParser("en")
+              //  val firstParagraph = asyncTaskTest("Potato")
 
-                println("My First Paragraph: $firstParagraph")
-
-               return  firstParagraph.text()
-            }
-
-             val firstParagraph = fetchFirstParagraph("Potato")
-             println("My paragraph1 : $firstParagraph") // prints "The potato is a starchy [...]."
-
-
-        } catch (e: Exception) {
-
-            //handle exception
-            null
-        }
-        return true
+        //  println("My paragraph: $firstParagraph") // prints "The potato is a starchy [...]."
     }
 
-        override fun onPostExecute(result: Boolean) {
-            // TODO: check this.exception
+
+
+    private fun asyncTaskTest(itemWiki: String) {
+        //val baseUrl: String = String.format("https://en.wikipedia.org/wiki/potato")
+        GlobalScope.launch(Dispatchers.IO) {
+           // val test = asyncTaskTest()
+            launch(Dispatchers.Default) {
+                val firsPara = wikipedia(itemWiki)
+                val document = Jsoup.parse(firsPara).text()
+               // val printFinal = document.text()
+                println("Test 666: $document ")
+
+            }
         }
+
     }
 
     override fun onDestroyView() {
