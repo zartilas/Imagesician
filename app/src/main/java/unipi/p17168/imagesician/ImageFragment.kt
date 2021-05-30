@@ -4,13 +4,9 @@ package unipi.p17168.imagesician
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.SearchManager
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Bitmap.CompressFormat
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.media.ExifInterface
+import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -25,9 +21,11 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
+import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
+import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
-import java.io.ByteArrayInputStream
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 
@@ -53,8 +51,18 @@ class ImageFragment : Fragment() {
         _binding = FragmentImageBinding.inflate(inflater, container, false)
         val view = binding.root
         userTriggerButtons()
+
+//        val SDK_INT = Build.VERSION.SDK_INT
+//        if (SDK_INT > 8) {
+//            val policy = ThreadPolicy.Builder()
+//                .permitAll().build()
+//            StrictMode.setThreadPolicy(policy)
+//        }
+
         return view
     }
+
+
 
 //    fun init(){
 //
@@ -95,7 +103,16 @@ class ImageFragment : Fragment() {
 
                             binding.chipFailed.isVisible = false
                             binding.imageView.setImageBitmap(bitmapImage)
+
+                           println("hi boss")
+
+                            val test = RetrieveFeedTask().execute()
+                            println("My paragraph 2: $test") // prints "The potato is a starchy [...]."
+                            println("hi boss 2")
+
                             processImageTagging(bitmapImage)
+
+
                         }
                     }
                     if (imageIsText){
@@ -108,8 +125,6 @@ class ImageFragment : Fragment() {
 
             }
         }
-
-        searchEng()
 
         super.onActivityResult(requestCode, resultCode, data)
     }
@@ -143,11 +158,6 @@ class ImageFragment : Fragment() {
             }
 
 
-
-
-
-
-
             }.addOnFailureListener {
                 // Task failed with an exception
                 // ...
@@ -158,9 +168,6 @@ class ImageFragment : Fragment() {
 
             }
     }
-
-
-
 
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
@@ -237,18 +244,6 @@ class ImageFragment : Fragment() {
         }
     }
 
-    private fun searchEng(){
-        val intent = Intent(Intent.ACTION_WEB_SEARCH)
-        val term = "kotlin"
-        val mysearch = intent.putExtra(SearchManager.QUERY, term)
-        println("My Search: $mysearch")
-    }
-
-
-
-
-
-
     //get image from data
     private fun getImage(data: Intent?): Bitmap?{
         val selectedImage = data?.data
@@ -304,9 +299,76 @@ class ImageFragment : Fragment() {
 //        return rotatedNewImage
 //    }
 
+
+
+//    class WikipediaParser() {
+//        private val baseUrl: String = String.format("https://en.wikipedia.org/wiki/potato")
+//
+//        @Throws(IOException::class)
+//        fun fetchFirstParagraph(article: String): String {
+//            return try{
+//                val url = baseUrl + article
+//                val doc: Document = Jsoup.connect(url).get()
+//                val paragraphs: Elements = doc.select(".mw-content-ltr p")
+//                val firstParagraph: Element = paragraphs.first()
+//                println("My First Paragraph: $firstParagraph")
+//                firstParagraph.text()
+//            }catch (e:IOException) {
+//                "Failed"
+//            }
+//        }
+////                fun printWiki(){
+////                    try {
+////                        val parser = WikipediaParser("en")
+////                        val firstParagraph = parser.fetchFirstParagraph("Potato")
+////
+////                        println("My paragraph: $firstParagraph") // prints "The potato is a starchy [...]."
+////                    }catch (e:IOException){
+////                        print("SORRY BOSS")
+////                    }
+////
+////                }
+//    }
+    internal class RetrieveFeedTask : AsyncTask<Void, Void, Boolean>() {
+
+    override fun doInBackground(vararg article: Void): Boolean? {
+
+         try {
+
+            fun fetchFirstParagraph(article: String): String {
+                val baseUrl: String = String.format("https://en.wikipedia.org/wiki/")
+                val url = baseUrl + article
+                val doc: Document = Jsoup.connect(url).get()
+                val paragraphs: Elements = doc.select(".mw-content-ltr p")
+                val firstParagraph: Element = paragraphs.first()
+
+                println("My First Paragraph: $firstParagraph")
+
+               return  firstParagraph.text()
+            }
+
+             val firstParagraph = fetchFirstParagraph("Potato")
+             println("My paragraph1 : $firstParagraph") // prints "The potato is a starchy [...]."
+
+
+        } catch (e: Exception) {
+
+            //handle exception
+            null
+        }
+        return true
+    }
+
+        override fun onPostExecute(result: Boolean) {
+            // TODO: check this.exception
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
+
 

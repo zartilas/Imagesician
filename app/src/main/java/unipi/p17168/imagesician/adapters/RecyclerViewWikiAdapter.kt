@@ -8,8 +8,7 @@ import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.inflate
 import android.view.View.*
 import android.view.ViewGroup
-
-
+import unipi.p17168.imagesician.databinding.WikiItemsBinding
 
 
 class RecyclerViewWikiAdapter(private val itemsList: List<WikiListItems>) :
@@ -17,6 +16,7 @@ class RecyclerViewWikiAdapter(private val itemsList: List<WikiListItems>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SetHolder {
         val inflatedView: View = parent.inflate(R.layout.wiki_items, false)
+
         return SetHolder(
             inflatedView
         )
@@ -31,11 +31,14 @@ class RecyclerViewWikiAdapter(private val itemsList: List<WikiListItems>) :
         holder.bindSet(itemCard)
     }
 
-
     class SetHolder(v: View) : RecyclerView.ViewHolder(v),
-        View.OnClickListener {
-        private var view: View = v
+        OnClickListener {
+       // private var view: View = v
         private var itemsList: WikiListItems? = null
+
+        private var _binding : WikiItemsBinding? = null
+        private val binding get() = _binding!!
+
 
         init {
             v.setOnClickListener(this)
@@ -43,18 +46,14 @@ class RecyclerViewWikiAdapter(private val itemsList: List<WikiListItems>) :
 
         override fun onClick(v: View) {
 
-
         }
-
 
         fun bindSet(itemsList: WikiListItems) {
             this.itemsList = itemsList
 
-                //TODO I WILL FIX THIS BOSS , PLS DONT FIRE ME
-            view..text = itemsList.item
-            view = itemsList.itemInfo
-            Picasso.get().load(itemsList.itemImageUrl).into(view)
+            binding.itemName.text = itemsList.item
+            binding.itemInfo.text = itemsList.itemInfo
+            Picasso.get().load(itemsList.itemImageUrl).into(binding.imgFromWiki)
         }
     }
-
 }
