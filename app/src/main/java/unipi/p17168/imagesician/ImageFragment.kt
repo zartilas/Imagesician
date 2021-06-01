@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.jsoup.safety.Whitelist
 import org.jsoup.select.Elements
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
 import java.io.IOException
@@ -105,20 +106,9 @@ class ImageFragment : Fragment() {
                             binding.chipFailed.isVisible = false
                             binding.imageView.setImageBitmap(bitmapImage)
 
-                           println("hi boss")
-//                            GlobalScope.launch(Dispatchers.IO) {
-//
-//
-//                                launch(Dispatchers.Default) {
-//
-//                                }
-//
-//                            }
-                            val test77777 = asyncTaskTest( "book")
-                            println("My paragraph 2: $test77777")
-                            //val test = RetrieveFeedTask().execute()
-                           // prints "The potato is a starchy [...]."
-                            println("hi boss 2")
+
+                            asyncTaskWiki( "Chair")
+
 
                             processImageTagging(bitmapImage)
 
@@ -211,21 +201,33 @@ class ImageFragment : Fragment() {
                             }
                         }
                         binding.chipGroup.removeAllViews()
-                        listWithLabels.sortedByDescending { it.length }.map {
-                            Chip(
-                                context,
-                                null,
-                                R.style.Widget_MaterialComponents_Chip_Choice
-                            ).apply {
-                                text = it }
-                        }.forEach {
-                                binding.chipGroup.addView(it) }
+                        listWithLabels.sortedByDescending { it.length }
+                            .map {
+                                Chip(
+                                    context,
+                                    null,
+                                    R.style.Widget_MaterialComponents_Chip_Choice
+                                ).apply {
+                                    text = it }
+                                    }.forEach {
+                                            binding.chipGroup.addView(it)
+
+                                    }
+
+                        listWithLabels.forEach{
+                            asyncTaskWiki(it)
+                        }
+
+
+
                     }.addOnFailureListener {
                         // Task failed with an exception
                         if(firstFailed){
                             binding.chipFailed.isVisible = true
                             binding.chipFailed.text = "I may be an AI app but not God, I can't know everything, I'm sorry." }
-                    }
+                        }
+
+
             }
            // LABELER
             labeler.process(image)
@@ -344,32 +346,21 @@ class ImageFragment : Fragment() {
         val baseUrl: String = String.format("https://en.wikipedia.org/wiki/")
         val url = baseUrl + article
         val doc: Document = Jsoup.connect(url).get()
-        val paragraphs: Elements = doc.select(".mw-parser-output p")
-        val firstParagraph: Element = paragraphs.first()
-        println("My First Paragraph: $firstParagraph")
+        val paragraphs: Elements = doc.select("#mw-content-text > div.mw-parser-output > p:eq(4)")
+        val wikiParagraph: Element = paragraphs.first()
 
-        val test68 = firstParagraph.text();
-        println("My First Paragraph test 68: $test68")
-        return firstParagraph.text()
-
-//                val parser = WikipediaParser("en")
-              //  val firstParagraph = asyncTaskTest("Potato")
-
-        //  println("My paragraph: $firstParagraph") // prints "The potato is a starchy [...]."
+        return wikiParagraph.text()
     }
 
 
 
-    private fun asyncTaskTest(itemWiki: String) {
-        //val baseUrl: String = String.format("https://en.wikipedia.org/wiki/potato")
+    private fun asyncTaskWiki(itemWiki: String) {
         GlobalScope.launch(Dispatchers.IO) {
-           // val test = asyncTaskTest()
             launch(Dispatchers.Default) {
-                val firsPara = wikipedia(itemWiki)
-                val document = Jsoup.parse(firsPara).text()
-               // val printFinal = document.text()
-                println("Test 666: $document ")
-
+                val paragraph = wikipedia(itemWiki)
+                val document = Jsoup.clean(Jsoup.parse(paragraph).text(), Whitelist.simpleText())
+                val finalDoc =document.replace("\\[\\w+".toRegex(), "").replace("]".toRegex(), "")
+                println("Test 666: $finalDoc ")
             }
         }
 

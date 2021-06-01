@@ -10,7 +10,6 @@ import android.view.View.*
 import android.view.ViewGroup
 import unipi.p17168.imagesician.databinding.WikiItemsBinding
 
-
 class RecyclerViewWikiAdapter(private val itemsList: List<WikiListItems>) :
     RecyclerView.Adapter<RecyclerViewWikiAdapter.SetHolder>() {
 
@@ -33,12 +32,10 @@ class RecyclerViewWikiAdapter(private val itemsList: List<WikiListItems>) :
 
     class SetHolder(v: View) : RecyclerView.ViewHolder(v),
         OnClickListener {
-       // private var view: View = v
-        private var itemsList: WikiListItems? = null
 
+        private var itemsList: WikiListItems? = null
         private var _binding : WikiItemsBinding? = null
         private val binding get() = _binding!!
-
 
         init {
             v.setOnClickListener(this)
@@ -53,7 +50,6 @@ class RecyclerViewWikiAdapter(private val itemsList: List<WikiListItems>) :
 
             binding.itemName.text = itemsList.item
             binding.itemInfo.text = itemsList.itemInfo
-            Picasso.get().load(itemsList.itemImageUrl).into(binding.imgFromWiki)
         }
     }
 }
