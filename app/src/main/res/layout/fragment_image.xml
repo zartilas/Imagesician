@@ -74,7 +74,7 @@
         app:layout_constraintTop_toBottomOf="@+id/switchContextText" />
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chipFailed"
+            android:id="@+id/chipTextRecognizing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="68dp"
@@ -86,7 +86,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="330dp"
+            android:id="@+id/recyclerWiki"
+            android:layout_height="550dp"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

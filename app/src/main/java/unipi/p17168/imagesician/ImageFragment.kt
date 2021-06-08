@@ -6,11 +6,14 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeling
@@ -18,15 +21,10 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
-import org.jsoup.safety.Whitelist
-import org.jsoup.select.Elements
+import com.google.mlkit.vision.text.TextRecognizerOptions
+import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
+import unipi.p17168.imagesician.wiki.WikiListItems
 import java.io.IOException
 
 
@@ -54,13 +52,6 @@ class ImageFragment : Fragment() {
         val view = binding.root
         userTriggerButtons()
 
-//        val SDK_INT = Build.VERSION.SDK_INT
-//        if (SDK_INT > 8) {
-//            val policy = ThreadPolicy.Builder()
-//                .permitAll().build()
-//            StrictMode.setThreadPolicy(policy)
-//        }
-
         return view
     }
 
@@ -78,14 +69,12 @@ class ImageFragment : Fragment() {
         binding.floatingButton.setOnClickListener{
             pickImage() //custom fun
         }
-
     }
 
     private fun pickImage(){
         val openGalleryIntent =
             Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(openGalleryIntent, 666)
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -103,72 +92,65 @@ class ImageFragment : Fragment() {
                         if (bitmapImage != null) {
 //                            val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
 
-                            binding.chipFailed.isVisible = false
+                            binding.chipTextRecognizing.isVisible = false
                             binding.imageView.setImageBitmap(bitmapImage)
-
-
-                            asyncTaskWiki( "Chair")
-
-
                             processImageTagging(bitmapImage)
-
-
                         }
                     }
                     if (imageIsText){
                         if (bitmapImage != null) {
+                            binding.recyclerWiki.isGone = true
+                            binding.chipGroup.removeAllViews()
                             binding.imageView.setImageBitmap(bitmapImage)
                             startTextRecognizing(bitmapImage)
                         }
                     }
                 }
-
             }
         }
-
         super.onActivityResult(requestCode, resultCode, data)
     }
 
     @SuppressLint("SetTextI18n")
     private fun startTextRecognizing(bitmap: Bitmap) {
-        val recognizer = TextRecognition.getClient()
+        val recognizerText = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+      //  val image = FirebaseVision.fromBitmap(bitmap,0)
         val image = InputImage.fromBitmap(bitmap,0)
-        val result = recognizer.process(image)
-        binding.chipGroup.removeAllViews()
+        val result = recognizerText.process(image)
+        val listWithText = arrayListOf<String>()
         result.addOnSuccessListener {
-                binding.chipFailed.isVisible = true
-                binding.chipFailed.text = "i am text"// }
             println("I AM TEXT BOOS")
-
-            val result = result.result
-            for (block in result.textBlocks) {
+            val resultText = result.result
+            for (block in resultText.textBlocks) {
                 val blockText = block.text
-                val blockCornerPoints = block.cornerPoints
-                val blockFrame = block.boundingBox
+                println("The blockText: $blockText")
+
                 for (line in block.lines) {
                     val lineText = line.text
-                    val lineCornerPoints = line.cornerPoints
-                    val lineFrame = line.boundingBox
-                    for (element in line.elements) {
-                        val elementText = element.text
-                        val elementCornerPoints = element.cornerPoints
-                        val elementFrame = element.boundingBox
-                    }
+                    println("The lineText: $lineText")
+                    listWithText.add(lineText)
+                    binding.chipTextRecognizing.isVisible = true
+                    binding.chipTextRecognizing.text = lineText
+
+//                    for (element in line.elements) {
+//                        val elementText = element.text
+//                        val elementCornerPoints = element.cornerPoints
+//                        val elementFrame = element.boundingBox
+//                    }
+                }
+
+                listWithText.forEach{
+                    println("My text boss is: $it")
                 }
             }
 
-
             }.addOnFailureListener {
                 // Task failed with an exception
-                // ...
-                binding.chipFailed.isVisible = true
-                binding.chipFailed.chipText = "i am text Fail"
+                binding.chipTextRecognizing.isVisible = true
+                binding.chipTextRecognizing.chipText = "i am text Fail"
                 println("I AM TEXT  FAIL BOSS")
-
-
             }
     }
-
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
     private fun processImageTagging(bitmap: Bitmap){
@@ -196,7 +178,6 @@ class ImageFragment : Fragment() {
                                 val textDetected = label.text
                                 if (!listWithLabels.contains(textDetected)) {
                                     listWithLabels.add(textDetected)
-
                                 }
                             }
                         }
@@ -208,26 +189,17 @@ class ImageFragment : Fragment() {
                                     null,
                                     R.style.Widget_MaterialComponents_Chip_Choice
                                 ).apply {
-                                    text = it }
+                                        text = it }
                                     }.forEach {
-                                            binding.chipGroup.addView(it)
-
+                                        binding.chipGroup.addView(it)
                                     }
-
-                        listWithLabels.forEach{
-                            asyncTaskWiki(it)
-                        }
-
-
-
+                        wikiSearch(listWithLabels)
                     }.addOnFailureListener {
                         // Task failed with an exception
                         if(firstFailed){
-                            binding.chipFailed.isVisible = true
-                            binding.chipFailed.text = "I may be an AI app but not God, I can't know everything, I'm sorry." }
+                            binding.chipTextRecognizing.isVisible = true
+                            binding.chipTextRecognizing.text = "I may be an AI app but not God, I can't know everything, I'm sorry." }
                         }
-
-
             }
            // LABELER
             labeler.process(image)
@@ -238,20 +210,16 @@ class ImageFragment : Fragment() {
                          if (!listWithLabels.contains(label.text)) {
                              listWithLabels.add(textLabeler)
                      }
-                         println("The labeler : $textLabeler")
+                         Log.wtf("LABELER","The labeler : $textLabeler")
                      }
-
-                    //OBJECT DETECTOR
-                    objDetector(false)
-
+                    objDetector(false)  //OBJECT DETECTOR
                 }.addOnFailureListener {
-                    // Task failed with an exception
-                    objDetector(true)
+                    objDetector(true)  // Task failed with an exception
                 }
 
         } catch (e: IOException) {
-            binding.chipFailed.isVisible = true
-            binding.chipFailed.text = "Something went wrong,try again."
+            binding.chipTextRecognizing.isVisible = true
+            binding.chipTextRecognizing.text = "Something went wrong,try again."
             e.printStackTrace()
         }
     }
@@ -342,28 +310,21 @@ class ImageFragment : Fragment() {
 ////                }
 //    }
 
-    private fun wikipedia(article: String): String?{
-        val baseUrl: String = String.format("https://en.wikipedia.org/wiki/")
-        val url = baseUrl + article
-        val doc: Document = Jsoup.connect(url).get()
-        val paragraphs: Elements = doc.select("#mw-content-text > div.mw-parser-output > p:eq(4)")
-        val wikiParagraph: Element = paragraphs.first()
 
-        return wikiParagraph.text()
-    }
+    private fun wikiSearch(finalList: ArrayList<String>) {
+        val data: MutableList<WikiListItems> = ArrayList()
 
-
-
-    private fun asyncTaskWiki(itemWiki: String) {
-        GlobalScope.launch(Dispatchers.IO) {
-            launch(Dispatchers.Default) {
-                val paragraph = wikipedia(itemWiki)
-                val document = Jsoup.clean(Jsoup.parse(paragraph).text(), Whitelist.simpleText())
-                val finalDoc =document.replace("\\[\\w+".toRegex(), "").replace("]".toRegex(), "")
-                println("Test 666: $finalDoc ")
-            }
+        finalList.forEach {
+            data.add(WikiListItems("Information\'s about $it","https://en.wikipedia.org/wiki/$it"))
         }
 
+        val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        val adapter = RecyclerViewWikiAdapter(data)
+
+        binding.recyclerWiki.isVisible = true
+        binding.recyclerWiki.layoutManager = layoutManager
+        binding.recyclerWiki.setHasFixedSize(true)
+        binding.recyclerWiki.adapter = adapter
     }
 
     override fun onDestroyView() {

@@ -1,4 +1,7 @@
 package unipi.p17168.imagesician.wiki
 
-class WikiListItems(val item: String,val itemInfo: String) {
+import android.webkit.WebView
+import android.webkit.WebViewClient
+
+class WikiListItems(val itemName: String,val itemInfo: String) {
 }
