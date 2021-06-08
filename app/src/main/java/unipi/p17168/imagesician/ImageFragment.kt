@@ -1,7 +1,10 @@
 package unipi.p17168.imagesician
 
+
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -26,7 +30,6 @@ import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
 import unipi.p17168.imagesician.wiki.WikiListItems
 import java.io.IOException
-
 
 
 @Suppress("DEPRECATION") //for the method getImage
@@ -54,9 +57,6 @@ class ImageFragment : Fragment() {
 
         return view
     }
-
-
-
 //    fun init(){
 //
 //    }
@@ -68,6 +68,44 @@ class ImageFragment : Fragment() {
         }
         binding.floatingButton.setOnClickListener{
             pickImage() //custom fun
+        }
+        binding.btnCopyText.setOnClickListener{
+            copyText()
+        }
+    }
+
+    private fun isGoneTextRecognition(isGone:Boolean):Boolean{
+        if(isGone){
+            binding.etmForTextRecognition.clearComposingText()
+            binding.btnCopyText.isGone = true
+            binding.etmForTextRecognition.isGone = true
+
+        }else if (!isGone){
+            binding.btnCopyText.isVisible = true
+            binding.etmForTextRecognition.isVisible = true
+        }
+        return true
+    }
+
+    private fun isGoneImage(isGone:Boolean):Boolean{
+        if(isGone){
+            binding.recyclerWiki.isGone = true
+            binding.chipGroup.isGone = true
+            binding.chipGroup.removeAllViews()
+        }else if(!isGone){
+            binding.recyclerWiki.isVisible = true
+            binding.chipGroup.isVisible = true
+        }
+        return true
+    }
+
+
+    private fun copyText(){
+        val text = binding.etmForTextRecognition.text
+        if(!text.length.equals(null)){
+            val clipboard = getSystemService(requireContext(), ClipboardManager::class.java) as ClipboardManager // Gets a handle to the clipboard service.
+            val clip: ClipData = ClipData.newPlainText("text", text) // Creates a new text clip to put on the clipboard
+            clipboard.setPrimaryClip(clip)  // Set the clipboard's primary clip.
         }
     }
 
@@ -83,28 +121,26 @@ class ImageFragment : Fragment() {
             {
                 val bitmapImage = getImage(data)
 
-//                if (bitmap != null) {
-//                    binding.imageView.setImageBitmap(bitmap)
-//                    processImageTagging(bitmap)
-//                }
                 bitmapImage.apply {
                     if(!imageIsText){
                         if (bitmapImage != null) {
-//                            val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
-
-                            binding.chipTextRecognizing.isVisible = false
-                            binding.imageView.setImageBitmap(bitmapImage)
-                            processImageTagging(bitmapImage)
+                            if(isGoneTextRecognition(true)) {
+                                //val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
+                                binding.imageView.setImageBitmap(bitmapImage)
+                                processImageTagging(bitmapImage)
+                            }else return
                         }
                     }
+
                     if (imageIsText){
                         if (bitmapImage != null) {
-                            binding.recyclerWiki.isGone = true
-                            binding.chipGroup.removeAllViews()
-                            binding.imageView.setImageBitmap(bitmapImage)
-                            startTextRecognizing(bitmapImage)
+                            if (isGoneImage(true)){
+                                binding.imageView.setImageBitmap(bitmapImage)
+                                startTextRecognizing(bitmapImage)
+                            }else return
                         }
                     }
+
                 }
             }
         }
@@ -113,43 +149,39 @@ class ImageFragment : Fragment() {
 
     @SuppressLint("SetTextI18n")
     private fun startTextRecognizing(bitmap: Bitmap) {
+
         val recognizerText = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
-      //  val image = FirebaseVision.fromBitmap(bitmap,0)
+        val builder = StringBuilder()
         val image = InputImage.fromBitmap(bitmap,0)
         val result = recognizerText.process(image)
-        val listWithText = arrayListOf<String>()
+        binding.etmForTextRecognition.clearComposingText()
+        isGoneTextRecognition(true)
         result.addOnSuccessListener {
             println("I AM TEXT BOOS")
             val resultText = result.result
             for (block in resultText.textBlocks) {
-                val blockText = block.text
-                println("The blockText: $blockText")
-
                 for (line in block.lines) {
-                    val lineText = line.text
-                    println("The lineText: $lineText")
-                    listWithText.add(lineText)
-                    binding.chipTextRecognizing.isVisible = true
-                    binding.chipTextRecognizing.text = lineText
-
-//                    for (element in line.elements) {
-//                        val elementText = element.text
-//                        val elementCornerPoints = element.cornerPoints
-//                        val elementFrame = element.boundingBox
-//                    }
+                    for (element in line.elements) {
+                        val elementText = element.text
+                        builder.append("$elementText ")
+                    }
                 }
+                // Returns `true` if this string is empty or consists solely of whitespace characters.
+                fun CharSequence.isBlank(): Boolean = length == 0 || indices.all { this[it].isWhitespace() }
+                if(!builder.toString().isBlank()){
+                    isGoneTextRecognition(false)
+                    binding.etmForTextRecognition.setText(builder.toString())
 
-                listWithText.forEach{
-                    println("My text boss is: $it")
+                }else{
+                    println("BOSS IS EMPTY")
                 }
             }
-
-            }.addOnFailureListener {
+        }.addOnFailureListener {
                 // Task failed with an exception
                 binding.chipTextRecognizing.isVisible = true
                 binding.chipTextRecognizing.chipText = "i am text Fail"
                 println("I AM TEXT  FAIL BOSS")
-            }
+        }
     }
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
