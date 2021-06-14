@@ -1,13 +1,10 @@
 package unipi.p17168.imagesician
 
-
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,39 +43,26 @@ class ImageFragment : Fragment() {
     private val binding get() = _binding!!
     private val contextImageFragment get() = this@ImageFragment.requireContext()
 
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//
-//    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    //~~~~~~~Create View~~~~~~~
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentImageBinding.inflate(inflater, container, false)
-        val view = binding.root
+
         userTriggerButtons()
 
-        return view
+        return binding.root
     }
-//    fun init(){
-//
-//    }
-
 
     private fun userTriggerButtons() {
         binding.switchContextText.setOnClickListener{
             imageIsText = binding.switchContextText.isChecked
         }
         binding.floatingButton.setOnClickListener{
-            pickImage() //custom fun
+            pickImage()
         }
         binding.btnCopyText.setOnClickListener{
-//
-//            val snackBar = Snackbar.make(this@ImageFragment.view!!,"COPPED TEXT",Snackbar.LENGTH_SHORT)
-//            snackBar.setAction("OK"){}
-//            snackBar.view.setBackgroundColor(Color.parseColor("#1B1B1B"))
-//            snackBar.setTextColor(Color.parseColor("#A9A9A9"))
-           // val text =  binding.etmForTextRecognition.text
+
            ToolBox().copyText(contextImageFragment,binding.etmForTextRecognition.text.toString()).also {
                ToolBox().showSnackBar(this@ImageFragment.requireView(),
                    ContextCompat.getColor(contextImageFragment,R.color.colorSuccessBackgroundSnackbar),
@@ -103,58 +87,50 @@ class ImageFragment : Fragment() {
         return true
     }
 
-    private fun isGoneImage(isGone:Boolean):Boolean{
-        if(isGone){
-            binding.recyclerWiki.isGone = true
-            binding.chipGroup.isGone = true
-            binding.chipGroup.removeAllViews()
-        }else if(!isGone){
-            binding.recyclerWiki.isVisible = true
-            binding.chipGroup.isVisible = true
-        }
-        return true
-    }
-
-
-    private fun pickImage(){
-        val openGalleryIntent =
-            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(openGalleryIntent, 666)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 666) {
-            if(resultCode == Activity.RESULT_OK)
-            {
-                val bitmapImage = getImage(data)
+        if(ToolBox().isNetworkAvailbale(contextImageFragment)) {
+            if (requestCode == 666) {
+                if (resultCode == Activity.RESULT_OK) {
+                    val bitmapImage = getImage(data)
 
-                bitmapImage.apply {
-                    if(!imageIsText){
-                        if (bitmapImage != null) {
-                            if(isGoneTextRecognition(true)) {
-                                //val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
-                                binding.imageView.setImageBitmap(bitmapImage)
-                                processImageTagging(bitmapImage)
-                            }else return
+                    bitmapImage.apply {
+                        if (!imageIsText) {
+                            if (bitmapImage != null) {
+                                if (isGoneTextRecognition(true)) {
+                                    //val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
+                                    binding.imageView.setImageBitmap(bitmapImage)
+                                    processImageTagging(bitmapImage)
+                                } else return
+                            }
                         }
-                    }
 
-                    if (imageIsText){
-                        if (bitmapImage != null) {
-                            if (isGoneImage(true)){
-                                binding.imageView.setImageBitmap(bitmapImage)
-                                startTextRecognizing(bitmapImage)
-                            }else return
+                        if (imageIsText) {
+                            if (bitmapImage != null) {
+                                if (isGoneImage(true)) {
+                                    binding.imageView.setImageBitmap(bitmapImage)
+                                    startTextRecognizing(bitmapImage)
+                                } else return
+                            }
                         }
-                    }
 
+                    }
                 }
+            }
+        }else {
+            isGoneImage(true)
+            isGoneTextRecognition(true)
+            ToolBox().copyText(contextImageFragment,binding.etmForTextRecognition.text.toString()).also {
+                ToolBox().showSnackBar(this@ImageFragment.requireView(),
+                    ContextCompat.getColor(contextImageFragment,R.color.colorErrorBackgroundSnackbar),
+                    ContextCompat.getColor(contextImageFragment,R.color.colorStrings),
+                    "No internet connection!",
+                    "OK",
+                    Snackbar.ANIMATION_MODE_SLIDE).show()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    @SuppressLint("SetTextI18n")
     private fun startTextRecognizing(bitmap: Bitmap) {
 
         val recognizerText = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
@@ -179,27 +155,21 @@ class ImageFragment : Fragment() {
             fun CharSequence.isBlank(): Boolean =
                 length == 0 || indices.all { this[it].isWhitespace() }
             if (builder.toString().isBlank()) {
-                println("I AM NOT A TEXT  BOSS")
-                val str = builder.toString()
-                println("builde -$str-")
-                val dialogNotFound = ToolBox().showNotFoundDialog(this@ImageFragment.requireContext())
+                val dialogNotFound = ToolBox().showNotFoundDialog(contextImageFragment)
                 dialogNotFound.show()
             } else {
-                println("I AM TEXT BOOS")
                 isGoneTextRecognition(false)
                 binding.etmForTextRecognition.setText(builder.toString())
             }
 
-
         }.addOnFailureListener {
             // Task failed with an exception
-            val dialogWrong = ToolBox().showWrongDialog(this@ImageFragment.requireContext())
+            val dialogWrong = ToolBox().showWrongDialog(contextImageFragment)
             dialogWrong.show()
 
         }
     }
 
-    @SuppressLint("SetTextI18n", "ResourceAsColor")
     private fun processImageTagging(bitmap: Bitmap){
 
         // Multiple object detection in static images
@@ -232,13 +202,13 @@ class ImageFragment : Fragment() {
                     binding.chipGroup.removeAllViews()
                     //binding.chipGroup.isVisible = true
                     isGoneImage(false)
-                    listWithLabels.sortedByDescending {
-                        it.length
+                    listWithLabels.sortedByDescending {item->
+                        item.length
                     }.map {
                         Chip(context, null, R.style.Widget_MaterialComponents_Chip_Choice)
                                 .apply { text = it }
-                    }.forEach {
-                        binding.chipGroup.addView(it)
+                    }.forEach { item ->
+                        binding.chipGroup.addView(item)
                     }
 
                     wikiSearch(listWithLabels)
@@ -261,7 +231,6 @@ class ImageFragment : Fragment() {
                     if (!listWithLabels.contains(label.text)) {
                         listWithLabels.add(textLabeler)
                     }
-                    Log.wtf("LABELER","The labeler : $textLabeler")
                 }
 
                 objDetector(false)  //OBJECT DETECTOR
@@ -378,6 +347,26 @@ class ImageFragment : Fragment() {
         binding.recyclerWiki.layoutManager = layoutManager
         binding.recyclerWiki.setHasFixedSize(true)
         binding.recyclerWiki.adapter = adapter
+
+    }
+
+    private fun isGoneImage(isGone:Boolean):Boolean{
+        if(isGone){
+            binding.recyclerWiki.isGone = true
+            binding.chipGroup.isGone = true
+            binding.chipGroup.removeAllViews()
+        }else if(!isGone){
+            binding.recyclerWiki.isVisible = true
+            binding.chipGroup.isVisible = true
+        }
+        return true
+    }
+
+
+    private fun pickImage(){
+        val openGalleryIntent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(openGalleryIntent, 666)
     }
 
     override fun onDestroyView() {

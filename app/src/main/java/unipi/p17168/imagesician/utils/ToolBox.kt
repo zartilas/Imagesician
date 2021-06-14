@@ -6,14 +6,26 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.util.Log
 import android.view.View
 import android.view.Window
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import unipi.p17168.imagesician.R
 
 class ToolBox {
+
+    //Network Check
+    fun isNetworkAvailbale(context: Context): Boolean {
+        val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connManager.activeNetwork
+        return  networkInfo!=null
+
+    }
 
     //Snack Bar
     fun showSnackBar(context: View,colorBackgroud:Int,colorText:Int,textShow:String,actionText:String,timeShow:Int):Snackbar{
@@ -32,7 +44,7 @@ class ToolBox {
     fun copyText(context: Context,text:String){
 
         if(!text.length.equals(null)){
-            val clipboard = ContextCompat.getSystemService(
+            val clipboard = getSystemService(
                 context,
                 ClipboardManager::class.java
             ) as ClipboardManager // Gets a handle to the clipboard service.

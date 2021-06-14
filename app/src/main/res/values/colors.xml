@@ -20,5 +20,6 @@
     <color name="colorSuccessBackgroundSnackbar">#39C16C</color>
     <color name="colorErrorBackgroundSnackbar">#CC0000</color>
 
+    <color name="qr_code_reader_square">#FF018786</color>
 
 </resources>
