@@ -23,5 +23,6 @@
     <string name="settings_item">Settings</string>
     <string name="select_image">Select Image</string>
     <string name="context_text">Context Text?</string>
+    <string name="copy_text">Copy Text</string>
 
 </resources>

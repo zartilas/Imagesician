@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--Main App-->
     <color name="colorPrimaryDark">#FF018786</color>
     <color name="colorPrimary">#00B594</color>
+    <color name="colorBackground">#f8f8ff</color>
+
+    <!--Navigation-->
     <color name="colorNavigation">#FFFFFF</color>
-    <color name="colorNavigationItemSelect">#FF018786</color>
     <color name="colorNavigationItem">#A9A9A9</color>
+    <color name="colorNavigationItemSelect">#FF018786</color>
+
+
+    <!--Strings-->
     <color name="colorStrings">#FFFFFF</color>
     <color name="colorStringsWithOutBackground">#00B594</color>
-    <color name="colorBackground">#f8f8ff</color>
+
+
+    <!--Snack Bar-->
+    <color name="colorSuccessBackgroundSnackbar">#39C16C</color>
+    <color name="colorErrorBackgroundSnackbar">#CC0000</color>
+
 
 </resources>

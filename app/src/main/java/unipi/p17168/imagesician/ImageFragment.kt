@@ -3,8 +3,6 @@ package unipi.p17168.imagesician
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -13,12 +11,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
+import com.google.android.material.snackbar.Snackbar
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.label.ImageLabeling
 import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
@@ -26,8 +25,10 @@ import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizerOptions
+import kotlinx.android.synthetic.main.toast_alert_copy.*
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
+import unipi.p17168.imagesician.utils.ToolBox
 import unipi.p17168.imagesician.wiki.WikiListItems
 import java.io.IOException
 
@@ -43,6 +44,8 @@ class ImageFragment : Fragment() {
 
     //val
     private val binding get() = _binding!!
+    private val contextImageFragment get() = this@ImageFragment.requireContext()
+
 
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
@@ -61,16 +64,29 @@ class ImageFragment : Fragment() {
 //
 //    }
 
+
     private fun userTriggerButtons() {
         binding.switchContextText.setOnClickListener{
             imageIsText = binding.switchContextText.isChecked
-
         }
         binding.floatingButton.setOnClickListener{
             pickImage() //custom fun
         }
         binding.btnCopyText.setOnClickListener{
-            copyText()
+//
+//            val snackBar = Snackbar.make(this@ImageFragment.view!!,"COPPED TEXT",Snackbar.LENGTH_SHORT)
+//            snackBar.setAction("OK"){}
+//            snackBar.view.setBackgroundColor(Color.parseColor("#1B1B1B"))
+//            snackBar.setTextColor(Color.parseColor("#A9A9A9"))
+           // val text =  binding.etmForTextRecognition.text
+           ToolBox().copyText(contextImageFragment,binding.etmForTextRecognition.text.toString()).also {
+               ToolBox().showSnackBar(this@ImageFragment.requireView(),
+                   ContextCompat.getColor(contextImageFragment,R.color.colorSuccessBackgroundSnackbar),
+                   ContextCompat.getColor(contextImageFragment,R.color.colorStrings),
+                   "COPPED TEXT",
+                   "OK",
+                   Snackbar.LENGTH_SHORT).show()
+           }
         }
     }
 
@@ -99,15 +115,6 @@ class ImageFragment : Fragment() {
         return true
     }
 
-
-    private fun copyText(){
-        val text = binding.etmForTextRecognition.text
-        if(!text.length.equals(null)){
-            val clipboard = getSystemService(requireContext(), ClipboardManager::class.java) as ClipboardManager // Gets a handle to the clipboard service.
-            val clip: ClipData = ClipData.newPlainText("text", text) // Creates a new text clip to put on the clipboard
-            clipboard.setPrimaryClip(clip)  // Set the clipboard's primary clip.
-        }
-    }
 
     private fun pickImage(){
         val openGalleryIntent =
@@ -157,7 +164,6 @@ class ImageFragment : Fragment() {
         binding.etmForTextRecognition.clearComposingText()
         isGoneTextRecognition(true)
         result.addOnSuccessListener {
-            println("I AM TEXT BOOS")
             val resultText = result.result
             for (block in resultText.textBlocks) {
                 for (line in block.lines) {
@@ -166,21 +172,30 @@ class ImageFragment : Fragment() {
                         builder.append("$elementText ")
                     }
                 }
-                // Returns `true` if this string is empty or consists solely of whitespace characters.
-                fun CharSequence.isBlank(): Boolean = length == 0 || indices.all { this[it].isWhitespace() }
-                if(!builder.toString().isBlank()){
-                    isGoneTextRecognition(false)
-                    binding.etmForTextRecognition.setText(builder.toString())
-
-                }else{
-                    println("BOSS IS EMPTY")
-                }
             }
+        }.addOnCompleteListener {
+
+            // Returns `true` if this string is empty or consists solely of whitespace characters.
+            fun CharSequence.isBlank(): Boolean =
+                length == 0 || indices.all { this[it].isWhitespace() }
+            if (builder.toString().isBlank()) {
+                println("I AM NOT A TEXT  BOSS")
+                val str = builder.toString()
+                println("builde -$str-")
+                val dialogNotFound = ToolBox().showNotFoundDialog(this@ImageFragment.requireContext())
+                dialogNotFound.show()
+            } else {
+                println("I AM TEXT BOOS")
+                isGoneTextRecognition(false)
+                binding.etmForTextRecognition.setText(builder.toString())
+            }
+
+
         }.addOnFailureListener {
-                // Task failed with an exception
-                binding.chipTextRecognizing.isVisible = true
-                binding.chipTextRecognizing.chipText = "i am text Fail"
-                println("I AM TEXT  FAIL BOSS")
+            // Task failed with an exception
+            val dialogWrong = ToolBox().showWrongDialog(this@ImageFragment.requireContext())
+            dialogWrong.show()
+
         }
     }
 
@@ -191,7 +206,7 @@ class ImageFragment : Fragment() {
         val options = ObjectDetectorOptions.Builder()
             .setDetectorMode(ObjectDetectorOptions.SINGLE_IMAGE_MODE)
             .enableMultipleObjects()
-            .enableClassification()  // Optional
+            .enableClassification()
             .build()
 
         val objectDetector = ObjectDetection.getClient(options)
@@ -199,59 +214,65 @@ class ImageFragment : Fragment() {
         val listWithLabels = arrayListOf<String>()
 
         try {
+
             val image = InputImage.fromBitmap(bitmap,0)
             fun objDetector(firstFailed :Boolean) {
                 //OBJECT DETECTOR
-                objectDetector.process(image)
-                    .addOnSuccessListener {
-                        // Task completed successfully
-                        for (detectedObject in it) {
-                            for (label in detectedObject.labels) {
-                                val textDetected = label.text
-                                if (!listWithLabels.contains(textDetected)) {
+                objectDetector.process(image).addOnSuccessListener {
+                    // Task completed successfully
+                    for (detectedObject in it) {
+                        for (label in detectedObject.labels) {
+                            val textDetected = label.text
+                            if (!listWithLabels.contains(textDetected)) {
                                     listWithLabels.add(textDetected)
-                                }
                             }
                         }
-                        binding.chipGroup.removeAllViews()
-                        listWithLabels.sortedByDescending { it.length }
-                            .map {
-                                Chip(
-                                    context,
-                                    null,
-                                    R.style.Widget_MaterialComponents_Chip_Choice
-                                ).apply {
-                                        text = it }
-                                    }.forEach {
-                                        binding.chipGroup.addView(it)
-                                    }
-                        wikiSearch(listWithLabels)
-                    }.addOnFailureListener {
-                        // Task failed with an exception
-                        if(firstFailed){
-                            binding.chipTextRecognizing.isVisible = true
-                            binding.chipTextRecognizing.text = "I may be an AI app but not God, I can't know everything, I'm sorry." }
-                        }
-            }
-           // LABELER
-            labeler.process(image)
-                .addOnSuccessListener {
-                    // Task completed successfully
-                     for (label in it) {
-                         val textLabeler = label.text
-                         if (!listWithLabels.contains(label.text)) {
-                             listWithLabels.add(textLabeler)
-                     }
-                         Log.wtf("LABELER","The labeler : $textLabeler")
-                     }
-                    objDetector(false)  //OBJECT DETECTOR
+                    }
+
+                    binding.chipGroup.removeAllViews()
+                    //binding.chipGroup.isVisible = true
+                    isGoneImage(false)
+                    listWithLabels.sortedByDescending {
+                        it.length
+                    }.map {
+                        Chip(context, null, R.style.Widget_MaterialComponents_Chip_Choice)
+                                .apply { text = it }
+                    }.forEach {
+                        binding.chipGroup.addView(it)
+                    }
+
+                    wikiSearch(listWithLabels)
+
                 }.addOnFailureListener {
-                    objDetector(true)  // Task failed with an exception
+                    // Task failed with an exception
+                    if(firstFailed){
+                        val dialogNotFound = ToolBox().showNotFoundDialog(this@ImageFragment.requireContext())
+                        dialogNotFound.show()
+                    }
+                }
+            }
+
+            // LABELER
+            labeler.process(image).addOnSuccessListener {
+
+                // Task completed successfully
+                for (label in it) {
+                    val textLabeler = label.text
+                    if (!listWithLabels.contains(label.text)) {
+                        listWithLabels.add(textLabeler)
+                    }
+                    Log.wtf("LABELER","The labeler : $textLabeler")
                 }
 
+                objDetector(false)  //OBJECT DETECTOR
+
+            }.addOnFailureListener {
+                    objDetector(true)  // Task failed with an exception
+            }
+
         } catch (e: IOException) {
-            binding.chipTextRecognizing.isVisible = true
-            binding.chipTextRecognizing.text = "Something went wrong,try again."
+            val dialogWrong = ToolBox().showWrongDialog(this@ImageFragment.requireContext())
+            dialogWrong.show()
             e.printStackTrace()
         }
     }
@@ -353,7 +374,7 @@ class ImageFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         val adapter = RecyclerViewWikiAdapter(data)
 
-        binding.recyclerWiki.isVisible = true
+        //binding.recyclerWiki.isVisible = true
         binding.recyclerWiki.layoutManager = layoutManager
         binding.recyclerWiki.setHasFixedSize(true)
         binding.recyclerWiki.adapter = adapter
@@ -363,6 +384,7 @@ class ImageFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
 
 
