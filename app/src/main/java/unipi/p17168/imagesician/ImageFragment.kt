@@ -31,7 +31,7 @@ import java.io.IOException
 
 
 @Suppress("DEPRECATION") //for the method getImage
-class ImageFragment : Fragment() {
+class ImageFragment : androidx.fragment.app.Fragment() {
 
     //~~~~~~~VARIABLES~~~~~~~
 
