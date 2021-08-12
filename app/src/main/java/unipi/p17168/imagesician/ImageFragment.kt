@@ -22,7 +22,7 @@ import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizerOptions
-import kotlinx.android.synthetic.main.toast_alert_copy.*
+//import kotlinx.android.synthetic.main.toast_alert_copy.*
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
 import unipi.p17168.imagesician.utils.ToolBox
@@ -31,7 +31,7 @@ import java.io.IOException
 
 
 @Suppress("DEPRECATION") //for the method getImage
-class ImageFragment : androidx.fragment.app.Fragment() {
+class ImageFragment : Fragment() {
 
     //~~~~~~~VARIABLES~~~~~~~
 

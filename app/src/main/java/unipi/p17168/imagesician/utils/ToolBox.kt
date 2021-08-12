@@ -1,6 +1,5 @@
 package unipi.p17168.imagesician.utils
 
-import android.Manifest
 import android.app.Activity
 import android.app.Dialog
 import android.content.ClipData
@@ -12,7 +11,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.view.View
 import android.view.Window
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -21,9 +19,6 @@ import com.google.android.material.snackbar.Snackbar
 import unipi.p17168.imagesician.R
 
 class ToolBox {
-
-
-
 
     //Permissions
      fun setupPermissions(context:Context,activity: Activity,permission: String, requestCode: Int) {
@@ -34,13 +29,12 @@ class ToolBox {
         }
     }
 
-
     //Network Check
     fun isNetworkAvailbale(context: Context): Boolean {
         val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connManager.activeNetwork
-        return  networkInfo!=null
 
+        return  networkInfo!=null
     }
 
     //Snack Bar
@@ -85,7 +79,7 @@ class ToolBox {
         return dialog
     }
 
-    fun showWrongDialog(context: Context, ) : Dialog {
+    fun showWrongDialog(context: Context) : Dialog {
 
         val dialog = Dialog(context)
 
@@ -100,6 +94,4 @@ class ToolBox {
 
         return dialog
     }
-
-
 }

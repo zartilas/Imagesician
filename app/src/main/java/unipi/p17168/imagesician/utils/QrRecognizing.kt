@@ -38,8 +38,8 @@ class QrRecognizing : ImageAnalysis.Analyzer {
                     val corners = barcode.cornerPoints
                     val rawValue = barcode.rawValue
 
-                    Log.wtf("bounds:","$bounds")
-                    Log.wtf("corners:","$corners")
+                    Log.e("bounds:","$bounds")
+                    Log.e("corners:","$corners")
                     Log.wtf("rawValue:",rawValue)
 
                     // See API reference for complete list of supported types
@@ -52,7 +52,7 @@ class QrRecognizing : ImageAnalysis.Analyzer {
                         Barcode.TYPE_URL -> {
                             val title = barcode.url!!.title
                             val url = barcode.url!!.url
-                            Log.e("test:",title)
+                            Log.e("test:","e")
                         }
                         Barcode.FORMAT_ALL_FORMATS->{
                             val test = barcode.displayValue
