@@ -15,13 +15,14 @@
         tools:context=".QrcodeFragment">
 
         <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragmentContainerView"
             android:layout_width="310dp"
             android:layout_height="310dp"
             android:background="@drawable/camera_reader_square"
             app:layout_constraintBottom_toBottomOf="@+id/camera_preview_view"
             app:layout_constraintEnd_toEndOf="@+id/camera_preview_view"
             app:layout_constraintStart_toStartOf="@+id/camera_preview_view"
-            app:layout_constraintTop_toTopOf="@+id/camera_preview_view"/>
+            app:layout_constraintTop_toTopOf="@+id/camera_preview_view" />
 
           <androidx.camera.view.PreviewView
             android:id="@+id/camera_preview_view"
@@ -33,6 +34,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingClass" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/scanButton"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="251dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/scan_code"
+            android:textAlignment="center"
+            android:textColor="@color/colorStrings"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:iconGravity="start"
+            app:iconSize="35dp"
+            app:iconTint="@color/colorStrings"
+            app:layout_constraintEnd_toEndOf="@+id/camera_preview_view"
+            app:layout_constraintHorizontal_bias="0.566"
+            app:layout_constraintStart_toStartOf="@+id/fragmentContainerView"
+            app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

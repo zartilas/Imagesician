@@ -28,6 +28,10 @@ class ToolBox {
             return
         }
     }
+        //if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) !=
+        //PackageManager.PERMISSION_GRANTED) {
+        //ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
+        //50); }
 
     //Network Check
     fun isNetworkAvailbale(context: Context): Boolean {

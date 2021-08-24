@@ -10,6 +10,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.common.InputImage
 
+
 class QrRecognizing : ImageAnalysis.Analyzer {
 
 
@@ -27,8 +28,8 @@ class QrRecognizing : ImageAnalysis.Analyzer {
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
 
-            val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-            val result = scanner.process(image)
+                val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+                    val result = scanner.process(image)
 
             result.addOnSuccessListener { barcodes ->
                 // Task completed successfully

@@ -21,7 +21,8 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizerOptions
+//import com.google.mlkit.vision.text.TextRecognizerOptions
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 //import kotlinx.android.synthetic.main.toast_alert_copy.*
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
