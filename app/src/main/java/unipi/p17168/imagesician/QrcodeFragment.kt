@@ -27,16 +27,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import com.google.mlkit.vision.barcode.BarcodeScanning
 
-
-
-
-
-typealias BarcodeListener = (barcode: String) -> Unit
-
 class QrcodeFragment : androidx.fragment.app.Fragment() {
-
-
-
 
     //var
     private var _binding: FragmentQrcodeBinding? = null
@@ -53,14 +44,12 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+
         // Inflate the layout for this fragment
         _binding = FragmentQrcodeBinding.inflate(inflater, container, false)
 
-        Log.wtf("MyApp 1", "I am here")
-
         init()
-        ToolBox().setupPermissions(contextQrCode, requireActivity(), CAMERA, 234)
-        
+
         return binding.root
     }
 
@@ -72,8 +61,7 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
      }
 
     private fun init() {
-
-
+        ToolBox().setupPermissions(contextQrCode, requireActivity(), CAMERA, 234)
         userTriggerButtons()
     }
 
