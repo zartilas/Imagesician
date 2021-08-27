@@ -31,6 +31,7 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
 
     //var
 
+
     private var _binding: FragmentQrcodeBinding? = null
 
     //val
