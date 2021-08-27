@@ -89,6 +89,7 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
                         }
                     }
                 }
+
                 cameraProvider.unbindAll() // Unbind any bound use cases before rebinding
                 cameraProvider.bindToLifecycle(
                     this,
