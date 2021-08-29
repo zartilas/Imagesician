@@ -20,6 +20,10 @@ class QrRecognizing : ImageAnalysis.Analyzer {
             Barcode.FORMAT_AZTEC)
         .build()
 
+    var listWithResult = arrayListOf<String>()
+
+//    var typeOfQR: Boolean? = null
+
     private val scanner = BarcodeScanning.getClient(options)
 
     @SuppressLint("UnsafeOptInUsageError")
@@ -28,8 +32,8 @@ class QrRecognizing : ImageAnalysis.Analyzer {
         val mediaImage = imageProxy.image
         if (mediaImage != null) {
 
-                val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-                    val result = scanner.process(image)
+        val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
+        val result = scanner.process(image)
 
             result.addOnSuccessListener { barcodes ->
                 // Task completed successfully
@@ -38,26 +42,37 @@ class QrRecognizing : ImageAnalysis.Analyzer {
                     val bounds = barcode.boundingBox
                     val corners = barcode.cornerPoints
                     val rawValue = barcode.rawValue
-
+                    Log.wtf("MyApp 69:","I AM HERE BOSS !!")
                     Log.e("bounds:","$bounds")
                     Log.e("corners:","$corners")
                     Log.wtf("rawValue:",rawValue)
-
                     // See API reference for complete list of supported types
                     when (barcode.valueType) {
                         Barcode.TYPE_WIFI -> {
                             val ssid = barcode.wifi!!.ssid
                             val password = barcode.wifi!!.password
                             val type = barcode.wifi!!.encryptionType
+                            Log.wtf("test:","I AM WIFI BOSS")
+//                            typeOfQR = true
+                            listWithResult.add(ssid!!)
+                            listWithResult.add(password!!)
+                            listWithResult.add(type.toString())
                         }
                         Barcode.TYPE_URL -> {
+                            Log.wtf("test:","I AM URL BOSS")
                             val title = barcode.url!!.title
                             val url = barcode.url!!.url
-                            Log.e("test:","e")
+//                            typeOfQR = false
+                            listWithResult.add(title!!)
+                            listWithResult.add(url!!)
+
+                            Log.e("My URL IS HERE BOSS:",url)
                         }
                         Barcode.FORMAT_ALL_FORMATS->{
-                            val test = barcode.displayValue
-                            Log.wtf("test:",test)
+//                            typeOfQR = null
+                            val value = barcode.displayValue
+                            listWithResult.add(value!!)
+                            Log.wtf("test:",value)
 
                         }
                     }

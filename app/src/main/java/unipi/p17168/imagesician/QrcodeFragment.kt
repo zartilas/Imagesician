@@ -26,6 +26,7 @@ import unipi.p17168.imagesician.utils.ToolBox
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import kotlinx.android.synthetic.main.fragment_image.*
 
 class QrcodeFragment : androidx.fragment.app.Fragment() {
 
@@ -39,6 +40,7 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
     private val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA  // Select back camera
     private val cameraExecutor = Executors.newSingleThreadExecutor()
     private val processingBarcode = AtomicBoolean(false)
+
 
 
     override fun onCreateView(
@@ -63,8 +65,8 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
     private fun init() {
         ToolBox().setupPermissions(contextQrCode, requireActivity(), CAMERA, 234)
         userTriggerButtons()
+        startUserCamera()
     }
-
 
     private fun startUserCamera(){
         val cameraProviderFuture = ProcessCameraProvider.getInstance(contextQrCode)
@@ -77,20 +79,27 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
             }
 
             try {
-                val imageAnalysis = ImageAnalysis.Builder().build().also {
+                val imageAnalysis = ImageAnalysis.Builder()
+                    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+                    .build().also {
                     it.setAnalyzer(cameraExecutor) { imageProxy: ImageProxy? ->
                         if (processingBarcode.compareAndSet(false, true)) {
                             if (imageProxy != null) {
                                 Log.wtf("MyApp 66", "I am here boss")
 
                                 QrRecognizing().analyze(imageProxy)
+                                    /*  val type =  QrRecognizing().typeOfQR*/
 
+                               /*     when (QrRecognizing().typeOfQR){
+                                        true-> {Log.wtf("1","I am true boss")}
+                                        false-> {Log.wtf("2","I am false boss")}
+                                        null-> {Log.wtf("3","I am null boss , sorry")}
+
+                                }*/
                             }
                         }
                     }
                 }
-
-
 
                 cameraProvider.unbindAll() // Unbind any bound use cases before rebinding
                 cameraProvider.bindToLifecycle(
@@ -114,5 +123,3 @@ class QrcodeFragment : androidx.fragment.app.Fragment() {
         }, ContextCompat.getMainExecutor(contextQrCode))
     }
 }
-
-
