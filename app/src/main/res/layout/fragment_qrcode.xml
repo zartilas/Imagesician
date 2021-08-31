@@ -33,7 +33,8 @@
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingClass" />
+           />
+
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/scanButton"
@@ -53,6 +54,7 @@
             app:layout_constraintHorizontal_bias="0.566"
             app:layout_constraintStart_toStartOf="@+id/fragmentContainerView"
             app:layout_constraintTop_toBottomOf="@+id/fragmentContainerView" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

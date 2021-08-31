@@ -1,3 +1,4 @@
+/*
 package unipi.p17168.imagesician.utils
 
 import android.annotation.SuppressLint
@@ -33,9 +34,7 @@ class QrRecognizing : ImageAnalysis.Analyzer {
         if (mediaImage != null) {
 
         val image = InputImage.fromMediaImage(mediaImage, imageProxy.imageInfo.rotationDegrees)
-        val result = scanner.process(image)
-
-            result.addOnSuccessListener { barcodes ->
+        scanner.process(image).addOnSuccessListener { barcodes ->
                 // Task completed successfully
                 for (barcode in barcodes) {
                     // barcodeListener( barcode.rawValue)
@@ -86,3 +85,4 @@ class QrRecognizing : ImageAnalysis.Analyzer {
         }
     }
 }
+*/
