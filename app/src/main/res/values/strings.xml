@@ -25,5 +25,20 @@
     <string name="context_text">Context Text?</string>
     <string name="copy_text">Copy Text</string>
     <string name="scan_code">Scan</string>
+    <string name="default_web_client_id">\"863169423879-02v19s5825a40lokv0p01tvbmtj9tsgs.apps.googleusercontent.com\"</string>
+    <string name="txt_sign_up">Sign Up</string>
+    <string name="txt_lets_get_started">Let\'s get started</string>
+    <string name="input_txt_hint_username">Your Username</string>
+    <string name="input_txt_hint_email">Your email address</string>
+    <string name="input_txt_hint_password">Your pasword</string>
+    <string name="txt_already_have_an_account">Already have an account? \n Sign In</string>
+    <string name="title_activity_base">BaseActivity</string>
+
+
+    <string name="txt_please_click_back_again_to_exit">Please click back again to exit</string>
+    <string name="txt_sign_in_header">Enter your email and password to continue.</string>
+    <string name="txt_sign_in">Sign in</string>
+    <string name="txt_forgot_password_question">Forgot password?</string>
+    <string name="txt_don_t_have_an_account">Don\'t have an account? \n <b> Sign Up</b> </string>
 
 </resources>

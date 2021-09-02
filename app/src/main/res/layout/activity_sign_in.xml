@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".activities.SignInActivity">
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="412px"
+        android:layout_height="412px"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/logo_pic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText,PxUsage" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="224dp"
+        android:background="@color/colorBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txt_Header_1"
+
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="29dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/txt_sign_in"
+            android:textColor="@color/colorTextLightGrey"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txt_Header_2"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/txt_sign_in_header"
+            android:textColor="@color/colorTextLightGrey"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_Header_1" />
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTxtLayout_Email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="39dp"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/txt_Header_2"
+            app:layout_constraintStart_toStartOf="@+id/txt_Header_2"
+            app:layout_constraintTop_toBottomOf="@+id/txt_Header_2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTxt_Email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:gravity="start"
+                android:hint="@string/input_txt_hint_email"
+                android:inputType="textEmailAddress"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorTextLightGrey"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/inputTxtLayout_Password"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:boxStrokeColor="@color/colorPrimary"
+            app:hintEnabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/inputTxtLayout_Email"
+            app:layout_constraintStart_toStartOf="@+id/inputTxtLayout_Email"
+            app:layout_constraintTop_toBottomOf="@+id/inputTxtLayout_Email"
+            app:passwordToggleEnabled="true">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/inputTxt_Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:hint="@string/input_txt_hint_password"
+                android:inputType="textPassword"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorWhite"
+                android:textColorHint="@color/colorTextLightGrey"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--<com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/txtView_Forgot_Password"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="37sp"
+            android:layout_marginEnd="147dp"
+            android:text="@string/txt_forgot_password_question"
+            android:textAllCaps="false"
+            android:textColor="@color/colorStrings"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_Sign_In"
+            app:layout_constraintEnd_toStartOf="@+id/btn_Sign_In"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/inputTxtLayout_Password"
+            app:layout_constraintTop_toTopOf="@+id/btn_Sign_In"
+            app:layout_constraintVertical_bias="1.0" />-->
+
+        <!-- app:layout_constraintStart_toStartOf="@+id/txtView_Forgot_Password"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/txtView_Forgot_Password"-->
+
+
+        <TextView
+            android:id="@+id/txtView_Sign_Up"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="200dp"
+            android:layout_height="37sp"
+            android:layout_marginEnd="44dp"
+            android:layout_marginBottom="16dp"
+            android:background="@android:color/transparent"
+            android:lines="2"
+            android:text="@string/txt_don_t_have_an_account"
+            android:textAllCaps="false"
+            android:textColor="@color/colorTextLightGrey"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_Sign_In"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/inputTxtLayout_Password"
+            app:layout_constraintTop_toBottomOf="@+id/inputTxtLayout_Password"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/btn_Sign_In"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
+            android:layout_width="132dp"
+            android:layout_height="54dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/txt_sign_in"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/inputTxtLayout_Password"
+            app:layout_constraintTop_toBottomOf="@+id/inputTxtLayout_Password" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

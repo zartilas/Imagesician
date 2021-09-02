@@ -50,30 +50,33 @@ class ImageFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentImageBinding.inflate(inflater, container, false)
 
-        userTriggerButtons()
+        setupClickListeners()
 
         return binding.root
     }
 
-    private fun userTriggerButtons() {
-        binding.switchContextText.setOnClickListener{
-            imageIsText = binding.switchContextText.isChecked
-        }
-        binding.floatingButton.setOnClickListener{
-            pickImage()
-        }
-        binding.btnCopyText.setOnClickListener{
+    private fun setupClickListeners(){
 
-           ToolBox().copyText(contextImageFragment,binding.etmForTextRecognition.text.toString()).also {
-               ToolBox().showSnackBar(this@ImageFragment.requireView(),
-                   ContextCompat.getColor(contextImageFragment,R.color.colorSuccessBackgroundSnackbar),
-                   ContextCompat.getColor(contextImageFragment,R.color.colorStrings),
-                   "COPPED TEXT",
-                   "OK",
-                   Snackbar.LENGTH_SHORT).show()
-           }
+        binding.apply {
+
+            switchContextText.setOnClickListener{ imageIsText = binding.switchContextText.isChecked }
+
+            floatingButton.setOnClickListener{ pickImage() }
+
+            btnCopyText.setOnClickListener{
+                ToolBox().copyText(contextImageFragment,binding.etmForTextRecognition.text.toString()).also {
+                        ToolBox().showSnackBar(this@ImageFragment.requireView(),
+                        ContextCompat.getColor(contextImageFragment,R.color.colorSuccessBackgroundSnackbar),
+                        ContextCompat.getColor(contextImageFragment,R.color.colorStrings),
+                                            "COPPED TEXT",
+                                            "OK",
+                                            Snackbar.LENGTH_SHORT)
+                                            .show()
+                        }
+            }
         }
     }
+
 
     private fun isGoneTextRecognition(isGone:Boolean):Boolean{
         if(isGone){
@@ -126,7 +129,8 @@ class ImageFragment : Fragment() {
                     ContextCompat.getColor(contextImageFragment,R.color.colorStrings),
                     "No internet connection!",
                     "OK",
-                    Snackbar.ANIMATION_MODE_SLIDE).show()
+                    Snackbar.ANIMATION_MODE_SLIDE)
+                    .show()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)

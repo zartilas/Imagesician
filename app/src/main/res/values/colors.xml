@@ -14,12 +14,15 @@
     <!--Strings-->
     <color name="colorStrings">#FFFFFF</color>
     <color name="colorStringsWithOutBackground">#00B594</color>
-
+    <color name="colorTextLightGrey">#B8A4A4</color>
 
     <!--Snack Bar-->
     <color name="colorSuccessBackgroundSnackbar">#39C16C</color>
     <color name="colorErrorBackgroundSnackbar">#CC0000</color>
 
     <color name="qr_code_reader_square">#FF018786</color>
+
+    <color name="colorWhite">#F4F4F4</color>
+
 
 </resources>
