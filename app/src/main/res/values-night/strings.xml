@@ -2,7 +2,6 @@
 <resources>
     <string name="sign_in">SIGN IN</string>
     <string name="button_sign_in_with_google">Sign in with Google</string>
-    <string name="default_web_client_id">\"863169423879-02v19s5825a40lokv0p01tvbmtj9tsgs.apps.googleusercontent.com\"</string>
     <string name="txt_sign_up">Sign Up</string>
     <string name="txt_lets_get_started">Let\'s get started</string>
     <string name="input_txt_hint_username">Your Username</string>

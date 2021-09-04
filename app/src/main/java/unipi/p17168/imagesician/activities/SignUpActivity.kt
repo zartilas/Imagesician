@@ -1,11 +1,9 @@
 package unipi.p17168.imagesician.activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
@@ -21,7 +19,6 @@ class SignUpActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
 
-    private val rootView: View = window.decorView.rootView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +31,15 @@ class SignUpActivity : BaseActivity() {
 
     private fun init(){
         setupUI()
+        setupClickListeners()
+    }
+
+
+    private fun setupClickListeners() {
+        binding.apply {
+            txtViewSignIn.setOnClickListener { onBackPressed() }
+            btnSignUp.setOnClickListener{ registerUser() }
+        }
     }
 
     private fun setupUI() {
@@ -77,7 +83,7 @@ class SignUpActivity : BaseActivity() {
         binding.apply {
             return when {
                 TextUtils.isEmpty(inputTxtName.text.toString().trim { it <= ' ' }) -> {
-                    ToolBox().showSnackBar(rootView,
+                    ToolBox().showSnackBar(binding.root,
                         ContextCompat.getColor(this@SignUpActivity,R.color.colorErrorBackgroundSnackbar),
                         ContextCompat.getColor(this@SignUpActivity,R.color.colorStrings),
                         "Please enter your username.",
@@ -87,7 +93,7 @@ class SignUpActivity : BaseActivity() {
                 }
 
                 TextUtils.isEmpty(inputTxtEmail.text.toString().trim { it <= ' ' }) -> {
-                    ToolBox().showSnackBar(rootView,
+                    ToolBox().showSnackBar(binding.root,
                         ContextCompat.getColor(this@SignUpActivity,R.color.colorErrorBackgroundSnackbar),
                         ContextCompat.getColor(this@SignUpActivity,R.color.colorStrings),
                         "Please enter your email.",
@@ -134,7 +140,7 @@ class SignUpActivity : BaseActivity() {
                         if (task.isSuccessful) {
 
                             // Firebase registered user
-                            val firebaseUser: FirebaseUser = task.result!!.user!!
+                            val firebaseUser: FirebaseUser = task.result.user!!
 
                             // Instance of User data model class.
                             val user = User(
@@ -152,7 +158,7 @@ class SignUpActivity : BaseActivity() {
                             //hideProgressDialog()
 
                             // If the registering is not successful then show the error message.
-                            ToolBox().showSnackBar(rootView,
+                            ToolBox().showSnackBar(binding.root,
                                 ContextCompat.getColor(this@SignUpActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@SignUpActivity,R.color.colorStrings),
                                 "Please enter your full name.",
