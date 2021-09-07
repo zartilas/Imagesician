@@ -2,11 +2,19 @@ package unipi.p17168.imagesician.database
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.util.Log
+import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storageMetadata
+import unipi.p17168.imagesician.ImageFragment
 import unipi.p17168.imagesician.activities.SignInActivity
 import unipi.p17168.imagesician.activities.SignUpActivity
 import unipi.p17168.imagesician.utils.Constants
@@ -47,7 +55,6 @@ class DBHelper {
             // Here the userInfo are Field and the SetOption is set to merge. It is for if we wants to merge later on instead of replacing the fields.
             .set(userInfo, SetOptions.merge())
             .addOnSuccessListener {
-
                 // Here call a function of base activity for transferring the result to it.
                 activity.userRegistrationSuccess()
             }
@@ -117,4 +124,23 @@ class DBHelper {
                 )
             }
     }
+
+     fun saveUserImage(image: Uri, isTextImage : Boolean){
+
+        Log.e("ImageFragmend","The id: ${DBHelper().getCurrentUserID()}")
+
+        val folder : StorageReference = FirebaseStorage.getInstance().reference.child(DBHelper().getCurrentUserID())
+        val imageName = folder.child("image" + image.lastPathSegment)
+
+        val metadata = if(isTextImage){
+            storageMetadata { setCustomMetadata("isText", true.toString()) }
+        }else{
+            storageMetadata { setCustomMetadata("isText", false.toString()) }
+        }
+
+         imageName.putFile(image,metadata).addOnSuccessListener{
+                Log.e("ImageFragment","Save Image")
+         }
+
+     }
 }

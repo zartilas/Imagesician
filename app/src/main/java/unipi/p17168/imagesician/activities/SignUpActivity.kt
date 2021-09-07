@@ -19,7 +19,6 @@ class SignUpActivity : BaseActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -161,7 +160,7 @@ class SignUpActivity : BaseActivity() {
                             ToolBox().showSnackBar(binding.root,
                                 ContextCompat.getColor(this@SignUpActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@SignUpActivity,R.color.colorStrings),
-                                "Please enter your full name.",
+                                "Sorry, try later.",
                                 "OK",
                                 Snackbar.ANIMATION_MODE_SLIDE).show()
                         }
@@ -177,7 +176,7 @@ class SignUpActivity : BaseActivity() {
      */
     fun userRegistrationSuccess() {
 
-        // Hide the progress dialog
+        //Hide the progress dialog
         //hideProgressDialog()
 
         /**
@@ -192,4 +191,3 @@ class SignUpActivity : BaseActivity() {
             binding.inputTxtEmail.text.toString())
     }
 }
-

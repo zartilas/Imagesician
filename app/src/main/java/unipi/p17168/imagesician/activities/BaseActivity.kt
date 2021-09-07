@@ -2,12 +2,8 @@ package unipi.p17168.imagesician.activities
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.navigation.findNavController
 import unipi.p17168.imagesician.ImagesicianActivity
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.utils.Constants
@@ -68,5 +64,4 @@ open class BaseActivity : AppCompatActivity() {
             doubleBackToExitPressedOnce = false
         }, 2000, TimeUnit.MILLISECONDS)
     }
-
 }

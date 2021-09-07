@@ -1,23 +1,21 @@
 package unipi.p17168.imagesician.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+
 
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.databinding.ActivitySignInBinding
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 
 
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+
+
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import unipi.p17168.imagesician.database.DBHelper
@@ -30,13 +28,6 @@ class SignInActivity : BaseActivity() {
     // ~~~~~~~VARIABLES~~~~~~~
     //var
     private lateinit var binding: ActivitySignInBinding
-
-
-    //val
-    private val firebaseUser: FirebaseUser? = null
-    private val firebaseAuth: FirebaseAuth? = null
-    private val RC_SIGN_IN = 101
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +43,7 @@ class SignInActivity : BaseActivity() {
 
     private fun init() {
         if (intent.hasExtra(Constants.EXTRA_REG_USERS_SNACKBAR)) {
-           /* if (intent.extras?.getBoolean(Constants.EXTRA_REG_USERS_SNACKBAR) == true) {
+        /*    if (intent.extras?.getBoolean(Constants.EXTRA_REG_USERS_SNACKBAR) == true) {
                 SnackBarSuccessClass
                     .make(binding.root,
                         getString(R.string.txt_congratulations),
@@ -129,7 +120,7 @@ class SignInActivity : BaseActivity() {
                             ToolBox().showSnackBar(binding.root,
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorStrings),
-                                "Please enter your username.",
+                                "Sorry, try later.",
                                 "OK",
                                 Snackbar.ANIMATION_MODE_SLIDE).show()
                         }

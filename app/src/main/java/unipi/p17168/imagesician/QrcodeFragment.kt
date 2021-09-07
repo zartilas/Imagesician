@@ -1,7 +1,6 @@
 package unipi.p17168.imagesician
 
 import android.Manifest.permission.CAMERA
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.camera.core.Preview;
@@ -9,14 +8,9 @@ import android.util.Size
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import com.google.android.material.snackbar.Snackbar
-import com.google.mlkit.vision.barcode.Barcode
-import com.google.mlkit.vision.barcode.BarcodeScannerOptions
-import com.google.mlkit.vision.common.InputImage
 import kotlinx.android.synthetic.main.fragment_qrcode.*
 import unipi.p17168.imagesician.databinding.FragmentQrcodeBinding
 
@@ -24,7 +18,6 @@ import unipi.p17168.imagesician.utils.ToolBox
 
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicBoolean
-import com.google.mlkit.vision.barcode.BarcodeScanning
 import kotlinx.android.synthetic.main.fragment_image.*
 import com.google.common.util.concurrent.ListenableFuture
 import java.util.concurrent.ExecutionException
@@ -34,12 +27,6 @@ import androidx.camera.core.ImageAnalysis
 
 import androidx.camera.core.CameraSelector
 import unipi.p17168.imagesician.utils.QrRecognizing
-import android.R
-
-import androidx.core.content.res.ResourcesCompat
-
-
-
 
 
 class QrcodeFragment : androidx.fragment.app.Fragment(){

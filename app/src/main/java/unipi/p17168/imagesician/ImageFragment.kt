@@ -21,17 +21,18 @@ import com.google.mlkit.vision.label.defaults.ImageLabelerOptions
 import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
-//import com.google.mlkit.vision.text.TextRecognizerOptions
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-//import kotlinx.android.synthetic.main.toast_alert_copy.*
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
+import unipi.p17168.imagesician.database.DBHelper
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
 import unipi.p17168.imagesician.utils.ToolBox
 import unipi.p17168.imagesician.wiki.WikiListItems
 import java.io.IOException
 
 
-@Suppress("DEPRECATION") //for the method getImage
+
+@Suppress("DEPRECATION")
+
 class ImageFragment : Fragment() {
 
     //~~~~~~~VARIABLES~~~~~~~
@@ -43,6 +44,7 @@ class ImageFragment : Fragment() {
     //val
     private val binding get() = _binding!!
     private val contextImageFragment get() = this@ImageFragment.requireContext()
+
 
     //~~~~~~~Create View~~~~~~~
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -77,7 +79,6 @@ class ImageFragment : Fragment() {
         }
     }
 
-
     private fun isGoneTextRecognition(isGone:Boolean):Boolean{
         if(isGone){
             binding.etmForTextRecognition.clearComposingText()
@@ -91,11 +92,24 @@ class ImageFragment : Fragment() {
         return true
     }
 
+    private fun isGoneImage(isGone:Boolean):Boolean{
+        if(isGone){
+            binding.recyclerWiki.isGone = true
+            binding.chipGroup.isGone = true
+            binding.chipGroup.removeAllViews()
+        }else if(!isGone){
+            binding.recyclerWiki.isVisible = true
+            binding.chipGroup.isVisible = true
+        }
+        return true
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(ToolBox().isNetworkAvailbale(contextImageFragment)) {
             if (requestCode == 666) {
                 if (resultCode == Activity.RESULT_OK) {
                     val bitmapImage = getImage(data)
+                    val uriImage = data?.data
 
                     bitmapImage.apply {
                         if (!imageIsText) {
@@ -104,6 +118,7 @@ class ImageFragment : Fragment() {
                                     //val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
                                     binding.imageView.setImageBitmap(bitmapImage)
                                     processImageTagging(bitmapImage)
+                                    DBHelper().saveUserImage(uriImage!!,false)
                                 } else return
                             }
                         }
@@ -113,6 +128,7 @@ class ImageFragment : Fragment() {
                                 if (isGoneImage(true)) {
                                     binding.imageView.setImageBitmap(bitmapImage)
                                     startTextRecognizing(bitmapImage)
+                                    DBHelper().saveUserImage(uriImage!!,true)
                                 } else return
                             }
                         }
@@ -254,61 +270,12 @@ class ImageFragment : Fragment() {
     //get image from data
     private fun getImage(data: Intent?): Bitmap?{
         val selectedImage = data?.data
+        //saveImage(selectedImage!!)
         return MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImage)
     }
 
-//    fun rotateBitmap(original: Bitmap, degrees: Float): Bitmap? {
-//        val width = original.width
-//        val height = original.height
-//        val matrix = Matrix()
-//        matrix.preRotate(degrees)
-//        val rotatedBitmap = Bitmap.createBitmap(original, 0, 0, width, height, matrix, true)
-//        val canvas = Canvas(rotatedBitmap)
-//        canvas.drawBitmap(original, 5.0f, 0.0f, null)
-//        return rotatedBitmap
-//    }
 
-//    //Get Image Uri from bitmap
-//    private fun  getImageUri(context: Context, bitmap: Bitmap): Uri? {
-//       // val bytes =  ByteArrayOutputStream()
-//        //bitmap.compress( Bitmap.CompressFormat.JPEG,100,bytes)
-//        val path = MediaStore.Images.Media.insertImage(context.contentResolver, bitmap, "imageUri", null)
-//        return parse(path)
-//    }
-//
-
-
-//    //Check if the photo needs rotation
-//    @Throws(IOException::class)
-//    private fun checkIfImageNeededRotation(newImage: Bitmap): Bitmap? {
-//
-//    val bos = ByteArrayOutputStream()
-//    newImage.compress(CompressFormat.PNG, 0 /*ignored for PNG*/, bos)
-//    val bitmapdata: ByteArray = bos.toByteArray()
-//    val bs = ByteArrayInputStream(bitmapdata)
-//
-//        val ei = ExifInterface(bs)
-//        return when (ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
-//            ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(newImage, 90F)
-//            ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(newImage, 180F)
-//            ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(newImage, 270F)
-//
-//            else -> newImage
-//        }
-//    }
-//
-//    private fun rotateImage(newImage: Bitmap, degree: Float): Bitmap? {
-//        val matrix = Matrix()
-//        matrix.postRotate(degree)
-//        val rotatedNewImage = Bitmap.createBitmap(newImage, 0, 0, newImage.width, newImage.height, matrix, true)
-//        newImage.recycle()
-//        println("I AM HERE TOO BOSS")
-//        return rotatedNewImage
-//    }
-
-
-
-//    class WikipediaParser() {
+/*//    class WikipediaParser() {
 //        private val baseUrl: String = String.format("https://en.wikipedia.org/wiki/potato")
 //
 //        @Throws(IOException::class)
@@ -335,7 +302,7 @@ class ImageFragment : Fragment() {
 ////                    }
 ////
 ////                }
-//    }
+//    }*/
 
 
     private fun wikiSearch(finalList: ArrayList<String>) {
@@ -355,19 +322,6 @@ class ImageFragment : Fragment() {
 
     }
 
-    private fun isGoneImage(isGone:Boolean):Boolean{
-        if(isGone){
-            binding.recyclerWiki.isGone = true
-            binding.chipGroup.isGone = true
-            binding.chipGroup.removeAllViews()
-        }else if(!isGone){
-            binding.recyclerWiki.isVisible = true
-            binding.chipGroup.isVisible = true
-        }
-        return true
-    }
-
-
     private fun pickImage(){
         val openGalleryIntent =
             Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
@@ -378,8 +332,10 @@ class ImageFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }
+
+
+
 
 
 
