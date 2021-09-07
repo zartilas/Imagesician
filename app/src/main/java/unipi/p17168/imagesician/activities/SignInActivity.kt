@@ -9,12 +9,8 @@ import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 
-
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.databinding.ActivitySignInBinding
-
-
-
 
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_sign_in.*
