@@ -125,7 +125,6 @@ class DBHelper {
     }
 
 
-
      fun saveUserImage(image: Uri, isTextImage : Boolean){
 
         Log.e("ImageFragmend","The id: ${DBHelper().getCurrentUserID()}")

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,19 +33,17 @@ import java.io.IOException
 
 
 @Suppress("DEPRECATION")
-
 class ImageFragment : Fragment() {
 
     //~~~~~~~VARIABLES~~~~~~~
 
-    //var
+    //VAR
     private var _binding : FragmentImageBinding ? = null
     private var imageIsText = false
 
-    //val
+    //VAL
     private val binding get() = _binding!!
     private val contextImageFragment get() = this@ImageFragment.requireContext()
-
 
     //~~~~~~~Create View~~~~~~~
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -109,16 +108,15 @@ class ImageFragment : Fragment() {
             if (requestCode == 666) {
                 if (resultCode == Activity.RESULT_OK) {
                     val bitmapImage = getImage(data)
-                    val uriImage = data?.data
+                    //val uriImage = data?.data
 
                     bitmapImage.apply {
                         if (!imageIsText) {
                             if (bitmapImage != null) {
                                 if (isGoneTextRecognition(true)) {
-                                    //val imageForIV = checkIfImageNeededRotation(bitmapImage)//TODO FIX THIS LINE
                                     binding.imageView.setImageBitmap(bitmapImage)
                                     processImageTagging(bitmapImage)
-                                    DBHelper().saveUserImage(uriImage!!,false)
+                                    //DBHelper().saveUserImage(uriImage!!,false)
                                 } else return
                             }
                         }
@@ -128,7 +126,7 @@ class ImageFragment : Fragment() {
                                 if (isGoneImage(true)) {
                                     binding.imageView.setImageBitmap(bitmapImage)
                                     startTextRecognizing(bitmapImage)
-                                    DBHelper().saveUserImage(uriImage!!,true)
+                                    //DBHelper().saveUserImage(uriImage!!,true)
                                 } else return
                             }
                         }
@@ -137,6 +135,7 @@ class ImageFragment : Fragment() {
                 }
             }
         }else {
+
             isGoneImage(true)
             isGoneTextRecognition(true)
             ToolBox().copyText(contextImageFragment,binding.etmForTextRecognition.text.toString()).also {
@@ -207,6 +206,7 @@ class ImageFragment : Fragment() {
         try {
 
             val image = InputImage.fromBitmap(bitmap,0)
+
             fun objDetector(firstFailed :Boolean) {
                 //OBJECT DETECTOR
                 objectDetector.process(image).addOnSuccessListener {
@@ -221,7 +221,6 @@ class ImageFragment : Fragment() {
                     }
 
                     binding.chipGroup.removeAllViews()
-                    //binding.chipGroup.isVisible = true
                     isGoneImage(false)
                     listWithLabels.sortedByDescending {item->
                         item.length
@@ -267,43 +266,17 @@ class ImageFragment : Fragment() {
         }
     }
 
-    //get image from data
+    //Get image from data
     private fun getImage(data: Intent?): Bitmap?{
         val selectedImage = data?.data
-        //saveImage(selectedImage!!)
         return MediaStore.Images.Media.getBitmap(context?.contentResolver,selectedImage)
     }
 
-
-/*//    class WikipediaParser() {
-//        private val baseUrl: String = String.format("https://en.wikipedia.org/wiki/potato")
-//
-//        @Throws(IOException::class)
-//        fun fetchFirstParagraph(article: String): String {
-//            return try{
-//                val url = baseUrl + article
-//                val doc: Document = Jsoup.connect(url).get()
-//                val paragraphs: Elements = doc.select(".mw-content-ltr p")
-//                val firstParagraph: Element = paragraphs.first()
-//                println("My First Paragraph: $firstParagraph")
-//                firstParagraph.text()
-//            }catch (e:IOException) {
-//                "Failed"
-//            }
-//        }
-////                fun printWiki(){
-////                    try {
-////                        val parser = WikipediaParser("en")
-////                        val firstParagraph = parser.fetchFirstParagraph("Potato")
-////
-////                        println("My paragraph: $firstParagraph") // prints "The potato is a starchy [...]."
-////                    }catch (e:IOException){
-////                        print("SORRY BOSS")
-////                    }
-////
-////                }
-//    }*/
-
+    private fun pickImage(){
+        val openGalleryIntent =
+            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(openGalleryIntent, 666)
+    }
 
     private fun wikiSearch(finalList: ArrayList<String>) {
         val data: MutableList<WikiListItems> = ArrayList()
@@ -315,18 +288,43 @@ class ImageFragment : Fragment() {
         val layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         val adapter = RecyclerViewWikiAdapter(data)
 
-        //binding.recyclerWiki.isVisible = true
         binding.recyclerWiki.layoutManager = layoutManager
         binding.recyclerWiki.setHasFixedSize(true)
         binding.recyclerWiki.adapter = adapter
 
     }
 
-    private fun pickImage(){
-        val openGalleryIntent =
-            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(openGalleryIntent, 666)
+    /*
+
+    class WikipediaParser() {
+
+        private val baseUrl: String = String.format("https://en.wikipedia.org/wiki/potato")
+
+      @Throws(IOException::class)
+      fun fetchFirstParagraph(article: String): String {
+          return try{
+              val url = baseUrl + article
+              val doc: Document = Jsoup.connect(url).get()
+              val paragraphs: Elements = doc.select(".mw-content-ltr p")
+              val firstParagraph: Element = paragraphs.first()
+              Log.e("My First Paragraph:" , firstParagraph)
+              firstParagraph.text()
+          }catch (e:IOException) {
+               "Failed"
+          }
+      }
+        fun printWiki(){
+            try {
+                val parser = WikipediaParser("en")
+                val firstParagraph = parser.fetchFirstParagraph("Potato")
+                Log.e("My First Paragraph:" , firstParagraph) // "The potato is a starchy [...]."
+
+            }catch (e:IOException){
+                Log.e("ImageFragment" , "error")
+            }
+        }
     }
+*/
 
     override fun onDestroyView() {
         super.onDestroyView()

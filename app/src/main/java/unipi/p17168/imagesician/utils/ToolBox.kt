@@ -25,9 +25,6 @@ import java.util.concurrent.TimeUnit
 
 class ToolBox {
 
-    // A global variable for double back press feature.
-    private var doubleBackToExitPressedOnce = false
-
     //Permissions
      fun setupPermissions(context:Context,activity: Activity,permission: String, requestCode: Int) {
         if (ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_DENIED) {
@@ -36,10 +33,6 @@ class ToolBox {
             return
         }
     }
-        //if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) !=
-        //PackageManager.PERMISSION_GRANTED) {
-        //ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.CAMERA},
-        //50); }
 
     //Network Check
     fun isNetworkAvailbale(context: Context): Boolean {
@@ -62,7 +55,7 @@ class ToolBox {
         return snackBar
      }
 
-    //copy Text
+    //Copy Text
     fun copyText(context: Context,text:String){
 
         if(!text.length.equals(null)){
@@ -88,6 +81,7 @@ class ToolBox {
         val btnAlertOk: MaterialButton = dialog.findViewById(R.id.btn_AlertTextWarning_Dismiss)
         btnAlertOk.setOnClickListener { dialog.dismiss()
         }
+
         return dialog
     }
 
@@ -106,7 +100,4 @@ class ToolBox {
 
         return dialog
     }
-
-
-
 }

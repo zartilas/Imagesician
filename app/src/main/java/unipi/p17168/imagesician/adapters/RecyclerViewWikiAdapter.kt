@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
@@ -45,7 +44,6 @@ class RecyclerViewWikiAdapter(
         item.add(holder.card)
     }
 
-
     override fun getItemCount(): Int {
         return data.size
     }
@@ -57,7 +55,6 @@ class RecyclerViewWikiAdapter(
     ): RecyclerView.ViewHolder(itemView){
         val nameItems: TextView = itemView.itemName
         val infoItem: WebView = itemView.webItemView
-
         val card : CardView = itemView.cardViewSingleItem_Wiki
     }
 }
