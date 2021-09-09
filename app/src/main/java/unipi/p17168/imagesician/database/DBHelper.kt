@@ -8,18 +8,15 @@ import android.util.Log
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storageMetadata
-import com.squareup.picasso.Picasso
 import unipi.p17168.imagesician.activities.SignInActivity
 import unipi.p17168.imagesician.activities.SignUpActivity
 import unipi.p17168.imagesician.utils.Constants
 import unipi.p17168.imagesician.models.User
-import unipi.p17168.imagesician.models.UserReco
 
 class DBHelper {
 
@@ -127,6 +124,8 @@ class DBHelper {
             }
     }
 
+
+
      fun saveUserImage(image: Uri, isTextImage : Boolean){
 
         Log.e("ImageFragmend","The id: ${DBHelper().getCurrentUserID()}")
@@ -143,33 +142,5 @@ class DBHelper {
          imageName.putFile(image,metadata).addOnSuccessListener{
                 Log.e("ImageFragment","Save Image")
          }
-
      }
-
-    /**
-     * A function to get the user logs list from cloud firestore.
-     *
-     * @param activity The fragment is passed as parameter as the function is called from fragment and need to the success result.
-     */
-    fun getUserImage(activity: Activity, sortBy: String) {
-        // The collection name for User Logs
-        val folder : Task<ListResult> = dbStorage.reference.child(DBHelper().getCurrentUserID()).listAll()
-            .addOnCompleteListener(){
-
-                // Here we have created a new instance for user logs ArrayList.
-                val userRecoList: ArrayList<UserReco> = ArrayList()
-
-
-
-
-
-
-        }
-        folder.equals(DBHelper().getCurrentUserID()).apply {
-
-        }
-
-    }
-
-
 }

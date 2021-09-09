@@ -23,7 +23,6 @@ class ImagesicianActivity : AppCompatActivity(),
          * icons, and menu item IDs and fragments.
          */
             LOGS(R.id.bottom_navigation_item_image, R.drawable.ic_add_photo_foreground, R.string.image_item, ImageFragment()),
-            PROGRESS(R.id.bottom_navigation_item_barcode, R.drawable.ic_qr_code_foreground, R.string.barcode_item, HistoryFragment()),
             PROFILE(R.id.bottom_navigation_item_settings, R.drawable.ic_horizontal_dots_foreground, R.string.settings_item, SettingsFragment())
     }
 
@@ -35,14 +34,13 @@ class ImagesicianActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_imagesician)
 
-
                 // Initialize components/views.
                 viewPager = findViewById(R.id.view_pager)
                 bottomNavigationView = findViewById(R.id.bottom_navigation_view)
                 mainPagerAdapter = MainPagerAdapter(supportFragmentManager)
 
                 // Set items to be displayed.
-                mainPagerAdapter.setItems(arrayListOf(MainScreen.LOGS, MainScreen.PROGRESS, MainScreen.PROFILE))
+                mainPagerAdapter.setItems(arrayListOf(MainScreen.LOGS, MainScreen.PROFILE))
 
                 // Show the default screen.
                 val defaultScreen = MainScreen.LOGS
