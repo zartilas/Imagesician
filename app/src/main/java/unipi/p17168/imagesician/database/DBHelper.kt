@@ -5,13 +5,16 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storageMetadata
+import com.squareup.picasso.Picasso
 import unipi.p17168.imagesician.activities.SignInActivity
 import unipi.p17168.imagesician.activities.SignUpActivity
 import unipi.p17168.imagesician.utils.Constants
@@ -22,6 +25,7 @@ class DBHelper {
 
     // Access a Cloud Firestore instance.
     private val dbFirestore = FirebaseFirestore.getInstance()
+    private val dbStorage = FirebaseStorage.getInstance()
 
 
     /**
@@ -127,7 +131,7 @@ class DBHelper {
 
         Log.e("ImageFragmend","The id: ${DBHelper().getCurrentUserID()}")
 
-        val folder : StorageReference = FirebaseStorage.getInstance().reference.child(DBHelper().getCurrentUserID())
+        val folder : StorageReference = dbStorage.reference.child(DBHelper().getCurrentUserID())
         val imageName = folder.child("image" + image.lastPathSegment)
 
         val metadata = if(isTextImage){
@@ -147,44 +151,24 @@ class DBHelper {
      *
      * @param activity The fragment is passed as parameter as the function is called from fragment and need to the success result.
      */
-    fun getUserLogEntries(activity: Activity, sortBy: String) {
+    fun getUserImage(activity: Activity, sortBy: String) {
         // The collection name for User Logs
-        dbFirestore.collection(Constants.COLLECTION_USER_LOGS)
-            .whereEqualTo(Constants.FIELD_USER_ID, getCurrentUserID())
-            .orderBy(sortBy, Query.Direction.ASCENDING)
-            .get() // Will get the documents snapshots.
-            .addOnSuccessListener { document ->
-
-                // Here we get the list of boards in the form of documents.
-                Log.d("User Logs List", document.documents.toString())
+        val folder : Task<ListResult> = dbStorage.reference.child(DBHelper().getCurrentUserID()).listAll()
+            .addOnCompleteListener(){
 
                 // Here we have created a new instance for user logs ArrayList.
-                val userLogsList: ArrayList<UserReco> = ArrayList()
+                val userRecoList: ArrayList<UserReco> = ArrayList()
 
-                // A for loop as per the list of documents to convert them into user logs ArrayList.
-                for (i in document.documents) {
 
-                    val userLog = i.toObject(UserLog::class.java)
-                    userLog!!.logId = i.id
 
-                    userLogsList.add(userLog)
-                }
-                when (activity) {
-                    is UserLogsListActivity -> {
-                        activity.successUserLogsFromFireStore(userLogsList)
-                    }
-                    else -> {}
-                }
-            }
-            .addOnFailureListener { e ->
-              /*  when (activity) {
-                    is UserLogsListActivity -> {
-                        activity.hideLogs()
-                    }
-                    else -> {}
-                }*/
-                Log.e("Get User Logs List", "Error while getting user logs list.", e)
-            }
+
+
+
+        }
+        folder.equals(DBHelper().getCurrentUserID()).apply {
+
+        }
+
     }
 
 

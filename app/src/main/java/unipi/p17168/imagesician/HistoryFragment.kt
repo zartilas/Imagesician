@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.camera.core.*
-import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fragment_qrcode.*
-import unipi.p17168.imagesician.databinding.FragmentQrcodeBinding
+
+import kotlinx.android.synthetic.main.fragment_history.*
 import unipi.p17168.imagesician.utils.ToolBox
 import kotlinx.android.synthetic.main.fragment_image.*
 import unipi.p17168.imagesician.databinding.FragmentHistoryBinding
-import unipi.p17168.imagesician.models.UserReco
 
 
 class HistoryFragment : androidx.fragment.app.Fragment(){
@@ -46,37 +44,7 @@ class HistoryFragment : androidx.fragment.app.Fragment(){
         setupClickListeners()
 
     }
-    /**
-     * A function to get the successful tables list from cloud firestore.
-     *
-     * @param userLogsList Will receive the tables list from cloud firestore.
-     */
-    fun successUserLogsFromFireStore(userLogsList: ArrayList<UserReco>) {
 
-        //hideProgressDialog()
-
-        if (userLogsList.size > 0) {
-
-            val userLogAdapter = UserLogListAdapter(this, userLogsList)
-
-            binding.apply {
-                recyclerView.run {
-                    layoutManager = LinearLayoutManager(this@UserLogsListActivity, LinearLayoutManager.VERTICAL, false)
-                    setHasFixedSize(true)
-
-                    adapter = userLogAdapter
-                }
-                layoutEmptyState.root.visibility = View.GONE
-            }
-        }
-        else
-            binding.layoutEmptyState.root.visibility = View.VISIBLE
-    }
-
-    fun hideLogs() {
-        hideProgressDialog()
-        binding.layoutEmptyState.root.visibility = View.VISIBLE
-    }
 
 
     override fun onResume() {

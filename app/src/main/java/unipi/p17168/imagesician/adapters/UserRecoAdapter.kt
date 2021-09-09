@@ -38,7 +38,7 @@ open class UserRecoAdapter(
      * Binds each item in the ArrayList to a view
      */
     override fun onBindViewHolder(holder: UserHistoryViewHolder, position: Int) {
-        val model = list[position]
+     /*   val model = list[position]
 
         holder.binding.apply {
             txtViewEquation.text =
@@ -54,7 +54,7 @@ open class UserRecoAdapter(
                 )
             txtViewDateAdded.text = Constants.DATE_FORMAT.format(model.dateAdded)
 
-            /* ICON */
+            *//* ICON *//*
             if (model.type == Constants.TYPE_MISTAKE) {
                 imgViewIcon.setImageDrawable(AppCompatResources.getDrawable(context, R.drawable.ic_cross))
                 imgViewIcon.setColorFilter(context.getColor(R.color.colorRedImperial))
@@ -76,7 +76,7 @@ open class UserRecoAdapter(
         // Slide from right animation
         val animation: Animation =
             AnimationUtils.loadAnimation(context, R.anim.anim_from_right)
-        holder.itemView.startAnimation(animation)
+        holder.itemView.startAnimation(animation)*/
     }
 
     /**
