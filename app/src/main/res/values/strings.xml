@@ -49,5 +49,10 @@
     <string name="txt_sign_in">Sign in</string>
     <string name="txt_forgot_password_question">Forgot password?</string>
     <string name="txt_don_t_have_an_account">Don\'t have an account? \n <b> Sign Up</b> </string>
+    <string name="button_logout">Logout</string>
+    <string name="txt_email">Email</string>
+    <string name="txt_name">Name</string>
+    <string name="txt_account_info">Account Info</string>
+    <string name="txt_date_registered">Date Registered</string>
 
 </resources>

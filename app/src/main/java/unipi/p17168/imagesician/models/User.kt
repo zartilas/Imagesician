@@ -15,6 +15,8 @@ import java.util.*
 @IgnoreExtraProperties
 data class User(
     val userId: String = "",
+    val fullName: String = "",
     val email: String = "",
-    val username: String = "",
+    @ServerTimestamp
+    val dateRegistered: Date = Date()
 ) : Parcelable

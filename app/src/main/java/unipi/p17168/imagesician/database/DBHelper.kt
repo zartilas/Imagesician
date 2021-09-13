@@ -5,24 +5,31 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import com.google.android.gms.tasks.Task
+import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.ListResult
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storageMetadata
+import unipi.p17168.imagesician.SettingsFragment
 import unipi.p17168.imagesician.activities.SignInActivity
 import unipi.p17168.imagesician.activities.SignUpActivity
+import unipi.p17168.imagesician.databinding.FragmentSettingsBinding
 import unipi.p17168.imagesician.utils.Constants
 import unipi.p17168.imagesician.models.User
+
+
+
+
 
 class DBHelper {
 
     // Access a Cloud Firestore instance.
     private val dbFirestore = FirebaseFirestore.getInstance()
     private val dbStorage = FirebaseStorage.getInstance()
+    private val settingsFragment = SettingsFragment()
+
 
 
     /**
@@ -70,7 +77,7 @@ class DBHelper {
     /**
      * A function to get the logged user details from from FireStore Database.
      */
-    fun getUserDetails(activity: Activity) {
+    fun getUserDetails(activity: Activity?,fragment: Fragment?) {
 
         // Here we pass the collection name from which we wants the data.
         dbFirestore.collection(Constants.COLLECTION_USERS)
@@ -79,12 +86,18 @@ class DBHelper {
             .get()
             .addOnSuccessListener { document ->
 
-                Log.d(activity.javaClass.simpleName, document.toString())
+                if (activity != null) {
+                    Log.d(activity.javaClass.simpleName, document.toString())
+                }
 
                 // Here we have received the document snapshot which is converted into the User Data model object.
                 val user = document.toObject(User::class.java)!!
 
-                when (activity) {
+                /*settingsFragment.successProfileDetailsFromFirestore(user)*/
+                Log.d("DBHelper","Succes Deatails")
+                Log.d("DBHelper", user.toString())
+
+                when (activity && fragment) {
                     // When activity is the sign in one
                     is SignInActivity -> {
                         val sharedPreferences =
@@ -102,7 +115,16 @@ class DBHelper {
                         editor.apply()
                         // Call a function of base activity for transferring the result to it.
                         activity.userLoggedInSuccess()
+                        Log.d("DBHelper","Succ es Login")
                     }
+
+
+                    // When Fragment is the profile details one
+                    is SettingsFragment  -> {
+                        settingsFragment.successProfileDetailsFromFirestore(user)
+                    }
+
+
                 }
             }
             .addOnFailureListener { e ->

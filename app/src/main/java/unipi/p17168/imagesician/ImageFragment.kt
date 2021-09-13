@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
-import unipi.p17168.imagesician.database.DBHelper
 import unipi.p17168.imagesician.databinding.FragmentImageBinding
 import unipi.p17168.imagesician.utils.ToolBox
 import unipi.p17168.imagesician.wiki.WikiListItems

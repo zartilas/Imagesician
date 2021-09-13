@@ -28,19 +28,18 @@ open class BaseActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-
     fun goToImagesicialActivity(context: Context) {
         val intent = Intent(context, ImagesicianActivity::class.java)
         startActivity(intent)
     }
 
-    fun goToSignInActivity(context: Context, showRegisteredSnackBar: Boolean, userEmail: String) {
+ /*   fun goToSignInActivity(context: Context, showRegisteredSnackBar: Boolean, userEmail: String) {
         val intent = Intent(context, SignInActivity::class.java)
         intent.putExtra(Constants.EXTRA_REG_USERS_SNACKBAR, showRegisteredSnackBar)
         intent.putExtra(Constants.EXTRA_USER_EMAIL, userEmail)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-    }
+    }*/
 
     /**
      * A function to implement the double back press feature to exit the app.

@@ -112,7 +112,6 @@ class SignInActivity : BaseActivity() {
                             DBHelper().getUserDetails(this@SignInActivity)
                         } else {
 
-
                             ToolBox().showSnackBar(binding.root,
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorStrings),
@@ -133,7 +132,7 @@ class SignInActivity : BaseActivity() {
     fun userLoggedInSuccess() {
 
         // Hide the progress dialog.
-      //  hideProgressDialog()
+        //hideProgressDialog()
 
         finish()
         // Redirect the user to Dashboard Screen after log in.
