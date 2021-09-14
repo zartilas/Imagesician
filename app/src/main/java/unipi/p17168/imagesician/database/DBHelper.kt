@@ -5,20 +5,16 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.util.Log
-import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storageMetadata
-import unipi.p17168.imagesician.SettingsFragment
 import unipi.p17168.imagesician.activities.SignInActivity
 import unipi.p17168.imagesician.activities.SignUpActivity
 import unipi.p17168.imagesician.utils.Constants
 import unipi.p17168.imagesician.models.User
-
-
 
 
 
@@ -27,8 +23,6 @@ class DBHelper {
     // Access a Cloud Firestore instance.
     private val dbFirestore = FirebaseFirestore.getInstance()
     private val dbStorage = FirebaseStorage.getInstance()
-    private val settingsFragment = SettingsFragment()
-
 
 
     /**
@@ -76,7 +70,7 @@ class DBHelper {
     /**
      * A function to get the logged user details from from FireStore Database.
      */
-    fun getUserDetails(activity: Activity?, fragment: Fragment?) {
+    fun getUserDetails(activity: Activity) {
 
         // Here we pass the collection name from which we wants the data.
         dbFirestore.collection(Constants.COLLECTION_USERS)
@@ -85,9 +79,7 @@ class DBHelper {
             .get()
             .addOnSuccessListener { document ->
 
-                if (activity != null) {
                     Log.d(activity.javaClass.simpleName, document.toString())
-                }
 
                 // Here we have received the document snapshot which is converted into the User Data model object.
                 val user = document.toObject(User::class.java)!!
@@ -119,13 +111,6 @@ class DBHelper {
 
                 }
 
-             /*   when (fragment) {
-                // When Fragment is the profile details one
-                is SettingsFragment  -> {
-                    Log.d("DBHelper n When", user.toString())
-                    settingsFragment.successProfileDetailsFromFirestore(user)
-                }
-            }*/
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error. And print the error in log.
@@ -139,14 +124,12 @@ class DBHelper {
                 }*/
 
                 Log.e(
-                    activity?.javaClass!!.simpleName,
+                    activity.javaClass.simpleName,
                     "Error while getting user details.",
                     e
                 )
             }
     }
-
-
      fun saveUserImage(image: Uri, isTextImage : Boolean){
 
         Log.e("ImageFragmend","The id: ${DBHelper().getCurrentUserID()}")

@@ -4,10 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentContainerView
 import unipi.p17168.imagesician.ImagesicianActivity
 import unipi.p17168.imagesician.R
-import unipi.p17168.imagesician.utils.Constants
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
