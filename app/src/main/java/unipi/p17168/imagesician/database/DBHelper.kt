@@ -15,7 +15,6 @@ import com.google.firebase.storage.ktx.storageMetadata
 import unipi.p17168.imagesician.SettingsFragment
 import unipi.p17168.imagesician.activities.SignInActivity
 import unipi.p17168.imagesician.activities.SignUpActivity
-import unipi.p17168.imagesician.databinding.FragmentSettingsBinding
 import unipi.p17168.imagesician.utils.Constants
 import unipi.p17168.imagesician.models.User
 
@@ -77,7 +76,7 @@ class DBHelper {
     /**
      * A function to get the logged user details from from FireStore Database.
      */
-    fun getUserDetails(activity: Activity?,fragment: Fragment?) {
+    fun getUserDetails(activity: Activity?, fragment: Fragment?) {
 
         // Here we pass the collection name from which we wants the data.
         dbFirestore.collection(Constants.COLLECTION_USERS)
@@ -94,10 +93,10 @@ class DBHelper {
                 val user = document.toObject(User::class.java)!!
 
                 /*settingsFragment.successProfileDetailsFromFirestore(user)*/
-                Log.d("DBHelper","Succes Deatails")
-                Log.d("DBHelper", user.toString())
+                Log.d("DBHelper","Succes Deatails")/*
+                Log.d("DBHelper", user.toString())*/
 
-                when (activity && fragment) {
+                when (activity) {
                     // When activity is the sign in one
                     is SignInActivity -> {
                         val sharedPreferences =
@@ -118,14 +117,15 @@ class DBHelper {
                         Log.d("DBHelper","Succ es Login")
                     }
 
-
-                    // When Fragment is the profile details one
-                    is SettingsFragment  -> {
-                        settingsFragment.successProfileDetailsFromFirestore(user)
-                    }
-
-
                 }
+
+             /*   when (fragment) {
+                // When Fragment is the profile details one
+                is SettingsFragment  -> {
+                    Log.d("DBHelper n When", user.toString())
+                    settingsFragment.successProfileDetailsFromFirestore(user)
+                }
+            }*/
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error. And print the error in log.
@@ -139,7 +139,7 @@ class DBHelper {
                 }*/
 
                 Log.e(
-                    activity.javaClass.simpleName,
+                    activity?.javaClass!!.simpleName,
                     "Error while getting user details.",
                     e
                 )

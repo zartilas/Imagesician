@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentContainerView
 import unipi.p17168.imagesician.ImagesicianActivity
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.utils.Constants
@@ -23,7 +24,7 @@ open class BaseActivity : AppCompatActivity() {
     // A global variable for double back press feature.
     private var doubleBackToExitPressedOnce = false
 
-    fun goToSignInActivity(context: Context) {
+    fun goToSignInActivity(context: Context?) {
         val intent = Intent(context, SignInActivity::class.java)
         startActivity(intent)
     }
@@ -33,13 +34,12 @@ open class BaseActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
- /*   fun goToSignInActivity(context: Context, showRegisteredSnackBar: Boolean, userEmail: String) {
-        val intent = Intent(context, SignInActivity::class.java)
-        intent.putExtra(Constants.EXTRA_REG_USERS_SNACKBAR, showRegisteredSnackBar)
-        intent.putExtra(Constants.EXTRA_USER_EMAIL, userEmail)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    fun goToMainActivityNoAnimation(context: Context) {
+        val intent = Intent(context, ImagesicianActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
-    }*/
+    }
 
     /**
      * A function to implement the double back press feature to exit the app.

@@ -8,6 +8,7 @@ object Constants {
     // General Constants
     const val SHARED_PREFERENCES_PREFIX: String = "ImagesicianPrefs"
     const val LOGGED_IN_EMAIL: String = "logged_in_email"
+    const val SPLASH_SCREEN_DELAY: Long = 1500
 
     // Intent Extras
     const val EXTRA_USER_EMAIL: String = "extraUserEmail"

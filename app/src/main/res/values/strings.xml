@@ -54,5 +54,10 @@
     <string name="txt_name">Name</string>
     <string name="txt_account_info">Account Info</string>
     <string name="txt_date_registered">Date Registered</string>
+    <string name="i_didn_t_recognize_anything">I didn\'t recognize anything!</string>
+    <string name="i_may_be_an_ai_app_but_not_a_god_n_i_can_t_know_everything_n_i_m_sorry">I may be an AI app but not a God.\n I can\'t know everything! \n I\'m sorry.</string>
+    <string name="ok">Ok</string>
+    <string name="something_went_wrong_n_maybe_your_internet_connection_was_interrupted">Something went wrong.\n Maybe your internet connection was interrupted.</string>
+    <string name="ok">Ok</string>
 
 </resources>
