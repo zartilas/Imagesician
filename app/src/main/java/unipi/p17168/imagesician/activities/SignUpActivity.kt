@@ -124,7 +124,7 @@ class SignUpActivity : BaseActivity() {
         if (validateRegisterDetails()) {
 
             // Show the progress dialog.
-            //showProgressDialog()
+            showProgressDialog()
 
             binding.apply  {
                 val email: String = inputTxtEmail.text.toString().trim { it <= ' ' }
@@ -177,7 +177,7 @@ class SignUpActivity : BaseActivity() {
     fun userRegistrationSuccess() {
 
         //Hide the progress dialog
-        //hideProgressDialog()
+        hideProgressDialog()
 
         /**
          * Here the new user registered is automatically signed-in so we just sign-out the user from firebase

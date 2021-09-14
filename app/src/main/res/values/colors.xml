@@ -26,4 +26,6 @@
 
     <color name="colorRedDark">#A31526</color>
 
+    <color name="colorContainer">#00796B</color>
+
 </resources>

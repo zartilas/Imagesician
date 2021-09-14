@@ -8,24 +8,24 @@
     tools:context=".SettingsFragment"
     android:background="@color/colorBackground">
 
-    <TextView
-        android:id="@+id/textView_Account_Info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="29dp"
-        android:text="@string/txt_account_info"
-        android:textColor="@color/colorPrimaryDark"
 
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textView_Account_Info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="29dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/txt_account_info"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="380dp"
+        android:layout_height="200dp"
         android:layout_marginTop="28dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,9 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/txt_name"
-            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/textView_Account_Info"
             app:layout_constraintTop_toBottomOf="@+id/textView_Account_Info" />
 
@@ -61,8 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/txt_email"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView_Name"
             tools:layout_editor_absoluteY="292dp" />
@@ -82,8 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="@string/txt_date_registered"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/textView_Name"
             tools:layout_editor_absoluteY="292dp" />
@@ -99,26 +96,65 @@
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_Logout"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/textView_More_Settings"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:background="@android:color/transparent"
-        android:gravity="start|center_vertical"
-        android:text="@string/button_logout"
-        android:textAllCaps="true"
-        android:textColor="@color/colorRedDark"
-        android:textSize="20sp"
-        app:icon="@drawable/ic_exit"
-        app:iconPadding="15dp"
-        app:iconSize="24dp"
-        app:iconTint="@color/colorRedDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:text="@string/txt_more_settings"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textView_Account_Info"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="380dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="28dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.903" />
+        app:layout_constraintStart_toStartOf="@+id/textView_More_Settings"
+        app:layout_constraintTop_toBottomOf="@+id/textView_More_Settings">
+
+        <Switch
+            android:id="@+id/switch_dark_mode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:switchPadding="100dp"
+            android:text="@string/enable_dark_mode"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView_More_Settings"
+            app:layout_constraintTop_toBottomOf="@+id/textView_More_Settings"
+            tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
+
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_Logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="28dp"
+            android:background="@android:color/transparent"
+            android:gravity="start|center_vertical"
+            android:text="@string/button_logout"
+            android:textAllCaps="true"
+            android:textColor="@color/colorRedDark"
+            android:textSize="20sp"
+            app:icon="@drawable/ic_exit"
+            app:iconPadding="15dp"
+            app:iconSize="24dp"
+            app:iconTint="@color/colorRedDark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.903" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

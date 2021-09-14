@@ -12,6 +12,7 @@ import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : BaseActivity() {
+
     // ~~~~~~~~ VARIABLES ~~~~~~~~
     private lateinit var binding: ActivitySplashBinding
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~

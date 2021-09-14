@@ -1,14 +1,15 @@
 package unipi.p17168.imagesician
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import unipi.p17168.imagesician.activities.BaseActivity
 import unipi.p17168.imagesician.activities.SignInActivity
 import unipi.p17168.imagesician.database.DBHelper
 import unipi.p17168.imagesician.databinding.FragmentSettingsBinding
@@ -43,11 +44,26 @@ class SettingsFragment : Fragment(){
         loadProfileDetails()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setupClickListeners() {
-        binding.btnLogout.setOnClickListener{
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent(context, SignInActivity::class.java)
-            startActivity(intent)
+        binding.apply {
+            btnLogout.setOnClickListener{
+                FirebaseAuth.getInstance().signOut()
+                val intent = Intent(context, SignInActivity::class.java)
+                startActivity(intent)
+            }
+
+            switchDarkMode.setOnCheckedChangeListener { _, _ ->
+                if (switchDarkMode.isChecked) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    switchDarkMode.text = getString(R.string.disable_dark_mode)
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    switchDarkMode.text = getString(R.string.enable_dark_mode)
+                }
+
+            }
+
         }
     }
 

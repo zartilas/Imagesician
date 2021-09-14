@@ -25,6 +25,7 @@ class SignInActivity : BaseActivity() {
     //var
     private lateinit var binding: ActivitySignInBinding
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,17 +36,8 @@ class SignInActivity : BaseActivity() {
         init()
     }
 
-
-
     private fun init() {
         if (intent.hasExtra(Constants.EXTRA_REG_USERS_SNACKBAR)) {
-        /*    if (intent.extras?.getBoolean(Constants.EXTRA_REG_USERS_SNACKBAR) == true) {
-                SnackBarSuccessClass
-                    .make(binding.root,
-                        getString(R.string.txt_congratulations),
-                        getString(R.string.txt_sign_up_successful))
-                    .show()
-            }*/
             binding.inputTxtEmail.setText(intent.getStringExtra(Constants.EXTRA_USER_EMAIL).toString())
         }
 
@@ -96,7 +88,7 @@ class SignInActivity : BaseActivity() {
     private fun signInUser() {
         if (validateFields()) {
             // Show the progress dialog.
-            //showProgressDialog()
+            showProgressDialog()
 
             binding.apply {
                 // Get the text from editText and trim the space
@@ -132,7 +124,7 @@ class SignInActivity : BaseActivity() {
     fun userLoggedInSuccess() {
 
         // Hide the progress dialog.
-        //hideProgressDialog()
+        hideProgressDialog()
 
         finish()
         // Redirect the user to Dashboard Screen after log in.

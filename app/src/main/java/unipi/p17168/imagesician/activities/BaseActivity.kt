@@ -1,7 +1,10 @@
 package unipi.p17168.imagesician.activities
 
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import unipi.p17168.imagesician.ImagesicianActivity
@@ -21,6 +24,9 @@ open class BaseActivity : AppCompatActivity() {
 
     // A global variable for double back press feature.
     private var doubleBackToExitPressedOnce = false
+
+    // This is a progress dialog instance which we will initialize later on.
+    private lateinit var mProgressDialog: Dialog
 
     fun goToSignInActivity(context: Context?) {
         val intent = Intent(context, SignInActivity::class.java)
@@ -61,4 +67,31 @@ open class BaseActivity : AppCompatActivity() {
             doubleBackToExitPressedOnce = false
         }, 2000, TimeUnit.MILLISECONDS)
     }
+
+    /**
+     * This function is used to show the progress dialog with the title and message to user.
+     */
+    fun showProgressDialog() {
+        mProgressDialog = Dialog(this)
+
+        /*Set the screen content from a layout resource.
+        The resource will be inflated, adding all top-level views to the screen.*/
+        mProgressDialog.setContentView(R.layout.dialog_progress)
+
+        mProgressDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        mProgressDialog.setCancelable(false)
+        mProgressDialog.setCanceledOnTouchOutside(false)
+
+        //Start the dialog and display it on screen.
+        mProgressDialog.show()
+    }
+
+    /**
+     * This function is used to dismiss the progress dialog if it is visible to user.
+     */
+    fun hideProgressDialog() {
+        mProgressDialog.dismiss()
+    }
+
 }

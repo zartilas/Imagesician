@@ -114,14 +114,11 @@ class DBHelper {
             }
             .addOnFailureListener { e ->
                 // Hide the progress dialog if there is any error. And print the error in log.
-               /* when (activity) {
+                when (activity) {
                     is SignInActivity -> {
                         activity.hideProgressDialog()
                     }
-                    is ProfileDetailsActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                }*/
+                }
 
                 Log.e(
                     activity.javaClass.simpleName,
