@@ -109,7 +109,7 @@ class SignInActivity : BaseActivity() {
 
                         FirebaseAuth.getInstance()
                         if (task.isSuccessful) {
-                            DBHelper().getUserDetails(this@SignInActivity,null)
+                            DBHelper().getUserDetails(this@SignInActivity)
                         } else {
 
                             ToolBox().showSnackBar(binding.root,
