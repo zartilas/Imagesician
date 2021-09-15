@@ -71,18 +71,19 @@ class SignInActivity : BaseActivity() {
 
     private fun setupClickListeners() {
         binding.apply {
-            txtViewSignUp.setOnClickListener {
-                // Launch the sign up screen when the user clicks on the sign up text.
-                val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
-                startActivity(intent)
-            }
-            /*txtViewForgotPassword.setOnClickListener {
-                // Launch the forgot password screen when the user clicks on the forgot password text.
-                val intent = Intent(this@SignInActivity, ForgotPasswordActivity::class.java)
-                startActivity(intent)*/
-            }
-            binding.btnSignIn.setOnClickListener { signInUser() }
+                txtViewSignUp.setOnClickListener {
+                    // Launch the sign up screen when the user clicks on the sign up text.
+                    val intent = Intent(this@SignInActivity, SignUpActivity::class.java)
+                    startActivity(intent)
+                }
+                txtViewForgotPassword.setOnClickListener {
+                    // Launch the forgot password screen when the user clicks on the forgot password text.
+                    val intent = Intent(this@SignInActivity, ForgotPasswordActivity::class.java)
+                    startActivity(intent)
+                }
+                btnSignIn.setOnClickListener { signInUser() }
         }
+    }
 
 
     private fun signInUser() {
@@ -107,8 +108,8 @@ class SignInActivity : BaseActivity() {
                             ToolBox().showSnackBar(binding.root,
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorStrings),
-                                "Sorry, try later.",
-                                "OK",
+                                getString(R.string.txt_Something_went_wrong),
+                                getString(R.string.ok),
                                 Snackbar.ANIMATION_MODE_SLIDE).show()
                         }
                     }

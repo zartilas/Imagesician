@@ -20,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Imagesician">
-
+        <activity
+            android:name=".activities.ForgotPasswordActivity"
+            android:exported="true" />
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true">
@@ -40,9 +42,7 @@
             android:exported="true" />
         <activity
             android:name=".activities.SignInActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"

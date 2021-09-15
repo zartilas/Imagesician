@@ -1,48 +1,24 @@
 <resources>
     <string name="app_name">Imagesician</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
+    <string name="title_activity_base">Base Activity</string>
     <!-- Bottom Nav -->
     <string name="image_item">Image</string>
-    <string name="barcode_item">QR Code</string>
     <string name="settings_item">Settings</string>
     <string name="select_image">Select Image</string>
     <string name="context_text">Context Text?</string>
     <string name="copy_text">Copy Text</string>
     <string name="scan_code">Scan</string>
-    <string name="sign_in">SIGN IN</string>
-    <string name="button_sign_in_with_google">Sign in with Google</string>
 
+    <string name="sign_in">Sign In</string>
     <string name="txt_sign_up">Sign Up</string>
     <string name="txt_lets_get_started">Let\'s get started</string>
     <string name="input_txt_hint_username">Your Username</string>
     <string name="input_txt_hint_email">Your email address</string>
     <string name="input_txt_hint_password">Your pasword</string>
     <string name="txt_already_have_an_account">Already have an account? \n Sign In</string>
-    <string name="title_activity_base">BaseActivity</string>
 
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="txt_please_click_back_again_to_exit">Please click back again to exit</string>
     <string name="txt_sign_in_header">Enter your email and password to continue.</string>
     <string name="txt_sign_in">Sign in</string>
@@ -62,6 +38,12 @@
     <string name="txt_more_settings">Application</string>
     <string name="enable_dark_mode">Enable dark mode </string>
     <string name="disable_dark_mode">Disable dark mode</string>
+    <string name="txt_password_reset">Password Reset</string>
+    <string name="txt_enter_email_address_to_send_reset_code">Enter email address to send reset code.</string>
+    <string name="button_send">Send</string>
+    <string name="txt_password_reset_mail_sent">Email sent successfully to reset your password!</string>
+    <string name="txt_Something_went_wrong">Something went wrong, try again.</string>
+    <string name="txt_error_empty_email">Please enter your email.</string>
 
 
 </resources>
