@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat.recreate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import unipi.p17168.imagesician.activities.SignInActivity
@@ -53,13 +54,13 @@ class SettingsFragment : Fragment(){
                 startActivity(intent)
             }
 
-            switchDarkMode.setOnCheckedChangeListener { _, _ ->
-                if (switchDarkMode.isChecked) {
+            switchNightMode.setOnCheckedChangeListener { _, _ ->
+                if (switchNightMode.isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    switchDarkMode.text = getString(R.string.disable_dark_mode)
+
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    switchDarkMode.text = getString(R.string.enable_dark_mode)
+
                 }
 
             }

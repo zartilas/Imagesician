@@ -36,14 +36,17 @@
     <string name="not_your_average_detector">Not your average Detector!</string>
     <string name="txt_please_wait">Please wait…</string>
     <string name="txt_more_settings">Application</string>
-    <string name="enable_dark_mode">Enable dark mode </string>
-    <string name="disable_dark_mode">Disable dark mode</string>
     <string name="txt_password_reset">Password Reset</string>
     <string name="txt_enter_email_address_to_send_reset_code">Enter email address to send reset code.</string>
     <string name="button_send">Send</string>
     <string name="txt_password_reset_mail_sent">Email sent successfully to reset your password!</string>
     <string name="txt_Something_went_wrong">Something went wrong, try again.</string>
     <string name="txt_error_empty_email">Please enter your email.</string>
-
+    <string name="dark_mode"> \t Night Theme </string>
+    <string name="RadioButtonGreek">Greek</string>
+    <string name="RadioButtonEnglish">English</string>
+    <string name="txt_appearance">Appearance</string>
+    <string name="txt_language">Language</string>
+    <string name="RadioButtonGerman">German</string>
 
 </resources>
