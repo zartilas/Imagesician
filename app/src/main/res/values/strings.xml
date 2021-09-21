@@ -1,16 +1,13 @@
 <resources>
-    <string name="app_name">Imagesician</string>
+    <string name="app_name" translatable="false">Imagesician</string>
+    <string name="title_activity_base" translatable="false">Base Activity</string>
 
-    <string name="title_activity_base">Base Activity</string>
-    <!-- Bottom Nav -->
     <string name="image_item">Image</string>
     <string name="settings_item">Settings</string>
     <string name="select_image">Select Image</string>
-    <string name="context_text">Context Text?</string>
-    <string name="copy_text">Copy Text</string>
-    <string name="scan_code">Scan</string>
+    <string name="txt_context_text">Context Text?</string>
+    <string name="txt_copy_text">The text copied to clipboard.</string>
 
-    <string name="sign_in">Sign In</string>
     <string name="txt_sign_up">Sign Up</string>
     <string name="txt_lets_get_started">Let\'s get started</string>
     <string name="input_txt_hint_username">Your Username</string>
@@ -31,7 +28,7 @@
     <string name="txt_date_registered">Date Registered</string>
     <string name="i_didn_t_recognize_anything">I didn\'t recognize anything!</string>
     <string name="i_may_be_an_ai_app_but_not_a_god_n_i_can_t_know_everything_n_i_m_sorry">I may be an AI app but not a God.\n I can\'t know everything! \n I\'m sorry.</string>
-    <string name="ok">OK</string>
+    <string name="txt_all_right">All right!</string>
     <string name="something_went_wrong_n_maybe_your_internet_connection_was_interrupted">Something went wrong.\n Maybe your internet connection was interrupted.</string>
     <string name="not_your_average_detector">Not your average Detector!</string>
     <string name="txt_please_wait">Please wait…</string>

@@ -19,4 +19,6 @@ object Constants {
     const val COLLECTION_USERS: String = "users"
 
     val DATE_FORMAT: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
+    var DLOCALE: Locale? = null
+    const val LANGUAGE : String = "language"
 }

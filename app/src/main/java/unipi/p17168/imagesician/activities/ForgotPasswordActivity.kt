@@ -68,7 +68,7 @@ class ForgotPasswordActivity : BaseActivity() {
                                 ContextCompat.getColor(this@ForgotPasswordActivity,R.color.colorSuccessBackgroundSnackbar),
                                 ContextCompat.getColor(this@ForgotPasswordActivity,R.color.colorStrings),
                                 getString(R.string.txt_password_reset_mail_sent),
-                                getString(R.string.ok),
+                                getString(R.string.txt_all_right),
                                 Snackbar.ANIMATION_MODE_SLIDE).show()
                             finish()
                         } else {
@@ -76,7 +76,7 @@ class ForgotPasswordActivity : BaseActivity() {
                                 ContextCompat.getColor(this@ForgotPasswordActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@ForgotPasswordActivity,R.color.colorStrings),
                                 getString(R.string.txt_Something_went_wrong),
-                                getString(R.string.ok),
+                                getString(R.string.txt_all_right),
                                 Snackbar.ANIMATION_MODE_SLIDE).show()
                         }
                     }
@@ -96,7 +96,7 @@ class ForgotPasswordActivity : BaseActivity() {
                         ContextCompat.getColor(this@ForgotPasswordActivity,R.color.colorErrorBackgroundSnackbar),
                         ContextCompat.getColor(this@ForgotPasswordActivity,R.color.colorStrings),
                         getString(R.string.txt_error_empty_email),
-                        getString(R.string.ok),
+                        getString(R.string.txt_all_right),
                         Snackbar.ANIMATION_MODE_SLIDE).show()
 
                     inputTxtLayoutEmail.requestFocus()

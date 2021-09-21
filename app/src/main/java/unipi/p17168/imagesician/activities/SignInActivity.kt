@@ -109,7 +109,7 @@ class SignInActivity : BaseActivity() {
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorStrings),
                                 getString(R.string.txt_Something_went_wrong),
-                                getString(R.string.ok),
+                                getString(R.string.txt_all_right),
                                 Snackbar.ANIMATION_MODE_SLIDE).show()
                         }
                     }

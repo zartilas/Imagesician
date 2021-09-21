@@ -3,12 +3,16 @@ package unipi.p17168.imagesician.activities
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.ContextThemeWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import unipi.p17168.imagesician.ImagesicianActivity
 import unipi.p17168.imagesician.R
+import unipi.p17168.imagesician.utils.Constants.DLOCALE
+import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
 import java.util.concurrent.TimeUnit
@@ -27,6 +31,10 @@ open class BaseActivity : AppCompatActivity() {
 
     // This is a progress dialog instance which we will initialize later on.
     private lateinit var mProgressDialog: Dialog
+
+    init {
+        updateConfig(this)
+    }
 
     fun goToSignInActivity(context: Context?) {
         val intent = Intent(context, SignInActivity::class.java)
@@ -94,4 +102,15 @@ open class BaseActivity : AppCompatActivity() {
         mProgressDialog.dismiss()
     }
 
+     private fun updateConfig(wrapper: ContextThemeWrapper) {
+
+        if(DLOCALE == Locale("") ) // Do nothing if dLocale is null
+            return
+
+        Locale.setDefault(DLOCALE)
+        val configuration = Configuration()
+        configuration.setLocale(DLOCALE)
+        wrapper.applyOverrideConfiguration(configuration)
+    }
 }
+

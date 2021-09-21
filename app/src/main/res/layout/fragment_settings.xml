@@ -160,10 +160,11 @@
             tools:ignore="MissingConstraints,UseSwitchCompatOrMaterialXml" />
 
         <RadioGroup
-            android:id="@+id/radioGroup1"
+            android:id="@+id/radioGroupLag"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#024CAF50"
+            android:checkedButton="@+id/radioButtonEnglish"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

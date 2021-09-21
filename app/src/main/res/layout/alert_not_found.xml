@@ -61,7 +61,7 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:src="@android:color/transparent"
-                android:text="@string/ok"
+                android:text="@string/txt_all_right"
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 app:backgroundTint="@null"
