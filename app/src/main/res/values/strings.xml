@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">Imagesician</string>
-    <string name="title_activity_base" translatable="false">Base Activity</string>
 
     <string name="image_item">Image</string>
     <string name="settings_item">Settings</string>

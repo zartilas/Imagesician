@@ -14,7 +14,7 @@
     <string name="input_txt_hint_email">Τη διεύθυνση ηλεκτρονικού ταχυδρομείου  σας</string>
     <string name="input_txt_hint_password">Ο κωδικός σας</string>
     <string name="txt_already_have_an_account">Έχετε ήδη λογαρισμό; Συνδεθείτε</string>
-    <string name="txt_sign_in_header">Προσθέστε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας και τον κωδικό σας για να συνεχίσετε.</string>
+    <string name="txt_sign_in_header">Εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας και τον κωδικό σας για να συνεχίσετε.</string>
     <string name="txt_forgot_password_question">"Ξεχάσατε τον κωδικό σας; "</string>
     <string name="button_logout">Αποσύνδεση</string>
     <string name="txt_name">Όνομα</string>
@@ -39,6 +39,6 @@
     <string name="txt_appearance">Εμφάνιση</string>
     <string name="txt_language">Γλώσσα</string>
     <string name="txt_enter_email_address_to_send_reset_code">Εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας για να σας στείλουμε κωδικό επαναφοράς.</string>
-    <string name="txt_don_t_have_an_account">Δεν έχετε λογαριασμό; Εγγεραφείτε</string>
+    <string name="txt_don_t_have_an_account">Δεν έχετε λογαριασμό; Εγγραφείτε</string>
     <string name="image_item">Φωτογραφία</string>
 </resources>
