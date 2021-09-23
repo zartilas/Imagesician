@@ -3,13 +3,13 @@ package unipi.p17168.imagesician
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.content.SharedPreferences
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.PreferenceManager
+import androidx.preference.PreferenceManager.getDefaultSharedPreferences
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import unipi.p17168.imagesician.activities.SignInActivity
@@ -20,6 +20,12 @@ import unipi.p17168.imagesician.utils.Constants
 import unipi.p17168.imagesician.utils.Constants.DLOCALE
 import unipi.p17168.imagesician.utils.Constants.LANGUAGE
 import java.util.*
+import android.util.Log
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlin.properties.Delegates
+
 
 class SettingsFragment : Fragment(){
 
@@ -28,14 +34,14 @@ class SettingsFragment : Fragment(){
     //VAR
     private var _binding : FragmentSettingsBinding? = null
     private lateinit var modelUser: User
+    private lateinit var sharePrefLagnuage: SharedPreferences
+    private lateinit var lag : String
 
     //VAL
     private val binding get() = _binding!!
     private val contextSettingsFragment get() = this@SettingsFragment.requireContext()
     private val dbFirestore = FirebaseFirestore.getInstance()
-    private val sharePrefLagnuage = PreferenceManager.getDefaultSharedPreferences(contextSettingsFragment)
-    private var lag = sharePrefLagnuage.getString(LANGUAGE, "En")
-
+    private var radioButtonID = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -47,6 +53,10 @@ class SettingsFragment : Fragment(){
     }
 
     private fun init(){
+        sharePrefLagnuage = getDefaultSharedPreferences(contextSettingsFragment)
+        lag = sharePrefLagnuage.getString(LANGUAGE, "En")!!
+        radioButtonID = binding.radioGroupLag.checkedRadioButtonId
+        Log.e("Settings Fragment, Change:","INIT()")
         setupClickListeners()
         loadProfileDetails()
         onRadioButtonClicked(binding.radioGroupLag)
@@ -106,43 +116,58 @@ class SettingsFragment : Fragment(){
             "English" -> change = "En"
             "Greek" -> change = "Gr"
         }
+        Log.e("Settings Fragment, Change:",change)
         DLOCALE = Locale(change) //set any locale you want here
     }
 
     private fun onRadioButtonClicked(view: View) {
-
         if (view is RadioButton) {
             // Is the button now checked?
             val checked = view.isChecked
+            Log.e("Settings Fragment","onRadioButtonClicked")
+            Log.e("Settings Fragment selecteID", radioButtonID.toString())
 
             // Check which radio button was clicked
             when (view.getId()) {
-                R.id.radioButtonGreek ->
-                    if (checked) {
-                        with (sharePrefLagnuage.edit()) {
-                            putString(LANGUAGE,"Greek")
+
+                R.id.radioButtonGreek->{
+                   if (checked) {
+                        with(sharePrefLagnuage.edit()) {
+                            putString(LANGUAGE, "Greek")
                             apply()
+                            Log.e("Settings Fragment", "GREEK SUCCESS")
                         }
                         changeLag()
                     }
-                R.id.radioButtonEnglish ->
+
+               }
+                binding.radioButtonGerman.id ->{
                     if (checked) {
-                        with (sharePrefLagnuage.edit()) {
-                            putString(LANGUAGE,"English")
+                        with(sharePrefLagnuage.edit()) {
+                            putString(LANGUAGE, "German")
                             apply()
+                            Log.e("Settings Fragment", "GERMAN SUCCESS")
                         }
                         changeLag()
                     }
-                R.id.radioButtonGerman ->
+                }
+                binding.radioButtonEnglish.id-> {
                     if (checked) {
-                        with (sharePrefLagnuage.edit()) {
-                            putString(LANGUAGE,"German")
+                        with(sharePrefLagnuage.edit()) {
+                            putString(LANGUAGE, "English")
                             apply()
+                            Log.e("Settings Fragment", "ENGLISH SUCCESS")
+
                         }
                         changeLag()
                     }
+                }
             }
         }
     }
+
 }
+
+
+
 
