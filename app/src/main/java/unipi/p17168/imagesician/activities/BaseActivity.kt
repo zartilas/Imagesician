@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.ContextThemeWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -32,9 +33,9 @@ open class BaseActivity : AppCompatActivity() {
     // This is a progress dialog instance which we will initialize later on.
     private lateinit var mProgressDialog: Dialog
 
-    init {
+  /*  init {
         updateConfig(this)
-    }
+    }*/
 
     fun goToSignInActivity(context: Context?) {
         val intent = Intent(context, SignInActivity::class.java)
@@ -102,15 +103,22 @@ open class BaseActivity : AppCompatActivity() {
         mProgressDialog.dismiss()
     }
 
-     private fun updateConfig(wrapper: ContextThemeWrapper) {
 
-        if(DLOCALE == Locale("") ) // Do nothing if dLocale is null
+     private fun updateConfig(wrapper: ContextThemeWrapper) {
+        if(DLOCALE == Locale("") ) {
+            // Do nothing if dLocale is null
+            Log.e("BaseActivity", "Nothing in localez")
             return
+        }
 
        // Locale.setDefault(DLOCALE!!)
         val configuration = Configuration()
         configuration.setLocale(DLOCALE)
         wrapper.applyOverrideConfiguration(configuration)
     }
+
+
+
+
 }
 

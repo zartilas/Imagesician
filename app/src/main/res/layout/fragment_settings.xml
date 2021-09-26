@@ -180,34 +180,25 @@
                 android:textStyle="bold"
                 />
 
-        <RadioButton
+            <RadioButton
             android:id="@+id/radioButtonGreek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/RadioButtonGreek"
-            android:onClick= "onRadioButtonClicked"
-            android:textSize="20sp"
-
-            />
-
-        <RadioButton
+            android:textSize="20sp"/>
+            <RadioButton
             android:id="@+id/radioButtonEnglish"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/RadioButtonEnglish"
-            android:onClick= "onRadioButtonClicked"
             android:textSize="20sp"
-          />
-
+            />
             <RadioButton
                 android:id="@+id/radioButtonGerman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/RadioButtonGerman"
-                android:onClick= "onRadioButtonClicked"
-                android:textSize="20sp"
-                 />
-
+                android:textSize="20sp"/>
         </RadioGroup>
 
     </LinearLayout>

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -21,11 +22,10 @@ import unipi.p17168.imagesician.utils.Constants.DLOCALE
 import unipi.p17168.imagesician.utils.Constants.LANGUAGE
 import java.util.*
 import android.util.Log
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.view.ContextThemeWrapper
+import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_settings.*
-import kotlin.properties.Delegates
-
+import unipi.p17168.imagesician.activities.BaseActivity
 
 class SettingsFragment : Fragment(){
 
@@ -41,7 +41,7 @@ class SettingsFragment : Fragment(){
     private val binding get() = _binding!!
     private val contextSettingsFragment get() = this@SettingsFragment.requireContext()
     private val dbFirestore = FirebaseFirestore.getInstance()
-    private var radioButtonID = 0
+    var radioButtonID = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -54,12 +54,13 @@ class SettingsFragment : Fragment(){
 
     private fun init(){
         sharePrefLagnuage = getDefaultSharedPreferences(contextSettingsFragment)
-        lag = sharePrefLagnuage.getString(LANGUAGE, "En")!!
+        lag = sharePrefLagnuage.getString(LANGUAGE,"En")!!
         radioButtonID = binding.radioGroupLag.checkedRadioButtonId
         Log.e("Settings Fragment, Change:","INIT()")
         setupClickListeners()
         loadProfileDetails()
-        onRadioButtonClicked(binding.radioGroupLag)
+        updateConfig(BaseActivity.getView as ContextThemeWrapper) //TODO FIX THIS
+        checkedChangeRadioButtonLag()
     }
 
     @SuppressLint("SetTextI18n")
@@ -109,7 +110,7 @@ class SettingsFragment : Fragment(){
         }
     }
 
-    private fun changeLag(){
+    /*private fun changeLag(){
         var change = ""
         when (lag) {
             "German" -> change = "Ge"
@@ -117,56 +118,78 @@ class SettingsFragment : Fragment(){
             "Greek" -> change = "Gr"
         }
         Log.e("Settings Fragment, Change:",change)
-        DLOCALE = Locale(change) //set any locale you want here
-    }
 
-    private fun onRadioButtonClicked(view: View) {
-        if (view is RadioButton) {
-            // Is the button now checked?
-            val checked = view.isChecked
-            Log.e("Settings Fragment","onRadioButtonClicked")
-            Log.e("Settings Fragment selecteID", radioButtonID.toString())
+    }*/
 
-            // Check which radio button was clicked
-            when (view.getId()) {
+/*    fun updateConfig(wrapper: ContextThemeWrapper) {
+        if(DLOCALE==Locale("") ) // Do nothing if dLocale is null
+            return
+        Locale.setDefault(DLOCALE)
+        val configuration = Configuration()
+        configuration.setLocale(DLOCALE)
+        wrapper.applyOverrideConfiguration(configuration)
+    }*/
 
+
+    private fun checkedChangeRadioButtonLag(){
+        var change = ""
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(contextSettingsFragment)
+        val language = sharedPreferences.getString("language", "bak")
+
+      //  val yourRadioGroup = findViewById(R.id.radioGroupLag) as RadioGroup
+        binding.radioGroupLag.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
                 R.id.radioButtonGreek->{
-                   if (checked) {
-                        with(sharePrefLagnuage.edit()) {
-                            putString(LANGUAGE, "Greek")
-                            apply()
-                            Log.e("Settings Fragment", "GREEK SUCCESS")
-                        }
-                        changeLag()
-                    }
+                   /* with(sharePrefLagnuage.edit()) {
+                        putString(LANGUAGE, "Greek")
+                        apply()
 
-               }
-                binding.radioButtonGerman.id ->{
-                    if (checked) {
-                        with(sharePrefLagnuage.edit()) {
-                            putString(LANGUAGE, "German")
-                            apply()
-                            Log.e("Settings Fragment", "GERMAN SUCCESS")
-                        }
-                        changeLag()
-                    }
+                    }*/
+                    Log.e("Settings Fragment", "GREEK SUCCESS")
+                    change = "el"
+
                 }
-                binding.radioButtonEnglish.id-> {
-                    if (checked) {
-                        with(sharePrefLagnuage.edit()) {
-                            putString(LANGUAGE, "English")
-                            apply()
-                            Log.e("Settings Fragment", "ENGLISH SUCCESS")
+                R.id.radioButtonGerman -> {
+                  /*  with(sharePrefLagnuage.edit()) {
+                        putString(LANGUAGE, "German")
+                        apply()
 
-                        }
-                        changeLag()
-                    }
+                    }*/
+                    Log.e("Settings Fragment", "GERMAN SUCCESS")
+                    change = "ge"
+                }
+                R.id.radioButtonEnglish -> {
+                    /*with(sharePrefLagnuage.edit()) {
+                        putString(LANGUAGE, "English")
+                        apply()
+
+
+                    }*/
+                    Log.e("Settings Fragment", "ENGLISH SUCCESS")
+                    change = "en"
+
                 }
             }
+            Constants.DLOCALE = Locale(change) //set any locale you want here
+            Log.e("SettingsFragment",change)
         }
     }
 
+    private fun updateConfig(wrapper: ContextThemeWrapper) {
+        if(DLOCALE == Locale("") ) {
+            // Do nothing if dLocale is null
+            Log.e("FragmentSettings", "Nothing in localez")
+            return
+        }
+
+        // Locale.setDefault(DLOCALE!!)
+        val configuration = Configuration()
+        configuration.setLocale(DLOCALE)
+        wrapper.applyOverrideConfiguration(configuration)
+    }
+
 }
+
 
 
 

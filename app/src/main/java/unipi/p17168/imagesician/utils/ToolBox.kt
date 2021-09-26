@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
 import android.view.View
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
@@ -95,5 +96,12 @@ class ToolBox {
         }
 
         return dialog
+    }
+
+    @JvmName("KeyboardUtils")
+    fun hideSoftKeyboard(context: Context, view: View) {
+        val inputMethodManager =
+            context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
