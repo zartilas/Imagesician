@@ -6,6 +6,8 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.ConnectivityManager
@@ -18,6 +20,10 @@ import androidx.core.content.ContextCompat.getSystemService
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
 import unipi.p17168.imagesician.R
+import java.util.*
+import android.os.LocaleList
+import android.view.ContextThemeWrapper
+import unipi.p17168.imagesician.utils.Constants.DLOCALE
 
 
 class ToolBox {
@@ -104,4 +110,5 @@ class ToolBox {
             context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager?
         inputMethodManager!!.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
 }

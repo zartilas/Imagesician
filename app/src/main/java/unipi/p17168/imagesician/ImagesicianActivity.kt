@@ -1,5 +1,7 @@
 package unipi.p17168.imagesician
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
@@ -7,9 +9,12 @@ import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.annotation.IdRes
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import unipi.p17168.imagesician.activities.BaseActivity
 
 class ImagesicianActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener {
@@ -94,6 +99,7 @@ class ImagesicianActivity : AppCompatActivity(),
                 }
                 return false
             }
+
     }
 
     fun getMainScreenForMenuItem(menuItemId: Int): ImagesicianActivity.MainScreen? {
@@ -104,3 +110,4 @@ class ImagesicianActivity : AppCompatActivity(),
         }
         return null
     }
+

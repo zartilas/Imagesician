@@ -1,10 +1,14 @@
 package unipi.p17168.imagesician
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.os.Bundle
 import android.content.SharedPreferences
 import android.content.res.Configuration
+import android.content.res.Resources
+import android.os.Build
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,9 +27,20 @@ import unipi.p17168.imagesician.utils.Constants.LANGUAGE
 import java.util.*
 import android.util.Log
 import android.view.ContextThemeWrapper
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStateManagerControl
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_settings.*
 import unipi.p17168.imagesician.activities.BaseActivity
+import unipi.p17168.imagesician.utils.ToolBox
+
+
+
+
+
 
 class SettingsFragment : Fragment(){
 
@@ -42,6 +57,8 @@ class SettingsFragment : Fragment(){
     private val contextSettingsFragment get() = this@SettingsFragment.requireContext()
     private val dbFirestore = FirebaseFirestore.getInstance()
     var radioButtonID = 0
+    var refresh : Intent? = null
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -53,14 +70,14 @@ class SettingsFragment : Fragment(){
     }
 
     private fun init(){
+
         sharePrefLagnuage = getDefaultSharedPreferences(contextSettingsFragment)
-        lag = sharePrefLagnuage.getString(LANGUAGE,"En")!!
         radioButtonID = binding.radioGroupLag.checkedRadioButtonId
         Log.e("Settings Fragment, Change:","INIT()")
         setupClickListeners()
         loadProfileDetails()
-        updateConfig(BaseActivity.getView as ContextThemeWrapper) //TODO FIX THIS
         checkedChangeRadioButtonLag()
+        setUpSettings()
     }
 
     @SuppressLint("SetTextI18n")
@@ -83,6 +100,15 @@ class SettingsFragment : Fragment(){
 
             }
 
+        }
+    }
+
+
+    private fun setUpSettings(){
+        when(sharePrefLagnuage.getString(LANGUAGE,"")){
+          "Greek"-> binding.radioGroupLag.check(R.id.radioButtonGreek)
+          "English"->  binding.radioGroupLag.check(R.id.radioButtonEnglish)
+          "German"-> binding.radioGroupLag.check(R.id.radioButtonGerman)
         }
     }
 
@@ -110,87 +136,57 @@ class SettingsFragment : Fragment(){
         }
     }
 
-    /*private fun changeLag(){
-        var change = ""
-        when (lag) {
-            "German" -> change = "Ge"
-            "English" -> change = "En"
-            "Greek" -> change = "Gr"
-        }
-        Log.e("Settings Fragment, Change:",change)
-
-    }*/
-
-/*    fun updateConfig(wrapper: ContextThemeWrapper) {
-        if(DLOCALE==Locale("") ) // Do nothing if dLocale is null
-            return
-        Locale.setDefault(DLOCALE)
-        val configuration = Configuration()
-        configuration.setLocale(DLOCALE)
-        wrapper.applyOverrideConfiguration(configuration)
-    }*/
-
 
     private fun checkedChangeRadioButtonLag(){
-        var change = ""
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(contextSettingsFragment)
-        val language = sharedPreferences.getString("language", "bak")
 
-      //  val yourRadioGroup = findViewById(R.id.radioGroupLag) as RadioGroup
         binding.radioGroupLag.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radioButtonGreek->{
-                   /* with(sharePrefLagnuage.edit()) {
+                    Log.e("Settings Fragment", "GREEK SUCCESS")
+                    with(sharePrefLagnuage.edit()) {
                         putString(LANGUAGE, "Greek")
                         apply()
-
-                    }*/
-                    Log.e("Settings Fragment", "GREEK SUCCESS")
-                    change = "el"
+                    }
 
                 }
                 R.id.radioButtonGerman -> {
-                  /*  with(sharePrefLagnuage.edit()) {
+                    Log.e("Settings Fragment", "GERMAN SUCCESS")
+                    with(sharePrefLagnuage.edit()) {
                         putString(LANGUAGE, "German")
                         apply()
-
-                    }*/
-                    Log.e("Settings Fragment", "GERMAN SUCCESS")
-                    change = "ge"
+                    }
                 }
                 R.id.radioButtonEnglish -> {
-                    /*with(sharePrefLagnuage.edit()) {
+                    Log.e("Settings Fragment", "ENGLISH SUCCESS")
+                    with(sharePrefLagnuage.edit()) {
                         putString(LANGUAGE, "English")
                         apply()
 
-
-                    }*/
-                    Log.e("Settings Fragment", "ENGLISH SUCCESS")
-                    change = "en"
-
+                    }
                 }
             }
-            Constants.DLOCALE = Locale(change) //set any locale you want here
-            Log.e("SettingsFragment",change)
+            ApplicationClass()
+            reloadFragment()
+
         }
     }
 
-    private fun updateConfig(wrapper: ContextThemeWrapper) {
-        if(DLOCALE == Locale("") ) {
-            // Do nothing if dLocale is null
-            Log.e("FragmentSettings", "Nothing in localez")
-            return
+    fun reloadFragment(){
+        // Reload current fragment
+        var frg: Fragment?
+        frg =  getChildFragmentManager().findFragmentByTag("fragment_settings")
+        val ft: FragmentTransaction =  getChildFragmentManager().beginTransaction()
+        if (frg != null) {
+            ft.detach(frg)
         }
-
-        // Locale.setDefault(DLOCALE!!)
-        val configuration = Configuration()
-        configuration.setLocale(DLOCALE)
-        wrapper.applyOverrideConfiguration(configuration)
+        if (frg != null) {
+            ft.attach(frg)
+        }
+        ft.commit()
     }
+
 
 }
-
-
 
 
 

@@ -6,13 +6,11 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.util.Log
 import android.view.ContextThemeWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import unipi.p17168.imagesician.ImagesicianActivity
 import unipi.p17168.imagesician.R
-import unipi.p17168.imagesician.utils.Constants.DLOCALE
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -32,10 +30,6 @@ open class BaseActivity : AppCompatActivity() {
 
     // This is a progress dialog instance which we will initialize later on.
     private lateinit var mProgressDialog: Dialog
-
-  /*  init {
-        updateConfig(this)
-    }*/
 
     fun goToSignInActivity(context: Context?) {
         val intent = Intent(context, SignInActivity::class.java)
@@ -103,19 +97,26 @@ open class BaseActivity : AppCompatActivity() {
         mProgressDialog.dismiss()
     }
 
+    companion object {
+        public var dLocale: Locale? = null
+    }
 
-     private fun updateConfig(wrapper: ContextThemeWrapper) {
-        if(DLOCALE == Locale("") ) {
-            // Do nothing if dLocale is null
-            Log.e("BaseActivity", "Nothing in localez")
+    init {
+        updateConfig(this)
+    }
+
+    fun updateConfig(wrapper: ContextThemeWrapper) {
+        if(dLocale==Locale("") ) // Do nothing if dLocale is null
             return
-        }
 
-       // Locale.setDefault(DLOCALE!!)
+        Locale.setDefault(dLocale)
         val configuration = Configuration()
-        configuration.setLocale(DLOCALE)
+        configuration.setLocale(dLocale)
         wrapper.applyOverrideConfiguration(configuration)
     }
+
+
+
 
 
 

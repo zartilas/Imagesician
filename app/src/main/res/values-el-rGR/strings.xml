@@ -2,7 +2,7 @@
 <resources>
     <string name="settings_item">Ρυθμίσεις</string>
     <string name="select_image">Επιλέξτε Φωτογραφία</string>
-    <string name="txt_context_text">Αναγνώριση Kειμένου;</string>
+<string name="txt_context_text">Αναγνώριση Kειμένου;</string>
     <string name="txt_sign_up">Εγγραφή</string>
     <string name="txt_lets_get_started">Ας ξεκινήσουμε</string>
     <string name="RadioButtonGreek">Ελληνικά</string>
