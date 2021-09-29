@@ -20,5 +20,14 @@ object Constants {
 
     val DATE_FORMAT: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
     var DLOCALE: Locale? = null
+
+    //LANGUAGE
     const val LANGUAGE : String = "language"
+    const val ENGLISH_LAG : String =  "English"
+    const val GREEK_LAG : String =  "Greek"
+    const val GERMAN_LAG : String =  "German"
+    const val EL : String = "el"
+    const val EN : String = "en"
+    const val GE : String = "ge"
+
 }

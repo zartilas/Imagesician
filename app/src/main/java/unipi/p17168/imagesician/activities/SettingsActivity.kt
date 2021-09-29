@@ -1,65 +1,60 @@
-package unipi.p17168.imagesician
+package unipi.p17168.imagesician.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
 import android.content.SharedPreferences
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.preference.PreferenceManager.getDefaultSharedPreferences
+import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import unipi.p17168.imagesician.activities.SignInActivity
+import kotlinx.android.synthetic.main.toolbar_settings.*
+import kotlinx.android.synthetic.main.toolbar_title_only.*
+import unipi.p17168.imagesician.LanguageClass
+import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.database.DBHelper
-import unipi.p17168.imagesician.databinding.FragmentSettingsBinding
+import unipi.p17168.imagesician.databinding.ActivitySettingsBinding
 import unipi.p17168.imagesician.models.User
 import unipi.p17168.imagesician.utils.Constants
-import unipi.p17168.imagesician.utils.Constants.LANGUAGE
-import java.util.*
-import android.util.Log
-import androidx.fragment.app.FragmentTransaction
-import kotlinx.android.synthetic.main.fragment_settings.*
+import unipi.p17168.imagesician.utils.Constants.ENGLISH_LAG
+import unipi.p17168.imagesician.utils.Constants.GERMAN_LAG
+import unipi.p17168.imagesician.utils.Constants.GREEK_LAG
 
+class SettingsActivity : BaseActivity() {
 
-class SettingsFragment : Fragment(){
-
-    //~~~~~~~VARIABLES~~~~~~~
-
-    //VAR
-    private var _binding : FragmentSettingsBinding? = null
+    // ~~~~~~~VARIABLES~~~~~~~
+    //var
+    private lateinit var binding: ActivitySettingsBinding
     private lateinit var modelUser: User
     private lateinit var sharePrefLagnuage: SharedPreferences
-    private lateinit var lag : String
+
 
     //VAL
-    private val binding get() = _binding!!
-    private val contextSettingsFragment get() = this@SettingsFragment.requireContext()
     private val dbFirestore = FirebaseFirestore.getInstance()
     var radioButtonID = 0
-    var refresh : Intent? = null
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
         init()
-        return binding.root
-
     }
 
     private fun init(){
-
-        sharePrefLagnuage = getDefaultSharedPreferences(contextSettingsFragment)
+        sharePrefLagnuage = PreferenceManager.getDefaultSharedPreferences(this)
         radioButtonID = binding.radioGroupLag.checkedRadioButtonId
-        Log.e("Settings Fragment, Change:","INIT()")
+        Log.e("Settings Fragment, Change:","init()")
         setupClickListeners()
         loadProfileDetails()
         checkedChangeRadioButtonLag()
         setUpSettings()
+        setupActionBar()
     }
 
     @SuppressLint("SetTextI18n")
@@ -67,30 +62,35 @@ class SettingsFragment : Fragment(){
         binding.apply {
             btnLogout.setOnClickListener{
                 FirebaseAuth.getInstance().signOut()
-                val intent = Intent(context, SignInActivity::class.java)
+                val intent = Intent(this@SettingsActivity, SignInActivity::class.java)
                 startActivity(intent)
             }
 
             switchNightMode.setOnCheckedChangeListener { _, _ ->
                 if (switchNightMode.isChecked) {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-
                 }
-
             }
-
         }
     }
 
+    private fun setupActionBar() {
+        binding.toolbar.apply {
+            setSupportActionBar(root)
+            textViewLabel.text = getString(R.string.txt_settings)
+            imgBtn_back.setOnClickListener {
+                goToImagesicialActivity(this@SettingsActivity)
+            }
+        }
+    }
 
     private fun setUpSettings(){
-        when(sharePrefLagnuage.getString(LANGUAGE,"")){
-          "Greek"-> binding.radioGroupLag.check(R.id.radioButtonGreek)
-          "English"->  binding.radioGroupLag.check(R.id.radioButtonEnglish)
-          "German"-> binding.radioGroupLag.check(R.id.radioButtonGerman)
+        when(sharePrefLagnuage.getString(Constants.LANGUAGE,"")){
+            GREEK_LAG-> binding.radioGroupLag.check(R.id.radioButtonGreek)
+            ENGLISH_LAG->  binding.radioGroupLag.check(R.id.radioButtonEnglish)
+            GERMAN_LAG-> binding.radioGroupLag.check(R.id.radioButtonGerman)
         }
     }
 
@@ -118,57 +118,34 @@ class SettingsFragment : Fragment(){
         }
     }
 
-
     private fun checkedChangeRadioButtonLag(){
 
         binding.radioGroupLag.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.radioButtonGreek->{
-                    Log.e("Settings Fragment", "GREEK SUCCESS")
+                    Log.e("Settings Fragment", GREEK_LAG)
                     with(sharePrefLagnuage.edit()) {
-                        putString(LANGUAGE, "Greek")
+                        putString(Constants.LANGUAGE, GREEK_LAG)
                         apply()
                     }
-
                 }
                 R.id.radioButtonGerman -> {
-                    Log.e("Settings Fragment", "GERMAN SUCCESS")
+                    Log.e("Settings Fragment", GERMAN_LAG)
                     with(sharePrefLagnuage.edit()) {
-                        putString(LANGUAGE, "German")
+                        putString(Constants.LANGUAGE, GERMAN_LAG)
                         apply()
                     }
                 }
                 R.id.radioButtonEnglish -> {
-                    Log.e("Settings Fragment", "ENGLISH SUCCESS")
+                    Log.e("Settings Fragment", ENGLISH_LAG)
                     with(sharePrefLagnuage.edit()) {
-                        putString(LANGUAGE, "English")
+                        putString(Constants.LANGUAGE, ENGLISH_LAG)
                         apply()
 
                     }
                 }
             }
             LanguageClass()
-            reloadFragment()
-
         }
     }
-
-    fun reloadFragment(){
-        // Reload current fragment
-        var frg: Fragment?
-        frg =  getChildFragmentManager().findFragmentByTag("fragment_settings")
-        val ft: FragmentTransaction =  getChildFragmentManager().beginTransaction()
-        if (frg != null) {
-            ft.detach(frg)
-        }
-        if (frg != null) {
-            ft.attach(frg)
-        }
-        ft.commit()
-    }
-
-
 }
-
-
-

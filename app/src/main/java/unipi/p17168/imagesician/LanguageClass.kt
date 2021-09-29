@@ -6,9 +6,15 @@ import unipi.p17168.imagesician.activities.BaseActivity
 import unipi.p17168.imagesician.utils.Constants.LANGUAGE
 import java.util.*
 import androidx.preference.PreferenceManager.getDefaultSharedPreferences
+import unipi.p17168.imagesician.utils.Constants.EL
+import unipi.p17168.imagesician.utils.Constants.EN
+import unipi.p17168.imagesician.utils.Constants.ENGLISH_LAG
+import unipi.p17168.imagesician.utils.Constants.GE
+import unipi.p17168.imagesician.utils.Constants.GERMAN_LAG
+import unipi.p17168.imagesician.utils.Constants.GREEK_LAG
 
 
-class ApplicationClass : Application() {
+class LanguageClass : Application() {
 
     override fun onCreate() {
         super.onCreate()
@@ -19,19 +25,12 @@ class ApplicationClass : Application() {
         setLang()
     }
 
-
     private fun setLang(){
-        var change = ""
         val sharedPreferences = getDefaultSharedPreferences(this)
         when(sharedPreferences.getString(LANGUAGE, "")){
-           "Greek"-> change = "el"
-           "English"-> change = "en"
-           "German"-> change = "ge"
+           GREEK_LAG->    BaseActivity.dLocale = Locale(EL) //set locale
+           ENGLISH_LAG->  BaseActivity.dLocale = Locale(EN)
+           GERMAN_LAG ->  BaseActivity.dLocale = Locale(GE)
        }
-
-        BaseActivity.dLocale = Locale(change) //set any locale you want here
-        /*BaseActivity().goToImagesicialActivity(this)*/
-        Log.e("ApplicationClass", change)
-
     }
 }

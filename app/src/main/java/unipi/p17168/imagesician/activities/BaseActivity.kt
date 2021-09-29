@@ -9,8 +9,9 @@ import android.graphics.drawable.ColorDrawable
 import android.view.ContextThemeWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import unipi.p17168.imagesician.ImagesicianActivity
 import unipi.p17168.imagesician.R
+import unipi.p17168.imagesician.utils.Constants
+import unipi.p17168.imagesician.utils.Constants.DLOCALE
 import java.util.*
 import java.util.concurrent.Executors
 import java.util.concurrent.ScheduledExecutorService
@@ -45,6 +46,11 @@ open class BaseActivity : AppCompatActivity() {
         val intent = Intent(context, ImagesicianActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NO_ANIMATION
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(intent)
+    }
+
+    fun goToSettingsActivity(context: Context){
+        val intent = Intent(context, SettingsActivity::class.java)
         startActivity(intent)
     }
 
@@ -98,7 +104,7 @@ open class BaseActivity : AppCompatActivity() {
     }
 
     companion object {
-        public var dLocale: Locale? = null
+         var dLocale: Locale? = null
     }
 
     init {
@@ -114,12 +120,6 @@ open class BaseActivity : AppCompatActivity() {
         configuration.setLocale(dLocale)
         wrapper.applyOverrideConfiguration(configuration)
     }
-
-
-
-
-
-
 
 }
 

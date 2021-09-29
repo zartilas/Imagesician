@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_item">Ρυθμίσεις</string>
-    <string name="select_image">Επιλέξτε Φωτογραφία</string>
+    <string name="select_image">Επιλέξτε Εικόνα</string>
 <string name="txt_context_text">Αναγνώριση Kειμένου;</string>
     <string name="txt_sign_up">Εγγραφή</string>
-    <string name="txt_lets_get_started">Ας ξεκινήσουμε</string>
+    <string name="txt_lets_get_started">Ας ξεκινήσουμε!</string>
     <string name="RadioButtonGreek">Ελληνικά</string>
     <string name="RadioButtonEnglish">Αγγλικά</string>
     <string name="RadioButtonGerman">Γερμανικά</string>
     <string name="dark_mode">" Νυχτερινό Θέμα"</string>
     <string name="txt_sign_in">Σύνδεση</string>
     <string name="input_txt_hint_username">Το όνομα χρήστη σας</string>
-    <string name="input_txt_hint_email">Τη διεύθυνση ηλεκτρονικού ταχυδρομείου  σας</string>
+    <string name="input_txt_hint_email">Το email σας</string>
     <string name="input_txt_hint_password">Ο κωδικός σας</string>
     <string name="txt_already_have_an_account">Έχετε ήδη λογαρισμό; Συνδεθείτε</string>
-    <string name="txt_sign_in_header">Εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας και τον κωδικό σας για να συνεχίσετε.</string>
+    <string name="txt_sign_in_header">Εισάγετε το email σας και τον κωδικό σας για να συνεχίσετε.</string>
     <string name="txt_forgot_password_question">"Ξεχάσατε τον κωδικό σας; "</string>
     <string name="button_logout">Αποσύνδεση</string>
     <string name="txt_name">Όνομα</string>
-    <string name="txt_email">Διεύθυνση ηλεκτρονικού ταχυδρομείου</string>
     <string name="txt_account_info">Πληροφορίες Λογαριασμού</string>
     <string name="txt_date_registered">Ημερομηνία εγγραφής</string>
     <string name="i_didn_t_recognize_anything">Δεν αναγνώρισα το οτιδήποτε!</string>
@@ -30,15 +28,19 @@
     <string name="not_your_average_detector">Όχι ο μέσος ανιχνευτής σου!</string>
     <string name="txt_please_click_back_again_to_exit">Παρακαλώ πατήστε ξανά για να αποχωρήσετε</string>
 
-    <string name="txt_copy_text">Το κείμενο αντιγράφηκε στο πρόχειρο σας.</string>
+    <string name="txt_copy_text">Αντιγραφή κειμένου</string>
     <string name="txt_password_reset">Επαναφορά κωδικού πρόσβασης</string>
     <string name="button_send">Αποστολή</string>
-    <string name="txt_error_empty_email">Παρακαλώ εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας.</string>
+    <string name="txt_error_empty_email">Παρακαλώ εισάγετε τo email σας.</string>
     <string name="txt_password_reset_mail_sent">Το μήνυμα ηλεκτρονικού ταχυδρομείου στάλθηκε επιτυχώς!</string>
     <string name="txt_Something_went_wrong">Κάτι πήγε στραβά, δοκιμάστε ξανά.</string>
     <string name="txt_appearance">Εμφάνιση</string>
     <string name="txt_language">Γλώσσα</string>
-    <string name="txt_enter_email_address_to_send_reset_code">Εισάγετε τη διεύθυνση ηλεκτρονικού ταχυδρομείου σας για να σας στείλουμε κωδικό επαναφοράς.</string>
+    <string name="txt_enter_email_address_to_send_reset_code">Εισάγετε το email σας για να σας στείλουμε κωδικό επαναφοράς.</string>
     <string name="txt_don_t_have_an_account">Δεν έχετε λογαριασμό; Εγγραφείτε</string>
-    <string name="image_item">Φωτογραφία</string>
+    <string name="image_item">Εικόνα</string>
+    <string name="txt_settings">Ρυθμίσεις</string>
+    <string name="txt_copy_text_success">Το κείμενο αντιγράφηκε στο πρόχειρο σας.</string>
+    <string name="txt_no_internet_connection">Δεν υπάρχει σύνδεση στο δαδίκτυο</string>
+    <string name="txt_informations_about">Πληροφορίες για</string>
 </resources>

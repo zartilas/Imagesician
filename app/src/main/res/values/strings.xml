@@ -2,10 +2,10 @@
     <string name="app_name" translatable="false">Imagesician</string>
 
     <string name="image_item">Image</string>
-    <string name="settings_item">Settings</string>
     <string name="select_image">Select Image</string>
     <string name="txt_context_text">Context Text?</string>
-    <string name="txt_copy_text">The text copied to clipboard.</string>
+    <string name="txt_copy_text_success">The text copied to clipboard.</string>
+    <string name="txt_copy_text">Copy text</string>
 
     <string name="txt_sign_up">Sign Up</string>
     <string name="txt_lets_get_started">Let\'s get started</string>
@@ -21,7 +21,7 @@
     <string name="txt_forgot_password_question">Forgot password?</string>
     <string name="txt_don_t_have_an_account">Don\'t have an account? \n <b> Sign Up</b> </string>
     <string name="button_logout">Logout</string>
-    <string name="txt_email">Email</string>
+    <string name="txt_email" translatable="false">Email</string>
     <string name="txt_name">Name</string>
     <string name="txt_account_info">Account Info</string>
     <string name="txt_date_registered">Date Registered</string>
@@ -44,5 +44,8 @@
     <string name="txt_appearance">Appearance</string>
     <string name="txt_language">Language</string>
     <string name="RadioButtonGerman">German</string>
+    <string name="txt_settings">Settings</string>
+    <string name="txt_no_internet_connection">No internet connection!</string>
+    <string name="txt_informations_about">Information\\\'s about</string>
 
 </resources>
