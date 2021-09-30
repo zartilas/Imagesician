@@ -5,6 +5,8 @@ import java.util.*
 
 object Constants {
 
+    const val NIGHTMODE: String = "nightMode"
+
     // General Constants
     const val SHARED_PREFERENCES_PREFIX: String = "ImagesicianPrefs"
     const val LOGGED_IN_EMAIL: String = "logged_in_email"
@@ -19,13 +21,12 @@ object Constants {
     const val COLLECTION_USERS: String = "users"
 
     val DATE_FORMAT: SimpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.ROOT)
-    var DLOCALE: Locale? = null
 
     //LANGUAGE
     const val LANGUAGE : String = "language"
-    const val ENGLISH_LAG : String =  "English"
-    const val GREEK_LAG : String =  "Greek"
-    const val GERMAN_LAG : String =  "German"
+    const val ENGLISH_LANG : String =  "English"
+    const val GREEK_LANG : String =  "Greek"
+    const val GERMAN_LANG : String =  "German"
     const val EL : String = "el"
     const val EN : String = "en"
     const val GE : String = "ge"

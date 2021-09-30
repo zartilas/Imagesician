@@ -5,9 +5,11 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
@@ -18,10 +20,12 @@ import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.toolbar_settings.*
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.ActivityImagesicianBinding
+import unipi.p17168.imagesician.utils.Constants.NIGHTMODE
 import unipi.p17168.imagesician.utils.ToolBox
 import unipi.p17168.imagesician.wiki.WikiListItems
 import java.io.IOException
@@ -46,6 +50,7 @@ class ImagesicianActivity : BaseActivity() {
     }
 
     private fun init(){
+        setUpSettings(baseContext)
         setupClickListeners()
         setupActionBar()
     }
@@ -79,6 +84,16 @@ class ImagesicianActivity : BaseActivity() {
                 goToSettingsActivity(this@ImagesicianActivity)
             }
         }
+    }
+
+
+    private fun setUpSettings1(){
+        sharePrefNightMode = PreferenceManager.getDefaultSharedPreferences(this)
+        when(sharePrefNightMode.getBoolean(NIGHTMODE, false)){
+            true-> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            false->AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        }
+
     }
 
     private fun isGoneTextRecognition(isGone:Boolean):Boolean{
@@ -287,4 +302,35 @@ class ImagesicianActivity : BaseActivity() {
         binding.recyclerWiki.adapter = adapter
 
     }
+
+    /*
+   class WikipediaParser() {
+
+      private val baseUrl: String = String.format("https://en.wikipedia.org/wiki/potato")
+
+     @Throws(IOException::class)
+     fun fetchFirstParagraph(article: String): String {
+         return try{
+             val url = baseUrl + article
+             val doc: Document = Jsoup.connect(url).get()
+             val paragraphs: Elements = doc.select(".mw-content-ltr p")
+             val firstParagraph: Element = paragraphs.first()
+             Log.e("My First Paragraph:" , firstParagraph)
+             firstParagraph.text()
+         }catch (e:IOException) {
+              "Failed"
+         }
+     }
+       fun printWiki(){
+           try {
+               val parser = WikipediaParser("en")
+               val firstParagraph = parser.fetchFirstParagraph("Potato")
+               Log.e("My First Paragraph:" , firstParagraph) // "The potato is a starchy [...]."
+
+           }catch (e:IOException){
+               Log.e("ImageActivity" , "error")
+           }
+       }
+   }
+*/
 }

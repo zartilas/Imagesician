@@ -1,9 +1,12 @@
 package unipi.p17168.imagesician.activities
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.core.app.ActivityCompat
+import unipi.p17168.imagesician.LanguageClass
 import unipi.p17168.imagesician.database.DBHelper
 import unipi.p17168.imagesician.databinding.ActivitySplashBinding
 import unipi.p17168.imagesician.utils.Constants
@@ -26,6 +29,8 @@ class SplashActivity : BaseActivity() {
     }
 
     private fun init() {
+        LanguageClass().setLang(applicationContext)
+        setUpSettings(applicationContext)
         hideSystemUI() // Hides the status bar and title from android UI.
         moveToNextActivity() // Moves to next activity in a specific amount of time after loading.
     }
@@ -56,10 +61,12 @@ class SplashActivity : BaseActivity() {
                 finish()
                 goToSignInActivity(this@SplashActivity)
             }
+
             else {
                 finish()
                 goToMainActivityNoAnimation(this@SplashActivity)
             }
         }, Constants.SPLASH_SCREEN_DELAY, TimeUnit.MILLISECONDS)
     }
+
 }
