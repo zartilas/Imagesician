@@ -191,7 +191,6 @@
                         android:layout_height="wrap_content"
                         android:text="@string/RadioButtonGreek"
                         android:drawableStart="@drawable/ic_greece"
-                        android:gravity = "center_vertical"
                         android:textSize="18sp" />
 
                     <RadioButton

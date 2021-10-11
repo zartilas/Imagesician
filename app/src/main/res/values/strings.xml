@@ -4,7 +4,7 @@
     <string name="image_item">Image</string>
     <string name="select_image">Select Image</string>
     <string name="txt_context_text">Context Text?</string>
-    <string name="txt_copy_text_success">The text copied to clipboard.</string>
+    <string name="txt_copy_text_success">The text was copied to clipboard.</string>
     <string name="txt_copy_text">Copy text</string>
 
     <string name="txt_sign_up">Sign Up</string>
@@ -39,13 +39,14 @@
     <string name="txt_Something_went_wrong">Something went wrong, try again.</string>
     <string name="txt_error_empty_email">Please enter your email.</string>
     <string name="dark_mode"> \t Night Theme </string>
-    <string name="RadioButtonGreek">"Greek"</string>
-    <string name="RadioButtonEnglish">"English"</string>
+    <string name="RadioButtonGreek">" \tGreek"</string>
+    <string name="RadioButtonEnglish">"  \tEnglish"</string>
     <string name="txt_appearance">Appearance</string>
     <string name="txt_language">Language</string>
-    <string name="RadioButtonGerman">"German"</string>
+    <string name="RadioButtonGerman">" \tGerman"</string>
     <string name="txt_settings">Settings</string>
     <string name="txt_no_internet_connection">No internet connection!</string>
-    <string name="txt_informations_about">Information\\\'s about</string>
+    <string name="txt_informations_about">Information\'s about</string>
+    <string name="warning">Warning!</string>
 
 </resources>

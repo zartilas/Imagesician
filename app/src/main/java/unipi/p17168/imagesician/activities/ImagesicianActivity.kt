@@ -5,11 +5,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
@@ -25,7 +23,6 @@ import kotlinx.android.synthetic.main.toolbar_settings.*
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.ActivityImagesicianBinding
-import unipi.p17168.imagesician.utils.Constants.NIGHTMODE
 import unipi.p17168.imagesician.utils.ToolBox
 import unipi.p17168.imagesician.wiki.WikiListItems
 import java.io.IOException
@@ -86,16 +83,6 @@ class ImagesicianActivity : BaseActivity() {
         }
     }
 
-
-    private fun setUpSettings1(){
-        sharePrefNightMode = PreferenceManager.getDefaultSharedPreferences(this)
-        when(sharePrefNightMode.getBoolean(NIGHTMODE, false)){
-            true-> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            false->AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-
-    }
-
     private fun isGoneTextRecognition(isGone:Boolean):Boolean{
         if(isGone){
             binding.etmForTextRecognition.clearComposingText()
@@ -153,13 +140,8 @@ class ImagesicianActivity : BaseActivity() {
             isGoneImage(true)
             isGoneTextRecognition(true)
             ToolBox().copyText(this,binding.etmForTextRecognition.text.toString()).also {
-                ToolBox().showSnackBar(window.decorView.rootView,
-                    ContextCompat.getColor(this, R.color.colorErrorBackgroundSnackbar),
-                    ContextCompat.getColor(this, R.color.colorStrings),
-                    getString(R.string.txt_no_internet_connection),
-                    getString(R.string.txt_all_right),
-                    Snackbar.ANIMATION_MODE_SLIDE)
-                    .show()
+                val dialogWrong = ToolBox().showWrongDialog(this)
+                dialogWrong.show()
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
@@ -291,7 +273,7 @@ class ImagesicianActivity : BaseActivity() {
         val data: MutableList<WikiListItems> = ArrayList()
 
         finalList.forEach {
-            data.add(WikiListItems("${R.string.txt_informations_about} $it","https://en.wikipedia.org/wiki/$it"))
+            data.add(WikiListItems("${getString(R.string.txt_informations_about)} $it","https://en.wikipedia.org/wiki/$it"))
         }
 
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false)

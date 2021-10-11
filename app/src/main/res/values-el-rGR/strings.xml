@@ -4,7 +4,7 @@
     <string name="txt_context_text">Αναγνώριση Kειμένου;</string>
     <string name="txt_sign_up">Εγγραφή</string>
     <string name="txt_lets_get_started">Ας ξεκινήσουμε!</string>
-    <string name="RadioButtonGreek">"\tΕλληνικά"</string>
+    <string name="RadioButtonGreek">" \tΕλληνικά"</string>
     <string name="RadioButtonEnglish">" \tΑγγλικά"</string>
     <string name="RadioButtonGerman">" \tΓερμανικά"</string>
     <string name="dark_mode">" \t Νυχτερινό Θέμα"</string>
@@ -43,4 +43,5 @@
     <string name="txt_copy_text_success">Το κείμενο αντιγράφηκε στο πρόχειρο σας.</string>
     <string name="txt_no_internet_connection">Δεν υπάρχει σύνδεση στο δαδίκτυο</string>
     <string name="txt_informations_about">Πληροφορίες για</string>
+    <string name="warning">Προειδοποίηση!</string>
 </resources>

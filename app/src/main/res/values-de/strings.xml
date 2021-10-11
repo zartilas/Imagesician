@@ -42,5 +42,6 @@
     <string name="txt_no_internet_connection">Keine Internetverbindung!</string>
     <string name="txt_informations_about">Informationen über</string>
     <string name="txt_copy_text_success">"Der Text wurde in der Zwischenablage kopiert "</string>
+    <string name="warning">Warnung!</string>
 
 </resources>
