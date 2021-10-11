@@ -46,7 +46,7 @@
             android:text="@string/select_image"
             android:textAlignment="center"
             android:textColor="@color/colorStrings"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:icon="@drawable/ic_photo_add"
             app:iconGravity="start"

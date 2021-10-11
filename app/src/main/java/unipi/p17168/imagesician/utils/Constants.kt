@@ -29,6 +29,6 @@ object Constants {
     const val GERMAN_LANG : String =  "German"
     const val EL : String = "el"
     const val EN : String = "en"
-    const val GE : String = "ge"
+    const val GE : String = "de"
 
 }

@@ -106,6 +106,14 @@ class SettingsActivity : BaseActivity() {
                     radioButtonEnglish.isClickable = true
                     reloadApp()
                 }
+             radioButtonGerman.setOnClickListener {
+                Log.e("Settings Activity", "Radio Group GE")
+                radioButtonGreek.isClickable = true
+                radioButtonGerman.isClickable = false
+                radioButtonEnglish.isClickable = false
+                reloadApp()
+                }
+
 
         }
     }

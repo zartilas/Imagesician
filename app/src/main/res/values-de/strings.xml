@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="image_item">Bild</string>
+    <string name="select_image">Bild auswählen</string>
+    <string name="txt_context_text">Kontext Bild?</string>
+    <string name="txt_copy_text">Text kopieren</string>
+    <string name="txt_sign_up">Einloggen</string>
+    <string name="txt_lets_get_started">Lass mal Starten</string>
+    <string name="input_txt_hint_username">Dein Benutzername</string>
+    <string name="input_txt_hint_email">"Deine email adresse "</string>
+    <string name="txt_already_have_an_account">Benutzeronto vorhanden ? Anmelden</string>
+    <string name="input_txt_hint_password">Dein Passwort</string>
+    <string name="txt_please_click_back_again_to_exit">"Bitte erneut zurückklicken um zu beenden "</string>
+    <string name="txt_sign_in_header">Email und Passwort eingeben um fortzufahren</string>
+    <string name="txt_sign_in">Anmelden</string>
+    <string name="txt_forgot_password_question">Passwort vergessen?</string>
+    <string name="txt_don_t_have_an_account">Kein Benutzerkonto vorhanden? Registrieren</string>
+    <string name="button_logout">Ausloggen</string>
+    <string name="txt_name">"Name  "</string>
+    <string name="txt_account_info">Benutzerkonto Info</string>
+    <string name="txt_date_registered">"Datum registriert "</string>
+    <string name="i_didn_t_recognize_anything">Ich habe nichts erkannt!</string>
+    <string name="i_may_be_an_ai_app_but_not_a_god_n_i_can_t_know_everything_n_i_m_sorry">"Ich bin vielleicht ein Al app aber nicht der Gott. Ich kann nicht alles wissen! Entschuldigung. "</string>
+    <string name="txt_all_right">Alles klar</string>
+    <string name="something_went_wrong_n_maybe_your_internet_connection_was_interrupted">Etwas ist schief gelaufen . Vielleicht ist die Internetverbidnung abgebrohen.</string>
+    <string name="txt_Something_went_wrong">Etwas ist schief gelaufen, versuch’s noch ein Mal!</string>
+    <string name="txt_password_reset">Passwort Zurücksetzen</string>
+    <string name="txt_please_wait">Bitte abwarten…</string>
+    <string name="txt_more_settings">Anwendung</string>
+    <string name="button_send">Schicken</string>
+    <string name="dark_mode"> \t Nacht Modus</string>
+    <string name="RadioButtonGerman">" \t Deutsch"</string>
+    <string name="txt_appearance">Erscheinung</string>
+    <string name="txt_language">Sprache</string>
+    <string name="RadioButtonEnglish">" \t Englisch"</string>
+    <string name="RadioButtonGreek">" \t Griechisch"</string>
+    <string name="txt_error_empty_email">"Bitte trag deine email ein  "</string>
+    <string name="txt_password_reset_mail_sent">Email erfolgreich gesendet!</string>
+    <string name="txt_enter_email_address_to_send_reset_code">"Email Adresse eingeben um Rückstellcode zugeschickt zu bekommen "</string>
+    <string name="not_your_average_detector">Nicht dein durchschnittlicher Detektor!</string>
+    <string name="txt_settings">Einstellungen</string>
+    <string name="txt_no_internet_connection">Keine Internetverbindung!</string>
+
+</resources>

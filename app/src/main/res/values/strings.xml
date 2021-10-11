@@ -39,11 +39,11 @@
     <string name="txt_Something_went_wrong">Something went wrong, try again.</string>
     <string name="txt_error_empty_email">Please enter your email.</string>
     <string name="dark_mode"> \t Night Theme </string>
-    <string name="RadioButtonGreek">Greek</string>
-    <string name="RadioButtonEnglish">English</string>
+    <string name="RadioButtonGreek">"Greek"</string>
+    <string name="RadioButtonEnglish">"English"</string>
     <string name="txt_appearance">Appearance</string>
     <string name="txt_language">Language</string>
-    <string name="RadioButtonGerman">German</string>
+    <string name="RadioButtonGerman">"German"</string>
     <string name="txt_settings">Settings</string>
     <string name="txt_no_internet_connection">No internet connection!</string>
     <string name="txt_informations_about">Information\\\'s about</string>

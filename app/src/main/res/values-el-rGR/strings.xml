@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="select_image">Επιλέξτε Εικόνα</string>
-<string name="txt_context_text">Αναγνώριση Kειμένου;</string>
+    <string name="txt_context_text">Αναγνώριση Kειμένου;</string>
     <string name="txt_sign_up">Εγγραφή</string>
     <string name="txt_lets_get_started">Ας ξεκινήσουμε!</string>
-    <string name="RadioButtonGreek">Ελληνικά</string>
-    <string name="RadioButtonEnglish">Αγγλικά</string>
-    <string name="RadioButtonGerman">Γερμανικά</string>
-    <string name="dark_mode">" Νυχτερινό Θέμα"</string>
+    <string name="RadioButtonGreek">"\tΕλληνικά"</string>
+    <string name="RadioButtonEnglish">" \tΑγγλικά"</string>
+    <string name="RadioButtonGerman">" \tΓερμανικά"</string>
+    <string name="dark_mode">" \t Νυχτερινό Θέμα"</string>
     <string name="txt_sign_in">Σύνδεση</string>
     <string name="input_txt_hint_username">Το όνομα χρήστη σας</string>
     <string name="input_txt_hint_email">Το email σας</string>
