@@ -105,6 +105,9 @@ class SignInActivity : BaseActivity() {
                             DBHelper().getUserDetails(this@SignInActivity)
                         } else {
 
+                            // Hide the progress dialog
+                            hideProgressDialog()
+
                             ToolBox().showSnackBar(binding.root,
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorErrorBackgroundSnackbar),
                                 ContextCompat.getColor(this@SignInActivity,R.color.colorStrings),

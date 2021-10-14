@@ -157,7 +157,7 @@ class SignUpActivity : BaseActivity() {
                         } else {
 
                             // Hide the progress dialog
-                            //hideProgressDialog()
+                            hideProgressDialog()
 
                             // If the registering is not successful then show the error message.
                             ToolBox().showSnackBar(binding.root,
