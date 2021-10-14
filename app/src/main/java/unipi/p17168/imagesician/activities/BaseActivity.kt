@@ -1,18 +1,26 @@
 package unipi.p17168.imagesician.activities
 
 
+import android.Manifest
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.ContextThemeWrapper
+import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import com.google.android.material.snackbar.Snackbar
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.utils.Constants.EN
 import unipi.p17168.imagesician.utils.Constants.NIGHTMODE
@@ -138,4 +146,7 @@ open class BaseActivity : AppCompatActivity() {
             false-> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
+
+
 }
+

@@ -1,20 +1,22 @@
 package unipi.p17168.imagesician.activities
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.databinding.ActivitySignInBinding
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_sign_in.*
 import unipi.p17168.imagesician.database.DBHelper
 import unipi.p17168.imagesician.utils.Constants
 import unipi.p17168.imagesician.utils.ToolBox
+import java.util.jar.Manifest
 
 
 class SignInActivity : BaseActivity() {
@@ -38,10 +40,16 @@ class SignInActivity : BaseActivity() {
         if (intent.hasExtra(Constants.EXTRA_REG_USERS_SNACKBAR)) {
             binding.inputTxtEmail.setText(intent.getStringExtra(Constants.EXTRA_USER_EMAIL).toString())
         }
-
+        ToolBox().setupPermissions(applicationContext,this@SignInActivity, android.Manifest.permission.READ_EXTERNAL_STORAGE,100)
         setupUI()
         setupClickListeners()
+
     }
+
+
+
+
+
 
     private fun setupUI() {
         binding.apply {
@@ -103,6 +111,7 @@ class SignInActivity : BaseActivity() {
                         FirebaseAuth.getInstance()
                         if (task.isSuccessful) {
                             DBHelper().getUserDetails(this@SignInActivity)
+
                         } else {
 
                             // Hide the progress dialog
@@ -161,6 +170,23 @@ class SignInActivity : BaseActivity() {
 
                 else -> true
             }
+        }
+    }
+
+    fun View.showSnackbar(
+        view: View,
+        msg: String,
+        length: Int,
+        actionMessage: CharSequence?,
+        action: (View) -> Unit
+    ) {
+        val snackbar = Snackbar.make(view, msg, length)
+        if (actionMessage != null) {
+            snackbar.setAction(actionMessage) {
+                action(this)
+            }.show()
+        } else {
+            snackbar.show()
         }
     }
 

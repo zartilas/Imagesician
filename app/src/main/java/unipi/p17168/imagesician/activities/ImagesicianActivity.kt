@@ -18,6 +18,7 @@ import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlinx.android.synthetic.main.activity_imagesician.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.android.synthetic.main.toolbar_settings.*
 import unipi.p17168.imagesician.R
@@ -26,6 +27,7 @@ import unipi.p17168.imagesician.databinding.ActivityImagesicianBinding
 import unipi.p17168.imagesician.utils.ToolBox
 import unipi.p17168.imagesician.wiki.WikiListItems
 import java.io.IOException
+
 
 class ImagesicianActivity : BaseActivity() {
 
@@ -47,6 +49,7 @@ class ImagesicianActivity : BaseActivity() {
     }
 
     private fun init(){
+
         setUpSettings(baseContext)
         setupClickListeners()
         setupActionBar()
@@ -57,8 +60,10 @@ class ImagesicianActivity : BaseActivity() {
         binding.apply {
 
             switchContextText.setOnClickListener{ imageIsText = binding.switchContextText.isChecked }
-
-            floatingButton.setOnClickListener{ pickImage() }
+            //floatingButton.setOnClickListener{ pickImage() }
+                floatingButton.setOnClickListener {
+                   pickImage()
+                }
 
             btnCopyText.setOnClickListener{
                 ToolBox().copyText(this@ImagesicianActivity,binding.etmForTextRecognition.text.toString()).also {
@@ -284,7 +289,6 @@ class ImagesicianActivity : BaseActivity() {
         binding.recyclerWiki.adapter = adapter
 
     }
-
     /*
    class WikipediaParser() {
 
