@@ -12,11 +12,8 @@ import android.view.ContextThemeWrapper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
 import androidx.preference.PreferenceManager
-import unipi.p17168.imagesician.LanguageClass
 import unipi.p17168.imagesician.R
-import unipi.p17168.imagesician.utils.Constants.EN
 import unipi.p17168.imagesician.utils.Constants.NIGHTMODE
 import java.util.*
 import java.util.concurrent.Executors
@@ -61,11 +58,6 @@ open class BaseActivity : AppCompatActivity() {
 
     fun goToSettingsActivity(context: Context){
         val intent = Intent(context, SettingsActivity::class.java)
-        startActivity(intent)
-    }
-
-    fun goToSplashActivity(context: Context){
-        val intent = Intent(context, SplashActivity::class.java)
         startActivity(intent)
     }
 
@@ -145,7 +137,4 @@ open class BaseActivity : AppCompatActivity() {
             false-> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
     }
-
-
 }
-

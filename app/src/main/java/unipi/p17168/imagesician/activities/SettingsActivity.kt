@@ -25,10 +25,6 @@ import unipi.p17168.imagesician.utils.Constants.GREEK_LANG
 import android.content.Intent
 
 
-
-
-
-
 class SettingsActivity : BaseActivity() {
 
     // ~~~~~~~VARIABLES~~~~~~~
@@ -36,7 +32,6 @@ class SettingsActivity : BaseActivity() {
     private lateinit var binding: ActivitySettingsBinding
     private lateinit var modelUser: User
     private lateinit var sharePrefLagnuage: SharedPreferences
-    private  var appR :Boolean = false
 
     //VAL
     private val dbFirestore = FirebaseFirestore.getInstance()

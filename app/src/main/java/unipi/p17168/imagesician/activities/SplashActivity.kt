@@ -1,11 +1,9 @@
 package unipi.p17168.imagesician.activities
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowInsets
 import android.view.WindowManager
-import androidx.core.app.ActivityCompat
 import unipi.p17168.imagesician.LanguageClass
 import unipi.p17168.imagesician.database.DBHelper
 import unipi.p17168.imagesician.databinding.ActivitySplashBinding
