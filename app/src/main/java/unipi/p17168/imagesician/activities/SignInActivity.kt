@@ -79,7 +79,9 @@ class SignInActivity : BaseActivity() {
                     val intent = Intent(this@SignInActivity, ForgotPasswordActivity::class.java)
                     startActivity(intent)
                 }
-                btnSignIn.setOnClickListener { signInUser() }
+                btnSignIn.setOnClickListener {
+                    ToolBox().hideSoftKeyboard(this@SignInActivity, it)
+                    signInUser()}
         }
     }
 

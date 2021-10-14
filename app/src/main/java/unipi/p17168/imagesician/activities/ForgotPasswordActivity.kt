@@ -54,14 +54,14 @@ class ForgotPasswordActivity : BaseActivity() {
         binding.apply {
             if (validateFields()) {
                 // Show the progress dialog.
-                showProgressDialog()
-
+                //showProgressDialog()
+                    ToolBox().hideSoftKeyboard(this@ForgotPasswordActivity,root)
                 // This piece of code is used to send the reset password link to the user's email id if the user is registered.
                 FirebaseAuth.getInstance().sendPasswordResetEmail(inputTxtEmail.text.toString())
                     .addOnCompleteListener { task ->
 
                         // Hide the progress dialog
-                        hideProgressDialog()
+                        //   hideProgressDialog()
 
                         if (task.isSuccessful) {
                             ToolBox().showSnackBar(binding.root,

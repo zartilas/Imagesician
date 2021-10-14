@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import unipi.p17168.imagesician.R
+import unipi.p17168.imagesician.utils.Constants.EN
 import unipi.p17168.imagesician.utils.Constants.NIGHTMODE
 import java.util.*
 import java.util.concurrent.Executors
@@ -112,8 +113,8 @@ open class BaseActivity : AppCompatActivity() {
 
     //ABOUT LANGUAGE
     companion object {
-         var dLocale: Locale? = null
-        // var dLocale: Locale? = Locale(EN)
+         //var dLocale: Locale? = null
+        var dLocale: Locale? = Locale(EN)
     }
 
     init {

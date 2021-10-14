@@ -37,8 +37,11 @@ class SignUpActivity : BaseActivity() {
     private fun setupClickListeners() {
         binding.apply {
             txtViewSignIn.setOnClickListener { onBackPressed() }
-            btnSignUp.setOnClickListener{ registerUser() }
+            btnSignUp.setOnClickListener{
+                registerUser()
+                ToolBox().hideSoftKeyboard(this@SignUpActivity, it)}
         }
+
     }
 
     private fun setupUI() {
@@ -122,7 +125,7 @@ class SignUpActivity : BaseActivity() {
 
         // Check with validate function if the entries are valid or not.
         if (validateRegisterDetails()) {
-
+            //ToolBox().hideSoftKeyboard(this,)
             // Show the progress dialog.
             showProgressDialog()
 

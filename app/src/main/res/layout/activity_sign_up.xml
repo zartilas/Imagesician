@@ -67,7 +67,6 @@
                 android:hint="@string/input_txt_hint_username"
                 android:inputType="textPersonName"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorStrings"
                 android:textColorHint="@color/colorTextLightGrey"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +91,6 @@
                 android:hint="@string/input_txt_hint_email"
                 android:inputType="textEmailAddress"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorTextLightGrey"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -118,7 +116,6 @@
                 android:hint="@string/input_txt_hint_password"
                 android:inputType="textPassword"
                 android:textAlignment="textStart"
-                android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorTextLightGrey"
                 android:textSize="16sp" />
         </com.google.android.material.textfield.TextInputLayout>
