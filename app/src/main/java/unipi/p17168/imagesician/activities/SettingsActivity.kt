@@ -8,9 +8,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.toolbar_settings.*
-import kotlinx.android.synthetic.main.toolbar_title_only.*
 import unipi.p17168.imagesician.LanguageClass
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.database.DBHelper
@@ -118,7 +115,7 @@ class SettingsActivity : BaseActivity() {
         binding.toolbar.apply {
             setSupportActionBar(root)
             textViewLabel.text = getString(R.string.txt_settings)
-            imgBtn_back.setOnClickListener {
+            imgBtnBack.setOnClickListener {
                 goToImagesicialActivity(this@SettingsActivity)
             }
         }
@@ -131,7 +128,8 @@ class SettingsActivity : BaseActivity() {
             GERMAN_LANG-> binding.radioGroupLag.check(R.id.radioButtonGerman)
         }
 
-        switch_night_mode.isChecked = sharePrefNightMode.getBoolean(NIGHTMODE, false)
+        binding.switchNightMode.isChecked = sharePrefNightMode.getBoolean(NIGHTMODE, false)
+
     }
 
     private fun loadProfileDetails() {

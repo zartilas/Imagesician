@@ -11,10 +11,12 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.wiki_items.view.*
 import unipi.p17168.imagesician.R
+import unipi.p17168.imagesician.databinding.WikiItemsBinding
 import unipi.p17168.imagesician.wiki.WikiListItems
 
-
+private lateinit var bindind: WikiItemsBinding
 class RecyclerViewWikiAdapter(
+
     private val data: List<WikiListItems>) :
     RecyclerView.Adapter<RecyclerViewWikiAdapter.ViewHolder>() {
 

@@ -18,9 +18,6 @@ import com.google.mlkit.vision.objects.ObjectDetection
 import com.google.mlkit.vision.objects.defaults.ObjectDetectorOptions
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
-import kotlinx.android.synthetic.main.activity_imagesician.*
-import kotlinx.android.synthetic.main.activity_settings.*
-import kotlinx.android.synthetic.main.toolbar_settings.*
 import unipi.p17168.imagesician.R
 import unipi.p17168.imagesician.adapters.RecyclerViewWikiAdapter
 import unipi.p17168.imagesician.databinding.ActivityImagesicianBinding
@@ -82,7 +79,7 @@ class ImagesicianActivity : BaseActivity() {
     private fun setupActionBar() {
         binding.toolbar.apply {
             setSupportActionBar(root)
-            imgBtn_Settings.setOnClickListener {
+            imgBtnSettings.setOnClickListener {
                 goToSettingsActivity(this@ImagesicianActivity)
             }
         }

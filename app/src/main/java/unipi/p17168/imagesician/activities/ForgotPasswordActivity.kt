@@ -70,7 +70,7 @@ class ForgotPasswordActivity : BaseActivity() {
                                 getString(R.string.txt_password_reset_mail_sent),
                                 getString(R.string.txt_all_right),
                                 Snackbar.ANIMATION_MODE_SLIDE).show()
-                            finish()
+                             //finish()
                         } else {
                             ToolBox().showSnackBar(binding.root,
                                 ContextCompat.getColor(this@ForgotPasswordActivity,R.color.colorErrorBackgroundSnackbar),
