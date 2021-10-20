@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
@@ -45,9 +46,6 @@ class SignInActivity : BaseActivity() {
         setupClickListeners()
 
     }
-
-
-
 
 
 
@@ -92,13 +90,11 @@ class SignInActivity : BaseActivity() {
                     signInUser()}
         }
     }
-
-
     private fun signInUser() {
         if (validateFields()) {
             // Show the progress dialog.
             showProgressDialog()
-
+            Log.e("Sign","Ok")
             binding.apply {
                 // Get the text from editText and trim the space
                 val email = inputTxtEmail.text.toString().trim { it <= ' ' }
@@ -107,7 +103,7 @@ class SignInActivity : BaseActivity() {
                 // Log-In using FirebaseAuth
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
-
+                        Log.e("FirebaseAuth","Ok")
                         FirebaseAuth.getInstance()
                         if (task.isSuccessful) {
                             DBHelper().getUserDetails(this@SignInActivity)
