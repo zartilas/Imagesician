@@ -158,7 +158,7 @@ class SettingsActivity : BaseActivity() {
 
     private fun checkedChangeRadioButtonLag(){
 
-        binding.radioGroupLag.setOnCheckedChangeListener { _, checkedId -> // idemi gamato an doulefkei etsi
+        binding.radioGroupLag.setOnCheckedChangeListener { _, checkedId -> 
             when (checkedId) {
                 R.id.radioButtonGreek->{
                     Log.e("Settings Activity", GREEK_LANG)
